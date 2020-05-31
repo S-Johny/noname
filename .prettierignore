@@ -1,0 +1,15 @@
+node_modules
+package.json
+package-lock.json
+dist
+*.log
+*.svg
+assets
+*.png
+*.jpg
+*.txt
+*.xml
+*.ico
+.*
+.firebase
+CHANGELOG.md
