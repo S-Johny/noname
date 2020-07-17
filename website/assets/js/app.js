@@ -13,4 +13,13 @@
   // Get a reference to the database service
   var database = firebase.database();
 
-  object.innerText = database.ref().child('object');
+  var query = firebase.database().ref("users").orderByKey();
+  var a = query.once("value")
+  .then(function(snapshot) { 
+	snapshot.forEach(function(childSnapshot) {
+      var key = childSnapshot.key;
+      var childData = childSnapshot.val();
+  });
+});
+
+  object.innerText = a
