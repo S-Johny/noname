@@ -8,7 +8,7 @@
   firebase.initializeApp(config);
 
   //get an element
-  var object = documnet.getElementById('object');
+  var object = document.getElementById('object');
 
   // Get a reference to the database service
   var database = firebase.database();
