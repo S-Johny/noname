@@ -2894,7 +2894,7 @@
 		}
 
 			.wrapper.style2 input, .wrapper.style2 select, .wrapper.style2 textarea {
-				color: white;
+				color: black;
 			}
 
 			.wrapper.style2 a {
@@ -2931,8 +2931,8 @@
 			.wrapper.style2 input[type="button"],
 			.wrapper.style2 button,
 			.wrapper.style2 .button {
-				background-color: #000;
-				color: #f2f2f2 !important;
+				background-color: white;
+				color: black;
 			}
 
 				.wrapper.style2 input[type="submit"].alt,
@@ -3027,8 +3027,8 @@
 
 				.wrapper.style2 input[type="checkbox"] + label:before,
 				.wrapper.style2 input[type="radio"] + label:before {
-					background: rgba(0, 0, 0, 0.075);
-					border-color: rgba(0, 0, 0, 0.15);
+					background: white;
+					border-color: white;
 				}
 
 			.wrapper.style2 input[type="checkbox"]:checked + label:before,
