@@ -14,12 +14,14 @@
   var database = firebase.database();
 
   var query = firebase.database().ref("users").orderByKey();
-  var a = query.once("value")
+  query.once("value")
   .then(function(snapshot) { 
-	snapshot.forEach(function(childSnapshot) {
-      var key = childSnapshot.key;
-      var childData = childSnapshot.val();
+	snapshot.forEach(function(data) {
+      var value = data.val();
+	  content +='<tr>';
+      content += '<td>' + val.name + '</td>';
+      content += '<td>' + val.time + '</td>';
+      content += '</tr>';
   });
+  $('#user_table').append(content);
 });
-
-  object.innerText = a
