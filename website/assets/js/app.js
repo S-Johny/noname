@@ -16,15 +16,18 @@ firebase.analytics();
 
 function write_logs(from, forwho, time, witness, description) 
 {
-	var timestamp = (((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_");
-	var id = timestamp + '_' + Math.floor(Math.random() * 100000);
+	var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
 	var refEvents = firebase.database().ref("events");  
-  	refEvents.push().set({timestamp: timestamp}, function(error) { if (error) {var a = error; } else { window.location.replace('index.html');}});
-	
+  	refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); } else { console.log('Transaction log succeed!'); }});
 }
 
 function submit_to_firebase()
 {
-	write_logs("me", "me", 60, "again me", "popisek");
-	
+	var forwho = document.forms.zaznamenat.elements.prokoho.value
+	var time = document.forms.zaznamenat.elements.time.value
+	var witness = document.forms.zaznamenat.elements.witness.value
+	var description = document.forms.zaznamenat.elements.description.value
+	write_logs("me", forwho, time, witness, description);
+	var timeRef = firebase.database().ref('users/Petr Kus/time');
+	timeRef.transaction(function(currentTime) {return currentTime + time;}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); } else { console.log('Transaction log succeed!'); window.location.replace('index.html'); }});
 }
