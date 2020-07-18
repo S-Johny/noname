@@ -16,12 +16,13 @@
   var query = firebase.database().ref("users").orderByKey();
   query.once("value")
   .then(function(snapshot) { 
-	snapshot.forEach(function(data) {
-      var value = data.val();
+	snapshot.forEach(function(user) {
+	  var content = '';
+      var value = user.val();
 	  content +='<tr>';
-      content += '<td>' + val.name + '</td>';
-      content += '<td>' + val.time + '</td>';
+      content += '<td>' + value.name + '</td>';
+      content += '<td>' + value.time + '</td>';
       content += '</tr>';
+      $('#user_table').append(content);
   });
-  $('#user_table').append(content);
 });
