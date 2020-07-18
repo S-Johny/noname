@@ -1,4 +1,12 @@
-// Initialize the FirebaseUI Widget using Firebase.
+function log_out() {
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+	}).catch(function(error) {
+	  // An error happened.
+	});
+};
+
+
 
   initApp = function() {
     firebase.auth().onAuthStateChanged(function(user) {
@@ -12,14 +20,14 @@
         var phoneNumber = user.phoneNumber;
         var providerData = user.providerData;
         user.getIdToken().then(function(accessToken) {
-          document.getElementById('sign-in-status').textContent = 'Signed in';
-          document.getElementById('sign-in').textContent = 'Sign out';
-          document.getElementById('account-details').textContent = user.displayName;
+          document.getElementById('sign-in-status').textContent = 'Přihlášen/a jako: ' + displayName + '   ';
+          document.getElementById('sign-in').textContent = 'ODHLÁSIT';
+		  document.getElementById('link').onclick = function () {log_out();};
         });
       } else {
         // User is signed out.
-        document.getElementById('sign-in-status').textContent = 'Signed out';
-        document.getElementById('sign-in').textContent = 'Sign in';
+        document.getElementById('sign-in-status').textContent = 'Nejsi přihlášen/a   ';
+        document.getElementById('sign-in').textContent = 'PŘIHLÁSIT';
         document.getElementById('account-details').textContent = 'null';
       }
     }, function(error) {
