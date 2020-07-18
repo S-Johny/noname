@@ -54,31 +54,44 @@
     <!-- Two -->
     <section id="two" class="wrapper style2">
     	<div class="inner" class="align-center">
-	    	<form name="zaznamenat" id="include_time" onsubmit="submit_to_firebase();return false;" width="300">
+	    	<form name="zaznamenat" id="include_time" onsubmit="submit_to_firebase();return false;">
 	  			<input type="radio" id="forme" name="prokoho" value="forme">
 	  			<label for="forme">pro mě</label><br>
 	  			<input type="radio" id="forteam" name="prokoho" value="forteam">
 	  			<label for="forteam">pro můj team</label><br>
 	  			<input type="radio" id="gift" name="prokoho" value="gift">
 	  			<label for="gift">pro někoho jiného</label>
-	  			<select name="names" id="list_names" width="200">
-				  <option value="volvo">Volvo</option>
+	  			<select name="names" id="list_names">
 				</select>
 				<br/>
 				<label for="time">Množství času v minutách:</label>
-	  			<input type="number" id="time" name="time" width="100"><br><br>
+	  			<input type="number" id="time" name="time"><br><br>
 	  			<br/>
 	  			<label for="witness">Svědek:</label>
-	  			<select name="witness" id="list_witness" width="200">
-				  <option value="volvo">Volvo</option>
+	  			<select name="witness" id="list_witness">
 				</select>
 				<br/>
 				<label for="description">Popis:</label>
-				<textarea id="description" name="description" rows="4" cols="30" width="300">
+				<textarea id="description" name="description" rows="4" cols="20">
 				</textarea>
 				<br/>
 	  			<input type="submit" value="ZAZNAMENAT">
 			</form>
+			<script type="text/javascript">
+				var query = firebase.database().ref("users").orderByKey();
+			  	query.once("value").then(function(snapshot) 
+			  	{
+			  		content=''
+			  		snapshot.forEach(function(user) 
+			  		{
+			      		var value = user.val();
+			      		content += "<option value='"+ value.name +"'>" + value.name + "</option>";
+			  		});
+					content +='</table>';
+					$('#list_names').append(content);
+					$('#list_witness').append(content);
+				});
+	    	</script>
 		</div>
     </section>
 

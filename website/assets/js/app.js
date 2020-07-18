@@ -27,7 +27,8 @@ function submit_to_firebase()
 	var time = document.forms.zaznamenat.elements.time.value
 	var witness = document.forms.zaznamenat.elements.witness.value
 	var description = document.forms.zaznamenat.elements.description.value
-	write_logs("me", forwho, time, witness, description);
-	var timeRef = firebase.database().ref('users/Petr Kus/time');
-	timeRef.transaction(function(currentTime) {return currentTime + time;}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); } else { console.log('Transaction log succeed!'); window.location.replace('index.html'); }});
+	var user = firebase.auth().currentUser;
+	write_logs(user.displayName, forwho, time, witness, description);
+	var timeRef = firebase.database().ref('users/'+ user.displayName + '/time');
+	timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(time)*60;}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!'); window.location.replace('transaction_succed.html'); }});
 }
