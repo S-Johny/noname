@@ -22,6 +22,7 @@
 	  content +='<tr>';
       content += '<td>' + value.name + '</td>';
       content += '<td>' + value.time + '</td>';
+      content += '<td>' + value.team + '</td>';
       content += '</tr>';
       $('#user_table').append(content);
   });
