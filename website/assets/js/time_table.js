@@ -44,7 +44,6 @@ function CountDown(id,running,starttime,time)
 // PRINT TABLE WHEN USER IS LOGED-IN
 firebase.auth().onAuthStateChanged(user => {
 	if(user) {
-		  var database = firebase.database();
 		  var query = firebase.database().ref("users").orderByKey();
 		  query.once("value")
 		  .then(function(snapshot) { 
