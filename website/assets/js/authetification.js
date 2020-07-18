@@ -22,7 +22,7 @@ function log_out() {
         user.getIdToken().then(function(accessToken) {
           document.getElementById('sign-in-status').textContent = 'Přihlášen/a jako: ' + displayName + '   ';
           document.getElementById('sign-in').textContent = 'ODHLÁSIT';
-		  document.getElementById('link').onclick = function () {log_out();};
+		  document.getElementById('sign-in').onclick = function () {log_out();};
         });
       } else {
         // User is signed out.
