@@ -1,6 +1,10 @@
 .digital
 {	
 	font-family: digital7;
+	color: black;
+	font-size: 180%;
+	font-style: normal;
+	font-weight: bold;
 }
 
 @font-face
