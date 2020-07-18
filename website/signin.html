@@ -14,7 +14,31 @@
     <script src="assets/js/app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth__cs.js"></script>
 	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth.css" />
-    <script src="assets/js/authetification.js"></script>
+	<script type="text/javascript">
+      // FirebaseUI config.
+      var uiConfig = {
+        signInSuccessUrl: 'https://noname-web.web.app/index.html',
+        signInOptions: [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.EmailAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
+          firebase.auth.PhoneAuthProvider.PROVIDER_ID
+        ],
+        // tosUrl and privacyPolicyUrl accept either url string or a callback
+        // function.
+        // Terms of service url/callback.
+        tosUrl: 'https://noname-web.web.app/index.html',
+        // Privacy policy url/callback.
+        privacyPolicyUrl: function() {
+          window.location.assign('<your-privacy-policy-url>');
+        }
+      };
+
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
   </head>
   <body>
     <!-- Header -->
@@ -26,7 +50,7 @@
     <nav id="menu">
       <ul class="links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="signin.html">Log-In</a></li>
+        <li><a href="generic.html">Generic</a></li>
         <li><a href="elements.html">Elements</a></li>
       </ul>
     </nav>
@@ -46,29 +70,8 @@
       </article>
     </section>
 
-    <!-- One -->
-    <section id="one" class="wrapper style2">
-    	<table style="width:100%" id="user_table" class="digital">
-		  <tr id="tr">
-		    <th>JMENO</th>
-		    <th>CAS</th>
-		    <th>TEAM</th> 
-		 </table> 
-    </section>
-
-    <!-- Two -->
-    <section id="two" class="wrapper style3">
-      <div class="inner">
-        <header class="align-center">
-          <p>
-            Nam vel ante sit amet libero scelerisque facilisis eleifend vitae
-            urna
-          </p>
-          <h2>Morbi maximus justo</h2>
-        </header>
-      </div>
-    </section>
-
+	<div id="firebaseui-auth-container"></div>
+	
     <!-- Footer -->
     <footer id="footer">
       <div class="container">
