@@ -12,6 +12,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/time_table.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth__cs.js"></script>
 	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth.css" />
     <script src="assets/js/authetification.js"></script>
@@ -19,14 +20,19 @@
   <body>
     <!-- Header -->
     <header id="header" class="alt">
+      <div class="logo">
+        <span id="sign-in-status"></span>
+        <a href="signin.html" id="sign-in"></a>
+        <pre id="account-details"></pre>
+      </div>
       <a href="#menu">Menu</a>
     </header>
-
+    
     <!-- Nav -->
     <nav id="menu">
       <ul class="links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="signin.html">Log-In</a></li>
+        <li><a href="signin.html">Sign-In</a></li>
         <li><a href="elements.html">Elements</a></li>
       </ul>
     </nav>
@@ -48,12 +54,6 @@
 
     <!-- One -->
     <section id="one" class="wrapper style2">
-    	<table style="width:100%" id="user_table" class="digital">
-		  <tr id="tr">
-		    <th>JMENO</th>
-		    <th>CAS</th>
-		    <th>TEAM</th> 
-		 </table> 
     </section>
 
     <!-- Two -->
