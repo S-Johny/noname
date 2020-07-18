@@ -18,18 +18,11 @@ function write_logs(from, forwho, time, witness, description)
 {
 	var timestamp = (((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_");
 	var id = timestamp + '_' + Math.floor(Math.random() * 100000);   
-  	firebase.database().ref('log_events/' + id).set({
-	timestamp:timestamp,
-    name: from,
-    forwho: forwho,
-	time: time,
-	witness: witness,
-    description : description
-  });
+  	firebase.database().ref('log_events/' + id).set({timestamp: timestamp, name: from, forwho: forwho, time: time, witness: witness, description: description});
 }
 
 function submit_to_firebase()
 {
-	write_logs("me", "me", 60, "again me", "popisek")
+	write_logs("me", "me", 60, "again me", "popisek");
 	window.location.replace('index.html');
 }

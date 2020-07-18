@@ -2995,7 +2995,7 @@
 					}
 
 			.wrapper.style2 label {
-				color: #000;
+				color: white;
 			}
 
 			.wrapper.style2 input[type="text"],
@@ -3003,8 +3003,8 @@
 			.wrapper.style2 input[type="email"],
 			.wrapper.style2 select,
 			.wrapper.style2 textarea {
-				background: rgba(0, 0, 0, 0.075);
-				border-color: rgba(0, 0, 0, 0.15);
+				background: white;
+				border-color: white;
 			}
 
 				.wrapper.style2 input[type="text"]:focus,
