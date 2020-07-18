@@ -1,0 +1,10 @@
+.digital
+{	
+	font-family: digital7;
+}
+
+@font-face
+{
+	font-family: digital7;
+	src: url("../fonts/digital_7_mono.woff");
+}

@@ -59,8 +59,8 @@ function CountDown(id,running,starttime,time)
   var query = firebase.database().ref("users").orderByKey();
   query.once("value")
   .then(function(snapshot) { 
+	var id_number = 0
 	snapshot.forEach(function(user) {
-	  var id_number = 0
 	  var content = '';
       var value = user.val();
 	  content +='<tr>';
