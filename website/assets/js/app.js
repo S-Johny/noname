@@ -15,7 +15,7 @@ function CountDown(id,running,starttime,time)
 	// find the amount of "seconds" between now and target
 	if (running == "true")
 	{
-		seconds_left = cash - (time_now - time_start);
+		seconds_left = time - (time_now - time_start);
 		if (seconds_left <=0)
 		{
 			seconds_left = 0;
