@@ -2889,12 +2889,12 @@
 			}
 
 		.wrapper.style2 {
-			background-color: #f2f2f2;
-			color: #a6a6a6;
+			background-color: black;
+			color: white;
 		}
 
 			.wrapper.style2 input, .wrapper.style2 select, .wrapper.style2 textarea {
-				color: #000;
+				color: white;
 			}
 
 			.wrapper.style2 a {
@@ -2902,11 +2902,11 @@
 			}
 
 			.wrapper.style2 strong, .wrapper.style2 b {
-				color: #000;
+				color: white;
 			}
 
 			.wrapper.style2 h1, .wrapper.style2 h2, .wrapper.style2 h3, .wrapper.style2 h4, .wrapper.style2 h5, .wrapper.style2 h6 {
-				color: #000;
+				color: white;
 			}
 
 			.wrapper.style2 blockquote {
@@ -3077,11 +3077,11 @@
 			}
 
 				.wrapper.style2 table tbody tr:nth-child(2n + 1) {
-					background-color: rgba(0, 0, 0, 0.075);
+					background-color: dimgray;
 				}
 
 			.wrapper.style2 table th {
-				color: #000;
+				color: white;
 			}
 
 			.wrapper.style2 table thead {
