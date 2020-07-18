@@ -19,11 +19,12 @@ function write_logs(from, forwho, time, witness, description)
 	var timestamp = (((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_");
 	var id = timestamp + '_' + Math.floor(Math.random() * 100000);
 	var refEvents = firebase.database().ref("events");  
-  	refEvents.push().set({timestamp: timestamp});
+  	refEvents.push().set({timestamp: timestamp}, function(error) { if (error) {var a = error; } else { window.location.replace('index.html');}});
+	
 }
 
 function submit_to_firebase()
 {
 	write_logs("me", "me", 60, "again me", "popisek");
-	window.location.replace('index.html');
+	
 }
