@@ -23,6 +23,7 @@ function log_out() {
           document.getElementById('sign-in-status').textContent = 'Přihlášen/a jako: ' + displayName + '   ';
           document.getElementById('sign-in').textContent = 'ODHLÁSIT';
 		  document.getElementById('sign-in').onclick = function () {log_out();};
+          $('#menu_links').append('<li><a href="include.html">ZAZNAMENAT</a></li>');
         });
       } else {
         // User is signed out.
