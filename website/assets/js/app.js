@@ -39,12 +39,15 @@ function submit_to_firebase()
 	{
 		var users_table = firebase.database().ref('users');
 		
-		var query = firebase.database().ref("users").orderByKey();
+		var value = ''
+		var name = ''
+		var name2 = ''
+		var query = firebase.database().ref("users").orderByKey('name');
 		query.once("value").then(function(snapshot) { 
 			snapshot.forEach(function(user2) {
-		      var value = user2.val();
-			  var name = value.name
-			  var name2 = user2.name
+		      value = user2.val();
+			  name = value.name
+			  name2 = user2.name
 		  });
 		});
 		
