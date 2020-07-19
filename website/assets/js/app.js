@@ -36,11 +36,10 @@ function submit_to_firebase()
 	
 	if (forwho == "forteam") 
 	{
-		var query = firebase.database().ref('users');
+		var query = firebase.database().ref('users').orderByChild('name');
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
-    	var childKey = childSnapshot.name;
     	var childData = childSnapshot.val();
-		console.log(childKey);
+		console.log(childData.name);
   			});
 		});
 
