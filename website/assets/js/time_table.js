@@ -1,9 +1,3 @@
-function zeroPad(num, size) 
-{
-    var s = "000000000" + num;
-    return s.substr(s.length-size);
-}
-
 function CountDown(id,running,starttime,time) 
 {
 	time_start= starttime;
@@ -26,19 +20,7 @@ function CountDown(id,running,starttime,time)
 		seconds_left = time;	
 	}
 	
-    // do some time calculations
-    days = parseInt(seconds_left / 86400);
-    seconds_left = seconds_left % 86400;
-    
-    hours = parseInt(seconds_left / 3600);
-    seconds_left = seconds_left % 3600;
-    
-    minutes = parseInt(seconds_left / 60);
-    seconds_left = parseInt(seconds_left % 60);
-
-    seconds = seconds_left;
-    // format countdown string + set tag value
-    countdown.innerHTML = zeroPad(days, 3) + ":" + zeroPad(hours, 2) + ":" + zeroPad(minutes, 2) + ":" + zeroPad(seconds, 2);
+    countdown.innerHTML = secondsToTimeString(seconds_left);
 }
 
 // PRINT TABLE WHEN USER IS LOGED-IN

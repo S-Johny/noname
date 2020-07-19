@@ -18,11 +18,47 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function write_logs(from, forwho, time, witness, description) 
+function zeroPad(num, size) 
+{
+    var s = "000000000" + num;
+    return s.substr(s.length-size);
+}
+
+function secondsToTimeString(seconds_left)
+{
+	// do some time calculations
+    days = parseInt(seconds_left / 86400);
+    seconds_left = seconds_left % 86400;
+    
+    hours = parseInt(seconds_left / 3600);
+    seconds_left = seconds_left % 3600;
+    
+    minutes = parseInt(seconds_left / 60);
+    seconds_left = parseInt(seconds_left % 60);
+
+    seconds = seconds_left;
+    // format countdown string + set tag value
+    return zeroPad(days, 3) + ":" + zeroPad(hours, 2) + ":" + zeroPad(minutes, 2) + ":" + zeroPad(seconds, 2);
+}
+
+function write_logs(from, forwho, time, before, after, witness, description) 
 {
 	var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
 	var refEvents = firebase.database().ref("events");  
-  	refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); } else { console.log('Transaction log succeed!'); }});
+  	refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before:before, after:after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); } else { console.log('Transaction log succeed!'); }});
+}
+
+async function get_time_of_user(user) 
+{
+	var mysnapshot = null;
+	var query = firebase.database().ref('users').orderByChild('name').equalTo(user);
+	query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { mysnapshot = childSnapshot});});
+	while (mysnapshot == null) {
+		await sleep(100);
+	}
+	
+	var time = mysnapshot.val().time;
+	return secondsToTimeString(time);
 }
 
 async function submit_to_firebase()
@@ -38,6 +74,7 @@ async function submit_to_firebase()
 	
 	// block when time is less than zero?
 	
+	var success = null
 	if (forwho == "forteam") 
 	{
 		//make some calls synchronous way
@@ -66,10 +103,34 @@ async function submit_to_firebase()
 		result_time = time*1.2/count;
 		
 		for (var i = names.length; i--; ) {
-			write_logs(user.displayName, names[i], result_time, witness, description);
+			var loop_success = null; 
+			success = True
 			var timeRef = firebase.database().ref('users/'+ names[i] + '/time');
-			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!');}});
+			var time_before = get_time_of_user(names[i])
+			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); loop_success = False } else { console.log('Transaction log succeed!'); loop_success = True}});
+			while (loop_success == null) {
+				await sleep(100);
+			}
+			var time_after = get_time_of_user(names[i])
+			
+			if(loop_success) 
+			{
+				write_logs(user.displayName, names[i], result_time, time_before, time_after, witness, description);
+			} 
+			else
+			{	
+				success = False;
+			}
 		}
+		
+		if(success) 
+		{
+			window.location.replace('transaction_succed.html');
+		} 
+		else
+		{	
+			window.location.replace('transaction_failed.html');
+		}	
 	}
 	else if (forwho == "forsomebody") 
 	{
