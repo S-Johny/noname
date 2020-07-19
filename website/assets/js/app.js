@@ -25,7 +25,7 @@ function write_logs(from, forwho, time, witness, description)
   	refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); } else { console.log('Transaction log succeed!'); }});
 }
 
-function submit_to_firebase()
+async function submit_to_firebase()
 {
 	var forwho = document.forms.zaznamenat.elements.prokoho.value;
 	var forsomebody = document.forms.zaznamenat.elements.names.value;
