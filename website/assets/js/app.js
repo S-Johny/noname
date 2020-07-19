@@ -45,7 +45,7 @@ function submit_to_firebase()
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { snapshot = childSnapshot});});
 		while (snapshot == null) {
-			await sleep(100)
+			await sleep(100);
 		}
 		var team = snapshot.val().team;
 		
