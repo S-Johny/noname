@@ -47,7 +47,7 @@ async function submit_to_firebase()
 		while (mysnapshot == null) {
 			await sleep(100);
 		}
-		var team = snapshot.val().team;
+		var team = mysnapshot.val().team;
 		
 		var count = 0
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
