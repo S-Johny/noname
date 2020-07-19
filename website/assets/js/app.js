@@ -105,13 +105,23 @@ async function submit_to_firebase()
 		for (var i = names.length; i--; ) {
 			var loop_success = null; 
 			success = true
+			var time_before = null;
+			time_before = get_time_of_user(names[i]);
+			while (time_before == null) {
+				await sleep(100);
+			}
+			
 			var timeRef = firebase.database().ref('users/'+ names[i] + '/time');
-			var time_before = get_time_of_user(names[i])
 			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); loop_success = false } else { console.log('Transaction log succeed!'); loop_success = true}});
 			while (loop_success == null) {
 				await sleep(100);
 			}
-			var time_after = get_time_of_user(names[i])
+			
+			var time_after = null;
+			time_after = get_time_of_user(names[i]);
+			while (time_after == null) {
+				await sleep(100);
+			}
 			
 			if(loop_success) 
 			{
