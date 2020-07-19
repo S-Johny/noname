@@ -39,7 +39,6 @@ function submit_to_firebase()
 		//make call synchronous by snapshot
 		var snapshot = null;
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
-		firebaseRef.on('value', function(snap) { latestSnapshot = snap; });
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { snapshot = childSnapshot});});
 		while (snapshot == null) {
 			var team = snapshot.val().team;
