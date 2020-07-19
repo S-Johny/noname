@@ -24,11 +24,44 @@ function write_logs(from, forwho, time, witness, description)
 function submit_to_firebase()
 {
 	var forwho = document.forms.zaznamenat.elements.prokoho.value
-	var time = document.forms.zaznamenat.elements.time.value
+	var forsomebody = document.forms.zaznamenat.elements.names.value
+	var time = Number(document.forms.zaznamenat.elements.time.value)*60
 	var witness = document.forms.zaznamenat.elements.witness.value
 	var description = document.forms.zaznamenat.elements.description.value
 	var user = firebase.auth().currentUser;
-	write_logs(user.displayName, forwho, time, witness, description);
-	var timeRef = firebase.database().ref('users/'+ user.displayName + '/time');
-	timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(time)*60;}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!'); window.location.replace('transaction_succed.html'); }});
+	var forwho_full = ''
+	var result_time = 0
+	
+	if (forwho == "forteam") 
+	{
+		forwho_full = "tym naky"
+		result_time = time*1.2/4
+	}
+	else if (forwho == "forsomebody") 
+	{
+	 	forwho_full = forsomebody
+		result_time = time*0.7
+		write_logs(user.displayName, forwho_full, result_time, witness, description);
+		var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
+		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!'); window.location.replace('transaction_succed.html'); }});
+	} 
+	else if (forwho == "giftforsomebody") 
+	{
+	 	forwho_full = forsomebody
+		result_time = time*0.7
+		write_logs(user.displayName, user.displayName, -time, witness, description);
+		var timeRef = firebase.database().ref('users/'+ user.displayName + '/time');
+		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(-time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!');}});
+		write_logs(user.displayName, forwho_full, result_time, witness, description);
+		var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
+		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!'); window.location.replace('transaction_succed.html'); }});
+	} 
+	else
+	{
+		forwho_full = user.displayName
+		result_time = time
+		write_logs(user.displayName, forwho_full, result_time, witness, description);
+		var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
+		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!'); window.location.replace('transaction_succed.html'); }});
+	}
 }
