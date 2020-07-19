@@ -40,7 +40,7 @@ async function submit_to_firebase()
 	
 	if (forwho == "forteam") 
 	{
-		//make call synchronous by snapshot
+		//make some calls synchronous way
 		var mysnapshot = null;
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { mysnapshot = childSnapshot});});
@@ -49,19 +49,18 @@ async function submit_to_firebase()
 		}
 		var team = mysnapshot.val().team;
 		
-		var count = 0
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
+		var count = 0;
+		var names = [];
+		var query = firebase.database().ref('users').orderByChild('team').equalTo(team);
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
-    	var childData = childSnapshot.val();
-		return childData.team
+ 			count++;
+			names.push(childSnapshot.val().name);
   			});
 		});
 		
-		var query = firebase.database().ref('users').orderByChild('team').equalTo(team);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
- 			count++
-  			});
-		});
+		while (count == 0) {
+			await sleep(100);
+		}
 		
 		forwho_full = 'TEAM ' + team ;
 		result_time = time*1.2/count;
