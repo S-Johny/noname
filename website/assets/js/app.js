@@ -36,9 +36,11 @@ function submit_to_firebase()
 	
 	if (forwho == "forteam") 
 	{
-		var query = firebase.database().ref('users').orderByChild('name');
+		var out = ''
+		var query = firebase.database().ref('users').orderByChild('name').equalTo('Petr Kus');
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
     	var childData = childSnapshot.val();
+		out = childData.name
 		console.log(childData.name);
   			});
 		});
