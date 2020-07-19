@@ -14,6 +14,10 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function write_logs(from, forwho, time, witness, description) 
 {
 	var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
@@ -40,7 +44,9 @@ function submit_to_firebase()
 		var snapshot = null;
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { snapshot = childSnapshot});});
-		while (snapshot == null) {}
+		while (snapshot == null) {
+			await sleep(100)
+		}
 		var team = snapshot.val().team;
 		
 		var count = 0
