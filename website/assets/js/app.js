@@ -37,15 +37,15 @@ function submit_to_firebase()
 	
 	if (forwho == "forteam") 
 	{
-		var ref = firebase.database().ref('users');
-		ref.orderByChild('name').equalTo('user.displayName').query.once("value", function(snapshot) 
+		var users_table = firebase.database().ref('users');
+		users_table.orderByChild('name').equalTo('user.displayName').once("value", function(snapshot) 
 		{
     		snapshot.forEach(function(data) 
 				{
 		        	var team = data.team;
 		    	});
 		});
-		ref.orderByChild('team').equalTo(team).query.once("value", function(snapshot) 
+		users_table.orderByChild('team').equalTo(team).once("value", function(snapshot) 
 		{
 			var names = [];
 			var count = 0;
