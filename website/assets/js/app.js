@@ -41,10 +41,10 @@ async function submit_to_firebase()
 	if (forwho == "forteam") 
 	{
 		//make call synchronous by snapshot
-		var snapshot = null;
+		var mysnapshot = null;
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { snapshot = childSnapshot});});
-		while (snapshot == null) {
+		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { mysnapshot = childSnapshot});});
+		while (mysnapshot == null) {
 			await sleep(100);
 		}
 		var team = snapshot.val().team;
