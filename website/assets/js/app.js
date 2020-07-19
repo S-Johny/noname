@@ -36,13 +36,20 @@ function submit_to_firebase()
 	
 	if (forwho == "forteam") 
 	{
-		var team = ''
+		//make call synchronous by snapshot
+		var snapshot = null;
+		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
+		firebaseRef.on('value', function(snap) { latestSnapshot = snap; });
+		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { snapshot = childSnapshot});});
+		while (snapshot == null) {
+			var team = snapshot.val().team;
+		}
+		
 		var count = 0
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
     	var childData = childSnapshot.val();
-		team = childData.team
-		console.log(childData.team);
+		return childData.team
   			});
 		});
 		
