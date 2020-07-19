@@ -42,7 +42,7 @@ function submit_to_firebase()
 		var value = ''
 		var name = ''
 		var name2 = ''
-		var query = firebase.database().ref("users").orderByKey('name');
+		var query = firebase.database().ref("users").orderByKey();
 		query.once("value").then(function(snapshot) { 
 			snapshot.forEach(function(user2) {
 		      value = user2.val();
