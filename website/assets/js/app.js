@@ -36,17 +36,24 @@ function submit_to_firebase()
 	
 	if (forwho == "forteam") 
 	{
-		var out = ''
-		var query = firebase.database().ref('users').orderByChild('name').equalTo('Petr Kus');
+		var team = ''
+		var count = 0
+		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
     	var childData = childSnapshot.val();
-		out = childData.name
-		console.log(childData.name);
+		team = childData.team
+		console.log(childData.team);
   			});
 		});
-
-		//forwho_full = 'TEAM ' + team ;
-		//result_time = time*1.2/count;
+		
+		var query = firebase.database().ref('users').orderByChild('team').equalTo(team);
+		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
+ 			count++
+  			});
+		});
+		
+		forwho_full = 'TEAM ' + team ;
+		result_time = time*1.2/count;
 	}
 	else if (forwho == "forsomebody") 
 	{
