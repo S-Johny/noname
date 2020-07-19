@@ -40,14 +40,15 @@ function submit_to_firebase()
 		var users_table = firebase.database().ref('users');
 		firebase().database().ref('users').orderByChild("name").equalTo('Petr Kus').on('value', function (snapshot) {
        //snapshot would have list of NODES that satisfies the condition
-		console.log(snapshot.val())
+		console.log(snapshot.val());
         console.log('-----------');
        //go through each item found and print out the emails
        snapshot.forEach(function(childSnapshot) {
        var team = childSnapshot.team;
         //this will be the actual email value found
         console.log(team);
-  });
+  		});
+		});
 		
 		users_table.orderByChild('team').equalTo(team).once("value", function(snapshot) 
 		{
