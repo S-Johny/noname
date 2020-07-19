@@ -38,8 +38,14 @@ function submit_to_firebase()
 	if (forwho == "forteam") 
 	{
 		var users_table = firebase.database().ref('users');
-		var users_table_2 = firebase.database().ref('users')
-		user_table_2.on('value', function(snapshot) {console.log(snapshot.val());});
+		var query = firebase.database().ref("users").orderByKey();
+		  query.once("value")
+		  .then(function(snapshot) { 
+			snapshot.forEach(function(user2) {
+		      var value = user2.val();
+			  var name = value.name
+			  var name2 = user2.name
+		  });
 		
 		users_table.orderByChild('team').equalTo(team).once("value", function(snapshot) 
 		{
