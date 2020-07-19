@@ -45,20 +45,7 @@ function write_logs(from, forwho, time, before, after, witness, description)
 {
 	var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
 	var refEvents = firebase.database().ref("events");  
-  	refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before:before, after:after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); } else { console.log('Transaction log succeed!'); }});
-}
-
-async function get_time_of_user(user) 
-{
-	var mysnapshot = null;
-	var query = firebase.database().ref('users').orderByChild('name').equalTo(user);
-	query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { mysnapshot = childSnapshot});});
-	while (mysnapshot == null) {
-		await sleep(100);
-	}
-	
-	var time = mysnapshot.val().time;
-	return secondsToTimeString(time);
+  	refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); } else { console.log('Transaction log succeed!'); }});
 }
 
 async function submit_to_firebase()
@@ -105,27 +92,54 @@ async function submit_to_firebase()
 		for (var i = names.length; i--; ) {
 			var loop_success = null; 
 			success = true
-			var time_before = null;
-			time_before = get_time_of_user(names[i]);
-			while (time_before == null) {
+			
+			//get time before
+			var usersnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(names[i]);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+			while (usersnapshot == null) {
 				await sleep(100);
 			}
+			var time_before = usersnapshot.val().time;
 			
+			//write user
 			var timeRef = firebase.database().ref('users/'+ names[i] + '/time');
 			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); loop_success = false } else { console.log('Transaction log succeed!'); loop_success = true}});
 			while (loop_success == null) {
 				await sleep(100);
 			}
 			
-			var time_after = null;
-			time_after = get_time_of_user(names[i]);
-			while (time_after == null) {
+			//get time after 
+			var usersnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(names[i]);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+			while (usersnapshot == null) {
 				await sleep(100);
 			}
+			var time_after = usersnapshot.val().time;
+			
 			
 			if(loop_success) 
 			{
-				write_logs(user.displayName, names[i], result_time, time_before, time_after, witness, description);
+				//transaction logging
+				var log_success = null;
+				var description = description;
+				var witness = witness;
+				var after = time_after;
+				var before = time_before;
+				var time = result_time;
+				var forwho = names[i];
+				var from = user.displayName;
+				var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
+				var refEvents = firebase.database().ref("events");  
+  				refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
+				while (log_success == null) {
+					await sleep(100);
+				}
+				if (log_success == false)
+				{
+					success = false;
+				}
 			} 
 			else
 			{	
