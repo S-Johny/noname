@@ -38,7 +38,7 @@ function submit_to_firebase()
 	if (forwho == "forteam") 
 	{
 		var users_table = firebase.database().ref('users');
-		var users_table_2 = firebase.database().ref('users').orderByChild('name');
+		var users_table_2 = firebase.database().ref('users').orderByChild('name').equalTo('Petr Kus');
 		
 		users_table.orderByChild('team').equalTo(team).once("value", function(snapshot) 
 		{
