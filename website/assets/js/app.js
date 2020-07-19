@@ -64,6 +64,12 @@ async function submit_to_firebase()
 		
 		forwho_full = 'TEAM ' + team ;
 		result_time = time*1.2/count;
+		
+		for (var i = names.length; i--; ) {
+			write_logs(user.displayName, names[i], result_time, witness, description);
+			var timeRef = firebase.database().ref('users/'+ names[i] + '/time');
+			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!');}});
+		}
 	}
 	else if (forwho == "forsomebody") 
 	{
