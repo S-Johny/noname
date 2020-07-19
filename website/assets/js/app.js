@@ -38,14 +38,14 @@ function submit_to_firebase()
 	if (forwho == "forteam") 
 	{
 		var ref = firebase.database().ref('users');
-		ref.child('users').orderByChild('name').equalTo('user.displayName').query.once("value", function(snapshot) 
+		ref.orderByChild('name').equalTo('user.displayName').query.once("value", function(snapshot) 
 		{
     		snapshot.forEach(function(data) 
 				{
 		        	var team = data.team;
 		    	});
 		});
-		ref.child('users').orderByChild('team').equalTo(team).query.once("value", function(snapshot) 
+		ref.orderByChild('team').equalTo(team).query.once("value", function(snapshot) 
 		{
 			var names = [];
 			var count = 0;
