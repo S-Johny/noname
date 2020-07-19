@@ -40,12 +40,11 @@ function submit_to_firebase()
 		var users_table = firebase.database().ref('users');
 		
 		var query = firebase.database().ref("users").orderByKey();
-		query.once("value").then(function(snapshot) { 
-			snapshot.forEach(function(user2) {
-		      var value = user2.val();
-			  var name = value.name;
-			  var name2 = user2.name;
-		  });
+		query.once('value', function(snapshot) {
+  		snapshot.forEach(function(childSnapshot) {
+    	var childKey = childSnapshot.name;
+    	var childData = childSnapshot.val();
+  			});
 		});
 		
 		users_table.orderByChild('team').equalTo(team).once("value", function(snapshot) 
