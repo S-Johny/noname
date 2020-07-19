@@ -33,32 +33,19 @@ function submit_to_firebase()
 	var result_time = 0;
 	
 	// block when time is less than zero?
-	//
 	
 	if (forwho == "forteam") 
 	{
-		var users_table = firebase.database().ref('users');
-		
-		var query = firebase.database().ref("users").orderByKey();
-		query.once('value', function(snapshot) {
-  		snapshot.forEach(function(childSnapshot) {
+		var query = firebase.database().ref('users');
+		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
     	var childKey = childSnapshot.name;
     	var childData = childSnapshot.val();
+		console.log(childKey);
   			});
 		});
-		
-		users_table.orderByChild('team').equalTo(team).once("value", function(snapshot) 
-		{
-			var names = [];
-			var count = 0;
-    		snapshot.forEach(function(data) 
-				{
-					names.push(data.name);
-		        	count++;
-		    	});
-		});
-		forwho_full = 'TEAM ' + team ;
-		result_time = time*1.2/count;
+
+		//forwho_full = 'TEAM ' + team ;
+		//result_time = time*1.2/count;
 	}
 	else if (forwho == "forsomebody") 
 	{
