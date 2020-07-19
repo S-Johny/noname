@@ -40,9 +40,8 @@ function submit_to_firebase()
 		var snapshot = null;
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
 		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { snapshot = childSnapshot});});
-		while (snapshot == null) {
-			var team = snapshot.val().team;
-		}
+		while (snapshot == null) {}
+		var team = snapshot.val().team;
 		
 		var count = 0
 		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
