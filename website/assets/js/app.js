@@ -23,32 +23,53 @@ function write_logs(from, forwho, time, witness, description)
 
 function submit_to_firebase()
 {
-	var forwho = document.forms.zaznamenat.elements.prokoho.value
-	var forsomebody = document.forms.zaznamenat.elements.names.value
-	var time = Number(document.forms.zaznamenat.elements.time.value)*60
-	var witness = document.forms.zaznamenat.elements.witness.value
-	var description = document.forms.zaznamenat.elements.description.value
+	var forwho = document.forms.zaznamenat.elements.prokoho.value;
+	var forsomebody = document.forms.zaznamenat.elements.names.value;
+	var time = Number(document.forms.zaznamenat.elements.time.value)*60;
+	var witness = document.forms.zaznamenat.elements.witness.value;
+	var description = document.forms.zaznamenat.elements.description.value;
 	var user = firebase.auth().currentUser;
-	var forwho_full = ''
-	var result_time = 0
+	var forwho_full = '';
+	var result_time = 0;
+	
+	// block when time is less than zero?
+	//
 	
 	if (forwho == "forteam") 
 	{
-		forwho_full = "tym naky"
-		result_time = time*1.2/4
+		var ref = firebase.database();
+		ref.child('users').orderByChild('name').equalTo('user.displayName').query.once("value", function(snapshot) 
+		{
+    		snapshot.forEach(function(data) 
+				{
+		        	var team = data.team;
+		    	});
+		});
+		ref.child('users').orderByChild('team').equalTo(team).query.once("value", function(snapshot) 
+		{
+			var names = [];
+			var count = 0;
+    		snapshot.forEach(function(data) 
+				{
+					names.push(data.name);
+		        	count++;
+		    	});
+		});
+		forwho_full = 'TEAM ' + team ;
+		result_time = time*1.2/count;
 	}
 	else if (forwho == "forsomebody") 
 	{
-	 	forwho_full = forsomebody
-		result_time = time*0.7
+	 	forwho_full = forsomebody;
+		result_time = time*0.7;
 		write_logs(user.displayName, forwho_full, result_time, witness, description);
 		var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
 		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!'); window.location.replace('transaction_succed.html'); }});
 	} 
 	else if (forwho == "giftforsomebody") 
 	{
-	 	forwho_full = forsomebody
-		result_time = time*0.7
+	 	forwho_full = forsomebody;
+		result_time = time*0.7;
 		write_logs(user.displayName, user.displayName, -time, witness, description);
 		var timeRef = firebase.database().ref('users/'+ user.displayName + '/time');
 		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(-time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!');}});
@@ -58,8 +79,8 @@ function submit_to_firebase()
 	} 
 	else
 	{
-		forwho_full = user.displayName
-		result_time = time
+		forwho_full = user.displayName;
+		result_time = time;
 		write_logs(user.displayName, forwho_full, result_time, witness, description);
 		var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
 		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); window.location.replace('transaction_failed.html'); } else { console.log('Transaction log succeed!'); window.location.replace('transaction_succed.html'); }});
