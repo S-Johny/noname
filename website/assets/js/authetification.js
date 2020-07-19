@@ -24,6 +24,7 @@ function log_out() {
           document.getElementById('sign-in').textContent = 'ODHLÁSIT';
 		  document.getElementById('sign-in').onclick = function () {log_out();};
           $('#menu_links').append('<li><a href="include.html">ZAZNAMENAT</a></li>');
+		  $('#menu_links').append('<li><a href="logy.html">logy</a></li>');
         });
       } else {
         // User is signed out.
