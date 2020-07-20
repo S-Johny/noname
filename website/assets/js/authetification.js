@@ -30,7 +30,6 @@ function log_out() {
         // User is signed out.
         document.getElementById('sign-in-status').textContent = 'Nejsi přihlášen/a   ';
         document.getElementById('sign-in').textContent = 'PŘIHLÁSIT';
-        document.getElementById('account-details').textContent = 'null';
       }
     }, function(error) {
       console.log(error);

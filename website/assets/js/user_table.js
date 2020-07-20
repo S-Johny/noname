@@ -6,7 +6,7 @@ firebase.auth().onAuthStateChanged(user => {
 		  .then(function(snapshot) { 
 			var id_number = 0
 			var content = '';
-			content +='<table style="width:100%" id="user_table" class="digital">';
+			content +='<table style="width:100%" id="user_table">';
 			content +='<tr id="tr">';
 			content +='<th>ORG</th>';
 			content +='<th>JMENO</th>';
@@ -42,6 +42,7 @@ firebase.auth().onAuthStateChanged(user => {
 				  content += '<td>' + value.phone + '</td>';
 				  content += '<td>' + value.email + '</td>';
 				  content += '<td>' + value.communication + '</td>';
+				  content += '<td>' + value.team + '</td>';
 				  content += '<td>' + secondsToTimeString(value.time) + '</td>';
 				  content += '<td>' + value.internet + '</td>';
 				  content += '<td>' + value.powerbanka + '</td>';
