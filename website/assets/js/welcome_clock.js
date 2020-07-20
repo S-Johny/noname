@@ -12,9 +12,6 @@ var target_date = target_date_object.getTime();
 // variables for time units
 var days, hours, minutes, seconds, miliseconds;
  
-// get tag element
-var countdown = document.getElementById("countdown");
-
 //variable for sound
 var SoundStartTime = new Date();
 var SoundFirstTime = true;
@@ -53,9 +50,12 @@ function CountDown()
     seconds = parseInt(miliseconds_left / 1000);
     miliseconds = parseInt(miliseconds_left % 1000);
      
-    // format countdown string + set tag value
-    countdown.innerHTML = zeroPad(days, 2) + ":" + zeroPad(hours, 2) + ":" + zeroPad(minutes, 2) + ":" + zeroPad(seconds, 2) + "." + zeroPad(miliseconds, 3) + "";  
+	// get tag element
+	var countdown = document.getElementById("countdown");
 
+    // format countdown string + set tag value
+    //countdown.innerHTML = zeroPad(days, 2) + ":" + zeroPad(hours, 2) + ":" + zeroPad(minutes, 2) + ":" + zeroPad(seconds, 2) + "." + zeroPad(miliseconds, 3) + "";  
+	countdown.innerHTML = "new time"
 	
     //play or stop sound of clock
     var magicNumber = 7600;
