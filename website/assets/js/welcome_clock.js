@@ -1,10 +1,10 @@
 // set the date we're counting down to
 var target_date_object = new Date();	
-target_date_object.setUTCDate(20);
+target_date_object.setUTCDate(24);
 target_date_object.setUTCFullYear(2020);
-target_date_object.setUTCHours(18);
+target_date_object.setUTCHours(6);
 target_date_object.setUTCMilliseconds(0);
-target_date_object.setUTCMinutes(46);
+target_date_object.setUTCMinutes(0);
 target_date_object.setUTCMonth(6);
 target_date_object.setUTCSeconds(0);
 var target_date = target_date_object.getTime();
