@@ -2,7 +2,7 @@
 var target_date_object = new Date();	
 target_date_object.setUTCDate(24);
 target_date_object.setUTCFullYear(2020);
-target_date_object.setUTCHours(6);
+target_date_object.setUTCHours(4);
 target_date_object.setUTCMilliseconds(0);
 target_date_object.setUTCMinutes(0);
 target_date_object.setUTCMonth(6);
