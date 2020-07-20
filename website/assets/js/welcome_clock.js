@@ -54,8 +54,7 @@ function CountDown()
 	var countdown = document.getElementById("countdown");
 
     // format countdown string + set tag value
-    //countdown.innerHTML = zeroPad(days, 2) + ":" + zeroPad(hours, 2) + ":" + zeroPad(minutes, 2) + ":" + zeroPad(seconds, 2) + "." + zeroPad(miliseconds, 3) + "";  
-	countdown.innerHTML = "new time"
+    countdown.innerHTML = zeroPad(days, 2) + ":" + zeroPad(hours, 2) + ":" + zeroPad(minutes, 2) + ":" + zeroPad(seconds, 2) + "." + zeroPad(miliseconds, 3) + "";  
 	
     //play or stop sound of clock
     var magicNumber = 7600;
