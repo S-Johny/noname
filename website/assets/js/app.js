@@ -59,45 +59,119 @@ async function submit_to_firebase()
 	var forwho_full = '';
 	var result_time = 0;
 	
-	// block when time is less than zero?
-	
-	if (forwho == "forteam") 
+
+	if(time<0 && user.displayName != 'admin')
 	{
-		var success = null
-		//find team
-		var mysnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { mysnapshot = childSnapshot});});
-		while (mysnapshot == null) {
-			await sleep(100);
+		window.location.replace('transaction_negative.html');
+	}
+	else
+	{
+		if (forwho == "forteam") 
+		{
+			var success = null
+			//find team
+			var mysnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { mysnapshot = childSnapshot});});
+			while (mysnapshot == null) {
+				await sleep(100);
+			}
+			var team = mysnapshot.val().team;
+			
+			//get count of peopple in team and names
+			var count = 0;
+			var names = [];
+			var query = firebase.database().ref('users').orderByChild('team').equalTo(team);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
+				count++;
+				names.push(childSnapshot.val().name);
+				});
+			});
+			while (count == 0) {
+				await sleep(100);
+			}
+			
+			//IMPORTANT CLACULATIONS
+			forwho_full = 'TEAM ' + team ;
+			result_time = time*1.2/count;
+			
+			//NOW WRITE TO DATABASE
+			for (var i = names.length; i--; ) {
+				var loop_success = null; 
+				success = true
+				
+				//get time before
+				var usersnapshot = null;
+				var query = firebase.database().ref('users').orderByChild('name').equalTo(names[i]);
+				query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+				while (usersnapshot == null) {
+					await sleep(100);
+				}
+				var time_before = secondsToTimeString(usersnapshot.val().time);
+				
+				//write user
+				var timeRef = firebase.database().ref('users/'+ names[i] + '/time');
+				timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); loop_success = false } else { console.log('Transaction log succeed!'); loop_success = true}});
+				while (loop_success == null) {
+					await sleep(100);
+				}
+				
+				//get time after 
+				var usersnapshot = null;
+				var query = firebase.database().ref('users').orderByChild('name').equalTo(names[i]);
+				query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+				while (usersnapshot == null) {
+					await sleep(100);
+				}
+				var time_after = secondsToTimeString(usersnapshot.val().time);
+				
+				if(loop_success) 
+				{
+					//transaction logging
+					var log_success = null;
+					var description = description;
+					var witness = witness;
+					var after = time_after;
+					var before = time_before;
+					var time = result_time;
+					var forwho = names[i];
+					var from = user.displayName;
+					var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
+					var refEvents = firebase.database().ref("events");  
+					refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
+					while (log_success == null) {
+						await sleep(100);
+					}
+					if (log_success == false)
+					{
+						success = false;
+					}
+				} 
+				else
+				{	
+					success = false;
+				}
+			}
+			
+			//VERIFICATION AND REDIRECTION
+			if(success) 
+			{
+				window.location.replace('transaction_succed.html');
+			} 
+			else
+			{	
+				window.location.replace('transaction_failed.html');
+			}
 		}
-		var team = mysnapshot.val().team;
-		
-		//get count of peopple in team and names
-		var count = 0;
-		var names = [];
-		var query = firebase.database().ref('users').orderByChild('team').equalTo(team);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) {
- 			count++;
-			names.push(childSnapshot.val().name);
-  			});
-		});
-		while (count == 0) {
-			await sleep(100);
-		}
-		
-		//IMPORTANT CLACULATIONS
-		forwho_full = 'TEAM ' + team ;
-		result_time = time*1.2/count;
-		
-		//NOW WRITE TO DATABASE
-		for (var i = names.length; i--; ) {
-			var loop_success = null; 
-			success = true
+		else if (forwho == "forsomebody") 
+		{
+			var success = null
+		 	forwho_full = forsomebody;
+			result_time = time*0.7;
 			
 			//get time before
 			var usersnapshot = null;
-			var query = firebase.database().ref('users').orderByChild('name').equalTo(names[i]);
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
 			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
 			while (usersnapshot == null) {
 				await sleep(100);
@@ -105,287 +179,219 @@ async function submit_to_firebase()
 			var time_before = secondsToTimeString(usersnapshot.val().time);
 			
 			//write user
-			var timeRef = firebase.database().ref('users/'+ names[i] + '/time');
-			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); loop_success = false } else { console.log('Transaction log succeed!'); loop_success = true}});
-			while (loop_success == null) {
+			var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
+			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); success = false } else { console.log('Transaction log succeed!'); success = true}});
+			while (success == null) {
 				await sleep(100);
 			}
 			
 			//get time after 
 			var usersnapshot = null;
-			var query = firebase.database().ref('users').orderByChild('name').equalTo(names[i]);
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
 			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
 			while (usersnapshot == null) {
 				await sleep(100);
 			}
 			var time_after = secondsToTimeString(usersnapshot.val().time);
 			
-			if(loop_success) 
+			//transaction logging
+			var log_success = null;
+			var description = description;
+			var witness = witness;
+			var after = time_after;
+			var before = time_before;
+			var time = result_time;
+			var forwho = forwho_full;
+			var from = user.displayName;
+			var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
+			var refEvents = firebase.database().ref("events");  
+			refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
+			while (log_success == null) {
+				await sleep(100);
+			}
+			if (log_success == false)
 			{
-				//transaction logging
-				var log_success = null;
-				var description = description;
-				var witness = witness;
-				var after = time_after;
-				var before = time_before;
-				var time = result_time;
-				var forwho = names[i];
-				var from = user.displayName;
-				var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
-				var refEvents = firebase.database().ref("events");  
-  				refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
-				while (log_success == null) {
-					await sleep(100);
-				}
-				if (log_success == false)
-				{
-					success = false;
-				}
+				success = false;
+			}
+			
+			//VERIFICATION AND REDIRECTION
+			if(success) 
+			{
+				window.location.replace('transaction_succed.html');
 			} 
 			else
 			{	
+				window.location.replace('transaction_failed.html');
+			}
+		} 
+		else if (forwho == "giftforsomebody") 
+		{
+			var success = null
+			var remove_success = null
+		 	forwho_full = forsomebody;
+			result_time = time*0.7;
+			
+			// REMOVE TIME TO USER
+			//get time before
+			var usersnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+			while (usersnapshot == null) {
+				await sleep(100);
+			}
+			var time_before = secondsToTimeString(usersnapshot.val().time);
+			
+			//write user
+			var timeRef = firebase.database().ref('users/'+ user.displayName + '/time');
+			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(-time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); remove_success = false } else { console.log('Transaction log succeed!'); remove_success = true}});
+			while (remove_success == null) {
+				await sleep(100);
+			}
+			
+			//get time after 
+			var usersnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+			while (usersnapshot == null) {
+				await sleep(100);
+			}
+			var time_after = secondsToTimeString(usersnapshot.val().time);
+			
+			//transaction logging
+			var log_success = null;
+			var description = description;
+			var witness = witness;
+			var after = time_after;
+			var before = time_before;
+			var time = result_time;
+			var forwho = user.displayName;
+			var from = user.displayName;
+			var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
+			var refEvents = firebase.database().ref("events");  
+			refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: -time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
+			while (log_success == null) {
+				await sleep(100);
+			}
+			if (log_success == false)
+			{
+				remove_success = false;
+			}
+			
+			// ADD TIME TO USER
+			//get time before
+			var usersnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+			while (usersnapshot == null) {
+				await sleep(100);
+			}
+			var time_before = secondsToTimeString(usersnapshot.val().time);
+			
+			//write user
+			var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
+			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); success = false } else { console.log('Transaction log succeed!'); success = true}});
+			while (success == null) {
+				await sleep(100);
+			}
+			
+			//get time after 
+			var usersnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+			while (usersnapshot == null) {
+				await sleep(100);
+			}
+			var time_after = secondsToTimeString(usersnapshot.val().time);
+			
+			//transaction logging
+			var log_success = null;
+			var description = description;
+			var witness = witness;
+			var after = time_after;
+			var before = time_before;
+			var time = result_time;
+			var forwho = forwho_full;
+			var from = user.displayName;
+			var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
+			var refEvents = firebase.database().ref("events");  
+			refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
+			while (log_success == null) {
+				await sleep(100);
+			}
+			if (log_success == false)
+			{
 				success = false;
 			}
-		}
-		
-		//VERIFICATION AND REDIRECTION
-		if(success) 
-		{
-			window.location.replace('transaction_succed.html');
+			
+			//VERIFICATION AND REDIRECTION
+			if(success && remove_success) 
+			{
+				window.location.replace('transaction_succed.html');
+			} 
+			else
+			{	
+				window.location.replace('transaction_failed.html');
+			}
 		} 
 		else
-		{	
-			window.location.replace('transaction_failed.html');
-		}
-	}
-	else if (forwho == "forsomebody") 
-	{
-		var success = null
-	 	forwho_full = forsomebody;
-		result_time = time*0.7;
-		
-		//get time before
-		var usersnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
-		while (usersnapshot == null) {
-			await sleep(100);
-		}
-		var time_before = secondsToTimeString(usersnapshot.val().time);
-		
-		//write user
-		var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
-		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); success = false } else { console.log('Transaction log succeed!'); success = true}});
-		while (success == null) {
-			await sleep(100);
-		}
-		
-		//get time after 
-		var usersnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
-		while (usersnapshot == null) {
-			await sleep(100);
-		}
-		var time_after = secondsToTimeString(usersnapshot.val().time);
-		
-		//transaction logging
-		var log_success = null;
-		var description = description;
-		var witness = witness;
-		var after = time_after;
-		var before = time_before;
-		var time = result_time;
-		var forwho = forwho_full;
-		var from = user.displayName;
-		var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
-		var refEvents = firebase.database().ref("events");  
-		refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
-		while (log_success == null) {
-			await sleep(100);
-		}
-		if (log_success == false)
 		{
-			success = false;
-		}
-		
-		//VERIFICATION AND REDIRECTION
-		if(success) 
-		{
-			window.location.replace('transaction_succed.html');
-		} 
-		else
-		{	
-			window.location.replace('transaction_failed.html');
-		}
-	} 
-	else if (forwho == "giftforsomebody") 
-	{
-		var success = null
-		var remove_success = null
-	 	forwho_full = forsomebody;
-		result_time = time*0.7;
-		
-		// REMOVE TIME TO USER
-		//get time before
-		var usersnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
-		while (usersnapshot == null) {
-			await sleep(100);
-		}
-		var time_before = secondsToTimeString(usersnapshot.val().time);
-		
-		//write user
-		var timeRef = firebase.database().ref('users/'+ user.displayName + '/time');
-		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(-time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); remove_success = false } else { console.log('Transaction log succeed!'); remove_success = true}});
-		while (remove_success == null) {
-			await sleep(100);
-		}
-		
-		//get time after 
-		var usersnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(user.displayName);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
-		while (usersnapshot == null) {
-			await sleep(100);
-		}
-		var time_after = secondsToTimeString(usersnapshot.val().time);
-		
-		//transaction logging
-		var log_success = null;
-		var description = description;
-		var witness = witness;
-		var after = time_after;
-		var before = time_before;
-		var time = result_time;
-		var forwho = user.displayName;
-		var from = user.displayName;
-		var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
-		var refEvents = firebase.database().ref("events");  
-		refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
-		while (log_success == null) {
-			await sleep(100);
-		}
-		if (log_success == false)
-		{
-			remove_success = false;
-		}
-		
-		// ADD TIME TO USER
-		//get time before
-		var usersnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
-		while (usersnapshot == null) {
-			await sleep(100);
-		}
-		var time_before = secondsToTimeString(usersnapshot.val().time);
-		
-		//write user
-		var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
-		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); success = false } else { console.log('Transaction log succeed!'); success = true}});
-		while (success == null) {
-			await sleep(100);
-		}
-		
-		//get time after 
-		var usersnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
-		while (usersnapshot == null) {
-			await sleep(100);
-		}
-		var time_after = secondsToTimeString(usersnapshot.val().time);
-		
-		//transaction logging
-		var log_success = null;
-		var description = description;
-		var witness = witness;
-		var after = time_after;
-		var before = time_before;
-		var time = result_time;
-		var forwho = forwho_full;
-		var from = user.displayName;
-		var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
-		var refEvents = firebase.database().ref("events");  
-		refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
-		while (log_success == null) {
-			await sleep(100);
-		}
-		if (log_success == false)
-		{
-			success = false;
-		}
-		
-		//VERIFICATION AND REDIRECTION
-		if(success && remove_success) 
-		{
-			window.location.replace('transaction_succed.html');
-		} 
-		else
-		{	
-			window.location.replace('transaction_failed.html');
-		}
-	} 
-	else
-	{
-		forwho_full = user.displayName;
-		result_time = time;
-		
-		//get time before
-		var usersnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
-		while (usersnapshot == null) {
-			await sleep(100);
-		}
-		var time_before = secondsToTimeString(usersnapshot.val().time);
-		
-		//write user
-		var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
-		timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); success = false } else { console.log('Transaction log succeed!'); success = true}});
-		while (success == null) {
-			await sleep(100);
-		}
-		
-		//get time after 
-		var usersnapshot = null;
-		var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
-		query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
-		while (usersnapshot == null) {
-			await sleep(100);
-		}
-		var time_after = secondsToTimeString(usersnapshot.val().time);
-		
-		//transaction logging
-		var log_success = null;
-		var description = description;
-		var witness = witness;
-		var after = time_after;
-		var before = time_before;
-		var time = result_time;
-		var forwho = forwho_full;
-		var from = user.displayName;
-		var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
-		var refEvents = firebase.database().ref("events");  
-		refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
-		while (log_success == null) {
-			await sleep(100);
-		}
-		if (log_success == false)
-		{
-			success = false;
-		}
-		
-		//VERIFICATION AND REDIRECTION
-		if(success) 
-		{
-			window.location.replace('transaction_succed.html');
-		} 
-		else
-		{	
-			window.location.replace('transaction_failed.html');
+			forwho_full = user.displayName;
+			result_time = time;
+			
+			//get time before
+			var usersnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+			while (usersnapshot == null) {
+				await sleep(100);
+			}
+			var time_before = secondsToTimeString(usersnapshot.val().time);
+			
+			//write user
+			var timeRef = firebase.database().ref('users/'+ forwho_full + '/time');
+			timeRef.transaction(function(currentTime) {return Number(currentTime) + Number(result_time);}, function(error, committed, snapshot) { if (error) { console.log('Transaction failed abnormally!', error); success = false } else { console.log('Transaction log succeed!'); success = true}});
+			while (success == null) {
+				await sleep(100);
+			}
+			
+			//get time after 
+			var usersnapshot = null;
+			var query = firebase.database().ref('users').orderByChild('name').equalTo(forwho_full);
+			query.once('value', function(snapshot) { snapshot.forEach(function(childSnapshot) { usersnapshot = childSnapshot});});
+			while (usersnapshot == null) {
+				await sleep(100);
+			}
+			var time_after = secondsToTimeString(usersnapshot.val().time);
+			
+			//transaction logging
+			var log_success = null;
+			var description = description;
+			var witness = witness;
+			var after = time_after;
+			var before = time_before;
+			var time = result_time;
+			var forwho = forwho_full;
+			var from = user.displayName;
+			var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
+			var refEvents = firebase.database().ref("events");  
+			refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
+			while (log_success == null) {
+				await sleep(100);
+			}
+			if (log_success == false)
+			{
+				success = false;
+			}
+			
+			//VERIFICATION AND REDIRECTION
+			if(success) 
+			{
+				window.location.replace('transaction_succed.html');
+			} 
+			else
+			{	
+				window.location.replace('transaction_failed.html');
+			}
 		}
 	}
 }

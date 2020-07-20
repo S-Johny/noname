@@ -37,14 +37,17 @@ firebase.auth().onAuthStateChanged(user => {
 			content +='<th>CAS</th>';
 			content +='<th>TEAM</th>';
 			
-			snapshot.forEach(function(user) {
+			snapshot.forEach(function(user) {		
 		      var value = user.val();
-			  content +='<tr>';
-		      content += '<td>' + value.name + '</td>';
-		      content += "<td id='time_" + id_number + "'><script>setInterval(function (){CountDown(" + id_number + ",'" + value.running + "'," + value.starttime +"," + value.time +")}, 1000);</script></td>";
-		      content += '<td>' + value.team + '</td>';
-		      content += '</tr>';
-		      id_number++
+			  if(value.name != 'admin')
+			  {
+				  content +='<tr>';
+			      content += '<td>' + value.name + '</td>';
+			      content += "<td id='time_" + id_number + "'><script>setInterval(function (){CountDown(" + id_number + ",'" + value.running + "'," + value.starttime +"," + value.time +")}, 1000);</script></td>";
+			      content += '<td>' + value.team + '</td>';
+			      content += '</tr>';
+			      id_number++
+			  }
 		  });
 		content +='</table>';
 		$('#one').append(content);
