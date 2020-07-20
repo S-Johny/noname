@@ -4,7 +4,7 @@ target_date_object.setUTCDate(20);
 target_date_object.setUTCFullYear(2020);
 target_date_object.setUTCHours(18);
 target_date_object.setUTCMilliseconds(0);
-target_date_object.setUTCMinutes(40);
+target_date_object.setUTCMinutes(46);
 target_date_object.setUTCMonth(6);
 target_date_object.setUTCSeconds(0);
 var target_date = target_date_object.getTime();
@@ -35,7 +35,7 @@ function CountDown()
     // find the amount of "seconds" between now and target
     var current_date = new Date().getTime();
     var current_date_object = new Date();
-    var miliseconds_left = target_date - current_date;
+    var miliseconds_left = Math.abs(target_date - current_date);
  
     // do some time calculations
     days = parseInt(miliseconds_left / 86400000);
