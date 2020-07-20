@@ -6,8 +6,6 @@ function log_out() {
 	});
 };
 
-
-
   initApp = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -25,6 +23,8 @@ function log_out() {
 		  document.getElementById('sign-in').onclick = function () {log_out();};
           $('#menu_links').append('<li><a href="include.html">ZAZNAMENAT</a></li>');
 		  $('#menu_links').append('<li><a href="logy.html">logy</a></li>');
+		  $('#menu_links').append('<li><a href="user_table.html">lide na akci</a></li>');
+          $('#menu_links').append('<li><a href="time_table.html">CAS</a></li>');
         });
       } else {
         // User is signed out.

@@ -36,6 +36,7 @@ firebase.auth().onAuthStateChanged(user => {
 			content +='<th>JMENO</th>';
 			content +='<th>CAS</th>';
 			content +='<th>TEAM</th>';
+			content +='</tr>';
 			
 			snapshot.forEach(function(user) {		
 		      var value = user.val();
