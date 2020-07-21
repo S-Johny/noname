@@ -145,48 +145,22 @@
         <p>
         	Primární telefoní číslo pro komunikaci s organizátory je +420 702 203 406 (Petr Kus). Každé telefoní číslo, které chce komunikovat s organizatory pomocí SMS se musí "inicializovat". Buď jako osoba a nebo jako komunikační číslo za celý team. Pro tým je třeba vyjmenovat všechny členy. Následuje příklad formátu dané inicializační SMS.
         </p>
-        <pre><code>
-        	INIT OSOBA [JMENO STREDNI_JMENO PREZDIVKA PRIJMENI]
-        </code></pre>
-        <pre><code>
-        	INIT TYM [JMENO TYMU]; [JMENO PRIJMENI CLENA 1]; [JMENO PRIJMENI CLENA 2]; ...
-        </code></pre>
-        <p>
-        	Tedy konkretně pro jemno Petr Kus a team Petr Kus, Jiřina Bohdalová, Indra Pták Ohnivák Mikeš
-        </p>
-        <pre><code>
-        	INIT OSOBA PETR KUS
-        </code></pre>
-        <p>
-        	A team Petr Kus, Jiřina Bohdalová, Indra Pták Ohnivák Mikeš
-        </p>
-        <pre><code>
-        	INIT TYM PETR KUS; JIRINA BOHDALOVA; INDRA PTAK OHNIVAK MIKES;
-        </code></pre>
-        <p>
-        	Podobnou logikou zápisu se řídí i další SMS. System bude velmi podezřívavý pokud mu dojde init z podivného čísla, která nepatří danému jménu nebo někomu z daného týmu. Pokud neproběhne inicializace a nebo se system rozbije a nebude vědět kdo píše odpoví 
-        </p>
-        <pre><code>
-        	INIT?
-        </code></pre>
-        <p>
-        	Poté je potřeba provést znovu inicialiazaci.
-        </p>
+        <pre><code>INIT OSOBA [JMENO STREDNI_JMENO PREZDIVKA PRIJMENI]</code></pre>
+        <pre><code>INIT TYM [JMENO TYMU]; [JMENO PRIJMENI CLENA 1]; [JMENO PRIJMENI CLENA 2]; ...</code></pre>
+        <p>Tedy konkretně pro jemno Petr Kus a team Petr Kus, Jiřina Bohdalová, Indra Pták Ohnivák Mikeš</p>
+        <pre><code>INIT OSOBA PETR KUS</code></pre>
+        <p>A team Petr Kus, Jiřina Bohdalová, Indra Pták Ohnivák Mikeš</p>
+        <pre><code>INIT TYM PETR KUS; JIRINA BOHDALOVA; INDRA PTAK OHNIVAK MIKES;</code></pre>
+        <p>Podobnou logikou zápisu se řídí i další SMS. System bude velmi podezřívavý pokud mu dojde init z podivného čísla, která nepatří danému jménu nebo někomu z daného týmu. Pokud neproběhne inicializace a nebo se system rozbije a nebude vědět kdo píše odpoví </p>
+        <pre><code>INIT?</code></pre>
+        <p>Poté je potřeba provést znovu inicialiazaci.</p>
         <dl>
           <dt>Zaznamenání času</dt>
             <dd>
-            	<p>
-        			"nouzové" Zaznamenání času. Prosíme nenadužívat zbytečně, povede to k delšímu čekání. A nejlépe vůbec nepoužívat. 
-        		</p>
-				<pre><code>
-        			LOG [PROME|PROTEAM|PRONEKOHO|DAR]; [OSOBA]; [CAS v MINUTACH]; [SVEDEK]; [POPIS] 
-        		</code></pre>
-        		<p>
-        			Příklad
-        		</p>
-        		<pre><code>
-        			LOG PROME;60;PETR KUS;toto je logovani 60 minut pro nekoho od koho tato zprava prisla 
-        		</code></pre>
+            	<p>"nouzové" Zaznamenání času. Prosíme nenadužívat zbytečně, povede to k delšímu čekání. A nejlépe vůbec nepoužívat.</p>
+				<pre><code>LOG [PROME|PROTEAM|PRONEKOHO|DAR]; [OSOBA]; [CAS v MINUTACH]; [SVEDEK]; [POPIS]</code></pre>
+        		<p>Příklad</p>
+        		<pre><code>LOG PROME;60;PETR KUS;toto je logovani 60 minut pro nekoho od koho tato zprava prisla </code></pre>
             </dd>
           <dt>Popis</dt>
             <dd>
