@@ -50,6 +50,7 @@ function write_logs(from, forwho, time, before, after, witness, description)
 
 async function submit_to_firebase()
 {
+    $("#mysubmitbutton").attr("disabled", true);
 	var forwho = document.forms.zaznamenat.elements.prokoho.value;
 	var forsomebody = document.forms.zaznamenat.elements.names.value;
 	var time = Number(document.forms.zaznamenat.elements.time.value)*60;

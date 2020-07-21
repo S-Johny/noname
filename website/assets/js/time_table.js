@@ -26,7 +26,7 @@ function CountDown(id,running,starttime,time)
 // PRINT TABLE WHEN USER IS LOGED-IN
 firebase.auth().onAuthStateChanged(user => {
 	if(user) {
-		  var query = firebase.database().ref("users").orderByKey();
+		  var query = firebase.database().ref("users").orderByKey('org');
 		  query.once("value")
 		  .then(function(snapshot) { 
 			var id_number = 0
@@ -36,6 +36,7 @@ firebase.auth().onAuthStateChanged(user => {
 			content +='<th>JMENO</th>';
 			content +='<th>CAS</th>';
 			content +='<th>TEAM</th>';
+			content +='<th>ORG</th>';
 			content +='</tr>';
 			
 			snapshot.forEach(function(user) {		
@@ -46,6 +47,7 @@ firebase.auth().onAuthStateChanged(user => {
 			      content += '<td>' + value.name + '</td>';
 			      content += "<td id='time_" + id_number + "'><script>setInterval(function (){CountDown(" + id_number + ",'" + value.running + "'," + value.starttime +"," + value.time +")}, 1000);</script></td>";
 			      content += '<td>' + value.team + '</td>';
+				  content += '<td>' + value.org + '</td>';
 			      content += '</tr>';
 			      id_number++
 			  }
