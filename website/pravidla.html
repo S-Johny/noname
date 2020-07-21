@@ -153,7 +153,7 @@
         <pre><code>INIT TYM PETR KUS; JIRINA BOHDALOVA; INDRA PTAK OHNIVAK MIKES;</code></pre>
         <p>Podobnou logikou zápisu se řídí i další SMS. System bude velmi podezřívavý pokud mu dojde init z podivného čísla, která nepatří danému jménu nebo někomu z daného týmu. Pokud neproběhne inicializace a nebo se system rozbije a nebude vědět kdo píše odpoví </p>
         <pre><code>INIT?</code></pre>
-        <p>Poté je potřeba provést znovu inicialiazaci.</p>
+        <p>Poté je potřeba provést znovu inicialiazaci. Všechny kody mají i tyto varianty s otazníčkem, to znamená, že orgové se dožadují od vás dané informace. Například informace o poloze nebo doupřesnění, rozšíření či upravení dané předchozí informace.</p>
         <dl>
           <dt>Zaznamenání času</dt>
             <dd>
@@ -162,12 +162,33 @@
         		<p>Příklad</p>
         		<pre><code>LOG PROME;60;PETR KUS;toto je logovani 60 minut pro nekoho od koho tato zprava prisla </code></pre>
             </dd>
-          <dt>Popis</dt>
+          <dt>Poskytnuti informace</dt>
             <dd>
-              <p>
-                Toto pole by mělo vysvětlovat za co byl daný čas získán. Mělo by to být napsáno jasně a pokud možno stručně, ale hlavně tak, aby to všem bylo jasné. 
-                Pro lepší vyjasnění může obsahovat ať už elektronické či pouze písemné odkazy na názvy úkolů, příspěvky na socialních sítích, fotky jinde na internetu. Prosíme, pokud je dlouhý link tak uvádět ve zkrácené podobě (použij zakracovač linků).   
-              </p>
+            	<p>Pokud jen chcete poslat neduležitou informaci</p>
+				<pre><code>INFO [INFORMACE]</code></pre>
+            </dd>
+          <dt>Varování / výstraha</dt>
+            <dd>
+            	<p>Pokud chcete organizátory před něčím varovat či poskytnout důležité varování pro ostatní prostředníctvím organizátorů. Pokud dojde WARN? - znamena to, zda nemáte například nějáký problém.</p>
+				<pre><code>WARN [INFORMACE]</code></pre>
+            </dd>
+          <dt>Poskytnuti vaší polohy</dt>
+            <dd>
+            	<p>Pokud posilate svoji polohu. </p>
+				<pre><code>LOC [OSOBA|TEAM] [popis polohy či gps]</code></pre>
+            </dd>
+          </dl>
+          <dt>Report problému</dt>
+            <dd>
+            	<p>Report technického nebo jiného problému</p>
+				<pre><code>ERROR [popis problemu]</code></pre>
+            </dd>
+          </dl>
+          <dt>Žádost o pomoc</dt>
+            <dd>
+            	<p>Tuto zprávu doufáme, že vůbec nedostaneme. Pokud pujde opravdu do tuhého rovnou volejte, samozřejmně.</p>
+				<pre><code>HELP [popis]</code></pre>
+				<p>Prosím používejte to opravdu jen v případě, že cítíte, že jste v nouzi. Ohrožení na zdraví například. Pro ostatní postačí WARN</p>
             </dd>
           </dl>
         </div>
