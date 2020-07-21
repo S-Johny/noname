@@ -25,6 +25,8 @@ function log_out() {
 		  $('#menu_links').append('<li><a href="logy.html">logy</a></li>');
 		  $('#menu_links').append('<li><a href="user_table.html">lide na akci</a></li>');
           $('#menu_links').append('<li><a href="time_table.html">CAS</a></li>');
+		  $('#menu_links').append('<li><a href="joby.html">JOBY</a></li>');
+		  $('#menu_links').append('<li><a href="pravidla.html">PRAVIDLA</a></li>');
         });
       } else {
         // User is signed out.
