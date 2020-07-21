@@ -41,19 +41,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 			snapshot.forEach(function(user) {		
 		      var value = user.val();
-			  if(value.name != 'admin' || value.org != 'ano')
-			  {
-				  content +='<tr>';
-			      content += '<td>' + value.name + '</td>';
-			      content += "<td id='time_" + id_number + "'><script>setInterval(function (){CountDown(" + id_number + ",'" + value.running + "'," + value.starttime +"," + value.time +")}, 1000);</script></td>";
-			      content += '<td>' + value.team + '</td>';
-				  content += '<td>' + value.org + '</td>';
-			      content += '</tr>';
-			      id_number++
-			  };
-			snapshot.forEach(function(user) {		
-		      var value = user.val();
-			  if(value.name != 'admin' || value.org != 'ne')
+			  if(value.name != 'admin' || value.org != 'ANO')
 			  {
 				  content +='<tr>';
 			      content += '<td>' + value.name + '</td>';
@@ -63,7 +51,20 @@ firebase.auth().onAuthStateChanged(user => {
 			      content += '</tr>';
 			      id_number++
 			  }
-		  });
+			});
+			snapshot.forEach(function(user) {		
+		      var value = user.val();
+			  if(value.name != 'admin' || value.org != 'NE')
+			  {
+				  content +='<tr>';
+			      content += '<td>' + value.name + '</td>';
+			      content += "<td id='time_" + id_number + "'><script>setInterval(function (){CountDown(" + id_number + ",'" + value.running + "'," + value.starttime +"," + value.time +")}, 1000);</script></td>";
+			      content += '<td>' + value.team + '</td>';
+				  content += '<td>' + value.org + '</td>';
+			      content += '</tr>';
+			      id_number++
+			  }
+			});
 		content +='</table>';
 		$('#one').append(content);
 		});
