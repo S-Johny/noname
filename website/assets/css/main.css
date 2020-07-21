@@ -67,7 +67,7 @@
 
 	.container.\31 25\25 {
 		width: 100%;
-		max-width: 100rem;
+		max-width: 140rem;
 		min-width: 80rem;
 	}
 
@@ -3396,7 +3396,7 @@
 		@media screen and (max-width: 736px) {
 
 			.wrapper {
-				padding: 3rem 0 1rem 0 ;
+				padding: 6rem 0 1rem 0 ;
 			}
 
 		}
