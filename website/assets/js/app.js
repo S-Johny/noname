@@ -264,7 +264,7 @@ async function submit_to_firebase()
 			var witness = witness;
 			var after = time_after;
 			var before = time_before;
-			var time = result_time;
+			var time = -time;
 			var forwho = user.displayName;
 			var from = user.displayName;
 			var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
