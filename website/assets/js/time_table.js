@@ -41,7 +41,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 			snapshot.forEach(function(user) {		
 		      var value = user.val();
-			  if(value.name != 'admin' || value.org != 'ANO')
+			  if(value.name != 'admin' && value.org != 'ANO')
 			  {
 				  content +='<tr>';
 			      content += '<td>' + value.name + '</td>';
@@ -54,7 +54,7 @@ firebase.auth().onAuthStateChanged(user => {
 			});
 			snapshot.forEach(function(user) {		
 		      var value = user.val();
-			  if(value.name != 'admin' || value.org != 'NE')
+			  if(value.name != 'admin' && value.org != 'NE')
 			  {
 				  content +='<tr>';
 			      content += '<td>' + value.name + '</td>';
