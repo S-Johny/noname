@@ -269,7 +269,7 @@ async function submit_to_firebase()
 			var from = user.displayName;
 			var timestamp = ((((new Date().toISOString()).replace(":", "-")).replace(".", "_")).replace("T", "_")).replace(":", "-");
 			var refEvents = firebase.database().ref("events");  
-			refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: -time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
+			refEvents.push().set({timestamp: timestamp, from: from, forwho: forwho, time: time, before: before, after: after, witness: witness, description: description}, function(error) { if (error) { console.log('Transaction failed abnormally!', error); log_success = false;} else { console.log('Transaction log succeed!'); log_success = true;}});
 			while (log_success == null) {
 				await sleep(100);
 			}
