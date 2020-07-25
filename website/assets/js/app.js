@@ -94,7 +94,7 @@ async function submit_to_firebase()
 			
 			//IMPORTANT CLACULATIONS
 			forwho_full = 'TEAM ' + team ;
-			result_time = time*1.2/count;
+			result_time = time*0.9/count;
 			
 			//NOW WRITE TO DATABASE
 			for (var i = names.length; i--; ) {
@@ -168,7 +168,7 @@ async function submit_to_firebase()
 		{
 			var success = null
 		 	forwho_full = forsomebody;
-			result_time = time*0.7;
+			result_time = time*0.85;
 			
 			//get time before
 			var usersnapshot = null;
@@ -230,7 +230,7 @@ async function submit_to_firebase()
 			var success = null
 			var remove_success = null
 		 	forwho_full = forsomebody;
-			result_time = time*0.7;
+			result_time = time*0.8;
 			
 			// REMOVE TIME TO USER
 			//get time before
