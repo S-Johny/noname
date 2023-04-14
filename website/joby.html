@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[BEZJMENA]</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/noname.css" />
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth__cs.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth.css" />
+    <script src="assets/js/authetification.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="header" class="alt">
+      <div class="logo">
+        <a href="signin.html" id="sign-in"></a>
+        <span id="sign-in-status"></span><br/>
+      </div>
+      <a href="#menu">Menu</a>
+    </header>
+    
+    <!-- Nav -->
+    <nav id="menu">
+      <ul class="links" id="menu_links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="signin.html">Přihlásit</a></li>
+      </ul>
+    </nav>
+    
+    <!-- One -->
+    <section id="One" class="wrapper style3">
+      <div class="inner">
+        <header class="align-center">
+          <p>Boj o svůj vlastní životní čas</p>
+          <h2>Hunger Games - JOBY (aneb jak získat čas)</h2>
+        </header>
+      </div>
+    </section>
+    
+    <!-- Main -->
+    <div id="main" class="container">
+      <!-- Elements -->
+      <h2 id="elements">Úkoly</h2>
+      <div class="row 200%">
+        <div class="6u 12u$(medium)">
+          <!-- Text stuff -->
+          <h3>Rozcestník</h3>
+          <ul>
+	          <li><a href="#team">POVINNY: Složení teamu</a></li>
+	          <li><a href="#secretebox">POVINNY: Tajemná krabice</a></li>
+	          <li><a href="#noninfection">POVINNY: bezinfekčnost</a></li>
+	          <li><a href="#check-in">POVINNY: check-in</a></li>
+	          <li><a href="#package">POVINNY: Odevzdání předbaleného balíčku</a></li>
+	          <li><a href="#battery">POVINNY: Odevzdání náhradních baterek</a></li>
+	          <li><a href="#timebox">POVINNY: časovaná bomba</a></li>
+	          <li><a href="#secrateinfo">POVINNY: Tajná indicie</a></li>
+	          <li><a href="#cedulky">POVINNY: Cedulky</a></li>
+	          <li><a href="#timemarket">Obchodník s časem</a></li>
+	          <li><a href="#networking">Zaskok na kafčo</a></li>
+	          <li><a href="#competition">Soutěž</a></li>
+	          <li><a href="#chellenge">Výzva</a></li>
+	          <li><a href="#newrule">Schválené pravidlo/úkol</a></li>
+	          <li><a href="#spacak">Klidná noc</a></li>
+	          <li><a href="#favoritplace">Oblíbené místo</a></li>
+	          <li><a href="#favoritfood">Oblíbené jídlo</a></li>
+	          <li><a href="#nicesuprise">Příjemné překvapení</a></li>
+	          <li><a href="#negative">Škodolibá radost</a></li>
+	          <li><a href="#eventname">Název akce</a></li>
+	          <li><a href="#doprava">Doprava</a></li>
+	          <li><a href="#rozlisovak">POVINNY: Rozlišovák</a></li>
+	          <li><a href="#strom">Strom</a></li>
+	          <li><a href="#rokovani">Rokování</a></li>
+	          <li><a href="#sutr">Zátěž a život</a></li>
+          </ul>
+          
+ 		  <h3 id="team" ><strong>Složení teamu</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a>&nbsp;&nbsp;<a href="#" class="button special big">hodně minut</a>
+          <p>
+          	Slož Tým! Tým má mít 4-6 lidí. A má být složen z účastníků Hunger Games. Této aktivity se účastní i lidé, kteří mohou na akci přijet později, nebo dokonce vůbec nedorazit (podle okolností a svého času). Můžou být pouze tři týmy o počtu 4 až 6 hráčů.  
+          </p>
+          <p>
+          	Časovou odměnu získává ten, z jehož telefonního čísla bude team poprvé nahlášen. Jakým způsobem ji zaznamená do systému je samozřejmě na něm, stejně jako u všech ostatních odměn.  Číslo musí být nejdříve inicializováno na danou osobu. Všichni členové teamu musí souhlasit se svojí účastí v tomto týmu.    
+          </p>
+          <h4 >Logická pravidla pro výpočet odměny:</h4>
+          <ul class="alt">  
+          	<li>+480 minut - Za každého člena týmu</li>
+          	<li>+360 minut - Tým obsahuje alespoň jednoho člena vyrážejícího z Prahy</li>
+          	<li>+360 minut - Tým obsahuje alespoň jednoho člena, kterého nikdo další v týmu nezná</li>
+          	<li>-240 minut - Tým obsahuje alespoň jednoho člena, kterého zná právě jeden jiný člověk z týmu</li>
+          	<li>-840 minut - Tým obsahuje dva a více lidí vyrážejících z Prahy</li>
+          	<li>+1500 minut - Tým obsahuje alespoň jednoho člena, který se účastní plně distančně (například v sobotu ráno  stále plánovaně není součástí akce)</li>
+          	<li>-3000 minut - Tým obsahuje dva a více členů, kteří se účastní plně distančně (například v sobotu večer  stále plánovaně není součástí akce)</li>
+          	<li>Tato pravidla se aplikují všechna naráz. Nejsou výlučná. Lépe řečeno: Pokud pro vás to pravidlo platí, prostě ho započítejte.</li>
+          </ul>         
+          <p>
+          	Nahlášení teamu probíhá standardní metodou komunikace pomocí SMS s organizátory (příkaz INIT). Součástí je i zvolení si názvu. Úkol je splněn okamžikem, kdy se název teamu objeví v systému u všech členů.         
+          </p>
+          <p>
+          	Pokud se v průběhu Hunger Games změní složení týmů, je povinností týmů to okamžitě nahlásit pomoci nového příkazu INIT.
+          </p>
+          <p>
+          	Pokud od 14:00 24.7 2020 budou existovat lidé, co nebudou součásti nějakého teamu. Exponenciálně začne být odebírán čas již existujícím teamům. Ten komu dosel cas se nepocita jako jednotlivec. Pokud nebudou teamy existovat, aplikuje se toto pravidlo na všechny jednotlivce. Toto platí v průběhu celého Hunger Games. 
+          </p>
+          <p>
+          	Doplňující pravidla úkolu pro potenciální rejpavé spekulanty: Časová odměna za tvorbu nového týmu končí po vytvoření čtyř týmů. Týmy mohou vznikat nové, ale už nikomu nenáleží časová odměna, vyjma bonusu za přijetí nového člena do již existujícího týmu, jenž do teď nebyl členem žádného týmu. Pokud je člen, za něhož byla již vyplacena nadstandardní časová odměna, přeřazen do jiného nového teamu, tomuto novému týmu nenáleží nová časová odměna (odměnu je možné za výjimečného člena započítat pouze a právě jednou).
+          </p>
+          <h3 id="secretebox" ><strong>Tajemná Krabice</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a>&nbsp;&nbsp;<a href="#" class="button special big">min 240 minut - max 300 minut</a>
+          <p>
+          	Alespoň jeden člen týmu vyzvedne tajemnou krabici na adrese Čápkova 34/31 Brno. Krabice je k převzetí od 06:00 do 12:00 a je pouze jedna na tým! Časovou odměnu získává ten člen týmu, který ji přebere do vlastních rukou.
+          	Časová odměna je 60 minut x počet členů týmu v okamžiku převzetí. Dveře otevřeš pomocí SMS:
+          </p>
+          <pre><code>OPEN DOOR [TYM]</code></pre>
+          <p>
+          	Na číslo +420 702 203 406 nebo nouzově po zazvonění na jméno Petr Kus.
+          </p>
+          <h3 id="secrateinfo" ><strong>Tajná indicie</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a>&nbsp;&nbsp;<a href="#" class="button special big">120 minut</a>
+          <p>
+          	Ten, který získal tajnou indici, dostává časovou odměnu 120 minut. Tajná indicie je v obálce. Obálka je nadepsaná "tajná indicie".
+          </p>
+          <h3 id="noninfection" ><strong>bezinfekčnost</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a>&nbsp;&nbsp;<a href="#" class="button special big">30 minut</a>
+          <p>
+          	Tento úkol je vzhledem ke smutné situaci u nás a ve světě s novým nebezpečným virem nutný. Pokud ho nesplníš, nebo máš důvod nepodepsat daný dokument <a href="https://mozek.brontosaurus.cz/attachments/article/1125/PROHLA%CC%81S%CC%8CENI%CC%81%20O%20BEZINFEKC%CC%8CNOSTI.pdf">čestné prohlášení o bezinfekčnosti</a>, bohužel nejedeš na akci. 
+          <p>
+          	Žádáme tě tedy o podpis tohoto dokumentu podle tvého nejlepšího svědomí a vědomí v tento moment.  Nalezneš ho na <a href="https://mozek.brontosaurus.cz/index.php/cely-mozek/aktuality-1/dulezita-sdeleni/1125-pokyny-k-uvolnovani-pozastavenych-cinnosti">této veřejné stránce</a>.
+          </p>
+          <p>	
+          	 Prosíme tě také o rámcové prostudování této stránky a i nařízení, která se uplatňují na dětské tábory, ze kterých se Brontosaurus inspiruje i pro jiné akce.
+          </p>
+          	Dané dokumenty prosím vytiskni a podepiš a nejlépe odevzdej na Ústředí Hnutí Brontosaurus Hvězdová 10, Brno. Na stejném místě jsou i jiná stanoviště, bude tě tam čekat náš org v čase, jenž je napsán u jiného úkolu. Na daném místě budou prázdné formuláře k vyplnění, pokud nechceš nebo nemůžeš tisknout. 
+          </p>
+          <p>
+          	Pokud si chceš započítat čas, ale nemůžeš se fyzicky dostavit, pošli scan či fotku na email akce <a href="mail:akce-ktera-nema-jmeno@email.cz">akce-ktera-nema-jmeno@email.cz</a> a při nejbližší příležitosti odevzdej v papírové podobě organizátorovi akce.  
+          </p>
+          <p>
+          	Víme, že některá pravidla je náročné dodržet a bude obzvláště na akci. Ale vzhledem k tomu, že je v České republice nejvíce aktivních nakažených covidem za celou dobu existence této nemoci, prosíme o dodržování všech hygienických zásad. Na akci si s sebou prosím vezměte roušky, desinfekci na ruce, vlastní flašku na pití. Sdílení hrdla láhve je za teto situace silná hra důvěry a trocha bláznovství.
+          </p>
+          	Sám jsme se před lety takhle nejspíše nakazil mononukleózou, když jsme měl oslabenou imunitu.
+          </p>
+          <p>
+          	Dále se určitě hodí vlastní miska a příbor. Pojďme viru případné šíření co nejvíce ztížit.    
+          </p>
+          <p>
+          	V balíčcích mimo jiné dostanete malý počet roušek, pokud někdo nebude mít vlastní a bude se cítit pro její použití, ať má příležitost. Dostanete i desinfekci na ruce. Před každým jídlem ji doporučuji použít. Než se budete dotýkat obličeje, jiných lidí nebo jíst jídlo rukama vždy si vzpomeňte čeho všeho jste s edotýkali a kolik naprosto neznámých lidí se mohlo dotknou či zakašlat na dané místo a případně ji použijte. Při výstupu z MHD či hromadné dopravy doporučuji použít desinfekci automaticky.
+          </p>
+          <p>
+          	Pojďme společně minimalizovat riziko, že si virus na akci dovezeme z cestování po ČR.
+          </p>
+          <p>
+          	Nás se to možná nedotkne, jsme mladí a zdraví, ale našich blízkých a lidí, na kterých nám záleží, a dalších ve společnosti by se to mohlo dotknout mnohem více.
+          </p>    
+          <h3 id="check-in" ><strong>check-in</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a>&nbsp;&nbsp;<a href="#" class="button special big">30 minut</a>
+          <p>
+          	Podpis do prezenční listiny pro akci. Prezenčka je dostupná v Brně na Ústředí Hnutí Brontosaurus Hvězdová 10 od 10:50 (24.7.2020) a pak u organizátorů. Celé stanoviště bude zavřeno odjezdem organizátorů. V kolik hodin to bude, nevíme, ale určitě ne před 17:00. 
+          </p>      
+          <h3 id="package" ><strong>Odevzdání předbaleného balíčku</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a>&nbsp;&nbsp;<a href="#" class="button special big">30 minut</a>
+          <p>
+          	Odevzdání předbaleného balíčku s čistým oblečením, který byl avizován v emailu před akcí. Možnost odevzdání je v Brně na Ústředí Hnutí Brontosaurus Hvězdová 10 od 10:50 (24.7.2020) a pak u organizátorů. Celé stanoviště bude zavřeno odjezdem organizátorů. V kolik hodin to bude, nevíme, ale určitě ne před 17:00. Preferovaný je bílí pláťený a nebo bílý plastový sáček ve kterém je vše, nadepsaný tvým jménem (například na kusu pásky).
+          </p> 
+          <h3 id="battery" ><strong>Odevzdání náhradních baterek</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a>&nbsp;&nbsp;<a href="#" class="button special big">30 minut</a>
+          <p>
+          	Odevzdání náhradních baterek bylo avizováno v emailu před akcí. Možnost odevzdání je v Brně na Ústředí Hnutí Brontosaurus Hvězdová 10 od 10:50 (24.7.2020) a pak u organizátorů. Celé stanoviště bude zavřeno odjezdem organizátorů v kolik hodin to bude, nevíme, ale určitě ne před 17:00.
+          </p> 
+          <p>
+          	Pokud máš zválštní typ baterek něják je označ svým jménem. Například přelep páskou a popiš.
+          </p>
+          <h3 id="cedulky" ><strong>Cedulky</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a>&nbsp;&nbsp;<a href="#" class="button special big">to záleží maximálně však 500 minut</a>
+          <p>
+          	Jde o vytvoření něčeho na způsob "Deníčku" / "Poznámkového bloku" / "Cedulek". Ale ani jedna tahle definice přesně nesedí. To, jestli si danou věc vytvoříš nebo si jí koupíš a jak si jí vyzdobíš, aby to bylo osobní, záleží na tobě.  
+          </p>
+          <p>
+          	Nebudeme tě nutit, do něj něco hlubokého psát ani ti říkat, že si to nikdo nepřečte. To prostě záleží na Tobě, nikomu to k přečtení dávat nemusíš, a psát si tam taky nic nemusíš, až na to, co je napsáno níže, ale občas je fajn si něco zaznamenat.   
+          </p>
+          <ul>
+	          <li>Papír stránek by měl být tvrdšího či alespoň hodně neprůhledného charakteru, aby při ukazování jedné stránky nešlo vidět, co je na druhé straně.</li>
+	          <li>Stránky by měli být bílé barvy a nejlépe bez linek a čtverečků.</li>
+	          <li>Stránka by bez problémů měla být ukázatelná tak, aby na jedné straně všichni okolo tebe viděli celou stránku a ty jsi v ten stejný čas mohl/a z druhé strany toho stejného papíru číst své poznámky (ideální pro tento účel je kroužková vazba jako třeba u kalendáře)</li>
+	          <li>Na prvních 24 stran napíšeš velkým písmem jména lidí, včetně orgů, tak, aby bylo jasné, kdo konkrétně to je (máme například více Michalů). Jména by měla být bez obtíží čitelná například z 5 metrů</li>
+	          <li>Další počet stran (3 až 6) by mělo sloužit na odtrhávání pásků o rozměru cca 6x14cm. Mohou být větší, menší nedoporučujeme. Můžeš si je nastřihnout.</li>
+	          <li>Další počet stran je na tvé vlastní účely, poznámky z akce, myšlenky. Myslím, že absolutní minimum jsou 2 strany.</li>
+	          <li>Minimální formát se zdá cca polovina A4 - tedy A5</li>
+	      </ul>    
+          <p>
+          	Možnost sehnání materiálu či rady a možná i nějaké malé místo k tvorbě je v Brně na Ústředí Hnutí Brontosaurus Hvězdová 10 od 14:00 (24.7.2020). Celé stanoviště bude zavřeno odjezdem organizátorů v kolik hodin to bude, nevíme, ale určitě ne před 17:00.
+          </p> 
+          <p>
+          	Získaný čas je 2.5x čas investovaný do tvorby či koupě. Cesta se nepočítá. Prosíme o sdílení fotky deníčku (nazývejme ho pro zjednodušení takto). 
+          </p> 
+        </div>
+        <div class="6u$ 12u$(medium)">
+          <h3 id="timemarket" ><strong>Obchodník s časem</strong></h3>
+          <a href="#" class="button special big">to záleží na tobě</a>
+          <p>
+          	Obchodník s časem umí být nesmlouvavý a vůbec bych se nedivil, pokud zde uvedené ceny budou úplně jinak. Obchodník se nachází na Ústředí Hnutí Brontosaurus Hvězdová 10 od 10:50 (24.7.2020). A dokáže ti dodat pár drobností, pokud nevíš odkud jinud je sehnat.    
+          </p>
+           <ul>
+	          <li>Karimatka - 100 minut</li>
+	          <li>Buzola - 50 minut</li>
+	          <li>Pláštěnka - 60 minut</li>
+	          <li>Fleecová deka - 80 minut</li>
+	          <li>Jiná deka - 50 minut</li>
+               <li>Sekera - 60 minut</li>
+                <li>Pila - 50 minut</li>
+                 <li>Powerbanka - 100 minut</li>
+	          <li>Kotlík s pokličkou - 100 minut</li>
+	          <li>Svítící frisbee - 20 minut</li>
+	          <li>Odevzdání něčeho, s čím se nechceš tahat, ale chceš to na akci - 60 minut</li>
+          </ul>
+          <p>
+          	 Pokud ho hezky poprosíš a přihodíš nějaké to dýško, možná dokáže sehnat i jinačí zboží. Množství zboží je silně omezeno, většinou na jediný kus, kdo dřív přijde, ten dřív... . K čemu se některé věci mohou hodit ponecháváme na tvé fantazii.
+          </p>
+          
+          <h3 id="networking" ><strong>Záskok na kafčo</strong></h3>
+          <a href="#" class="button special big">max 250 minut, ale záleží to na tobě</a>
+          <p>
+          	Záskok na kafčo, je skutečný "záskok na kafčo", které nemusí být úplně kafčo, ale třeba limča a dezertík. Má to ale pár zásadních podmínek.	
+          </p>
+          <ul>
+	          <li>Platit vše za oba musí jen jeden z vás.</li>
+	          <li>Musíte v podniku strávit alespoň 40 minut.</li>
+	          <li>Nejlépe se vůbec nesmíte znát, pokud se nějak znáte, tak maximálně povrchně!</li>
+	          <li>Nesmíš záskok absolvovat dvakrát se stejným člověkem. Opravdu se nejde ani pozvat vzájemně!</li>
+	          <li>Pozvat můžeš maximálně 2x za celé Hunger Games.</li>
+          </ul>
+          <p>
+          	 S přiděleným časem za odměnu nakládá ten, kdo zval. Získaný čas je roven ceně v korunách, ale pozor, jen toho co bylo pro pozvanou osobu. Nepočítá se cena velkého jídla/menu/polévky, počítá se skutečně jen to okolo (káva, dezert, limo...).  	
+          </p>
+          <p>
+          	 Dnes je velmi oblíbené se u takovýchto příležitostí fotit, takže všichni očekávají na důkaz fotku v komunitním prostoru na facebooku.  	
+          </p>
+          <h3 id="competition" ><strong>Soutěž/Zápas</strong></h3>
+          <a href="#" class="button special big">max 250 minut, ale záleží to na tobě</a>
+          <p>
+          	Soutěž je jakákoli soutěž mezi jednotlivci či týmy. Pravidla soutěže si jednomyslným souhlasem určují soutěžící strany ještě před započetím samotné soutěže. Aby soutěž mohla začít musí všichni souhlasit na jasných podmínkách, jak se určí výherní strana a strana, co prohrává.   
+          </p>
+          <p>
+          	Výherní straně vzniká nárok na 2.5 x délku soutěže v minutách a straně, co prohrála, 1.1 x délku soutěže v minutách.	
+          </p>
+          <h3 id="spacak" ><strong>Klidná noc</strong></h3>
+          <a href="#" class="button special big">500 minut</a>
+          <p>
+          	Klidná noc, nebo možná spíš neklidná noc? Každý den je možné odevzdat spacák. Spacák se ti vrátí druhý den v podvečer / večer.  
+          </p>
+          <p>
+          	Spacák, který odevzdáváš musí být tvůj jediný spacák. Pokud máš dva, musíš odevzdat oba dva. Pokud máš spacák, co se dá použít jako deka, musíš ho v noci používat nebo někdo jiný jako deku! 	
+          </p>
+          <p>
+          	Organizátoři si vyhrazují právo tvůj spacák zapůjčit v případě, že ho někdo z účastníků akce bude nutně potřebovat (například HELP SMS), pokud vysloveně neuvedeš/neřekneš, že si to nepřeješ (doporučujeme to k spacáku případně poznačit)   	
+          </p>
+          <p>
+          	Explicitně zmíním, jsou to Hunger Games. Doporučujeme vysloveně raději nepočítat s pomocí organizátorů, pokud to bez spacáku nezvládneš. Vzdálenosti mohou být značné a i v případě, že se organizátoři po přijetí SMS HELP budou nanejvýše snažit, pomoc může trvat několik hodin. 
+          </p>
+          <p>
+          	Spacák můžeš odevzdat každý den u Obchodníka.
+          </p>
+          <h3 id="chellenge" ><strong>Výzva</strong></h3>
+          <a href="#" class="button special big">max 1200 minut</a>
+          <p>
+          	  Můžete vyzvat jiný team. Pravidla jsou velmi podobná obecné soutěži. Dohodnete se jednostraně na pravidlech a vyzvete. Ale, u výzvy můžete hodně získat a nebo hodně ztratit. Výzva předpokládá, že teamy musí blíže u sebe.
+          	  A proto zde naleznete polohy teamu <a href="https://en.mapy.cz/s/fovudalubo">polohy nocování teamů</a>  
+          </p>
+          <p>
+          	  Team který výzívá řekne o kolik času druhý team vyzívá. Tym který byl vyzván může odmítnout. Pokud odmítne 20% z čásu o který byl team vyzván musí někdo zaplatit. Kdo to bude rozhoduje třetí team. 
+          </p>
+          <p>
+          	  Třetí soudcovsý tým by se měl řídit jednouchým leč flexibilním pravidlem. Pokud výzva byla fér a bylo v možnostech obou týmu danou věc splnit a vyhrát výzvu a zároveň výzývaný čas nebyl příliš velký pro tým který byl vyzván odmítnutí výzvy nebylo fér. Tudíž tým co byl vyzván musí darovat těchto 20% někomu z týmu co vyzýval. 
+          </p>
+          <p>
+          	  Pokud třetí soudcovsý tým nazná že výzva nebyla fér. Musí to zaplatit tým co výzíval. 
+          </p>
+          <p>
+          	  Ten tým či jednotlivec který výzvu vyhraje, si může přičíst 100% výzvy. Tým co prohraje ztrácí 20% a převádí ho na někoho z orgů.
+          </p>
+          <p>
+          	  Z výzev očekáváme dokumentaci, fotky, videa na facebooku. Pár příkladů výzev o orgů, jistě vás napadnou vlastní. 
+          </p>
+          <ul>
+          	  <li>závod být na nějké pozici co nejdříve</li>
+	          <li>kdo sežene nejvíce čajů - z obchodu! (minimalizujte styk s veřejností vzhledem ke koroně)</li>
+	          <li>hod do dálky</li>
+	          <li>kdo vydrží víc kliků</li>
+	          <li>běh na nějkou vzdálenost</li>
+	          <li>Njevíce nafocených křížků po cestě</li>
+	          <li>Nejchutnější jídlo (předem dohodnutý arbitr z třetího teamu)</li>
+	          <li>Nejít něco nej...</li>
+	          <li>Vyfotit co nejvíce druhů zvířat, bylinek... .</li>
+	          <li>Napodobit známý obraz (předem dohodnutý arbitr z třetího teamu)</li>
+	      </ul>
+          <p>
+          	  PS: doporučujeme nezdržovat se dlouho v okolí kopce Pustiny cca 3 km od něj nejblíže. Můžete rychle projít oblstí, aby jste se dostali blíže ostatním. Byl vybrán pro jednu z následujících aktivit, která bude uvedena později. Výskyt v této oblasti by vás silně hendikepoval. Prosím snažte se z ní úplně dostat nejpozději v 12:00. 
+          </p>
+          
+          <h3 id="newrule" ><strong>Schválené pravidlo/úkol</strong></h3>
+          <a href="#" class="button special big">240 minut</a>
+          <p>
+          	  Vymyslet smysluplné pravidlo/úkol, aby přesvědčilo i organizátory a oni ho schválili, je pěkná fuška a pěkná výzva. Myslím, že to všichni dokážou náležitě ocenit. A zároveň tu je spousta prostoru pro nové úkoly a nová pravidla, která mohou i změnit atmosféru, proč to tedy nevyužít. S časem nakládá ten, kdo pravilo navrhl dle facebooku.  
+          </p>
+          
+          <h3 id="favoritplace" ><strong>Oblíbené místo</strong></h3>
+          <a href="#" class="button special big">dle vzdálenosti místa</a>
+          <p>
+          	  Pokud se vyfotíš na něčím oblíbeném místě a fotku nasdílíš do našeho komunitního facebooku, máš nárok na počet minut dle toho, kolik je to kilometrů od brněnského a nebo pražského hlavního nádraží - použije se ta menší hodnota.
+          	  Uznána mohou být jen ta oblíbená místa, které byla uvedena v dotazníčku před akcí (můžeš vidět v "Lide na akci"). Dané místo a daná osoba platí jen jednou. 
+          </p>
+          <h3 id="favoritfood" ><strong>Oblíbené jídlo</strong></h3>
+          <a href="#" class="button special big">120 minut</a>
+          <p>
+          	 Pokud ty osobně uděláš někomu radost jeho oblíbeným jídlem a nejlépe ho vyfotíš u jeho konzumace nebo u jeho přebírání a zasdílíš to na naši facbookovou komunitu. Máš jednoznačně nárok na tuto časovou odměnu. Opět uznána mohu být pouze ta jídla, která byla uvedena v dotazníčku (najdeš v sekci "Lidé na akci").
+          	 Obdarovaný a ten, kdo obdarovává, platí jen jednou. Obdarovaný může dané jídlo dostat maximálně 3x.    
+          </p>
+          <h3 id="chellenge" ><strong>Výzva</strong></h3>
+          <a href="#" class="button special big"></a>
+          <p>
+          	  Bude upřesněno později.  
+          </p> 
+          <h3 id="nicesuprise" ><strong>Příjemné překvapení</strong></h3>
+          <a href="#" class="button special big"></a>
+          <p>
+          	  Bude upřesněno později.  
+          </p>
+          <h3 id="negative" ><strong>Škodolibá radost</strong></h3>
+          <a href="#" class="button special big"></a>
+          <p>
+          	  Bude upřesněno později.  
+          </p>
+          <h3 id="eventname" ><strong>Název akce</strong></h3>
+          <a href="#" class="button special big"></a><a href="#" class="button special big">cca 1000 minut</a>
+          <p>
+          	  Naše akce je stále BEZ JMENA. Došlo nám hodně návrhů a i hodně návrhů máte v dotazníčkách.
+          </p>
+          <p>
+          	  Nyní přišel okamžik, se pokusit jí nějaké jméno dát... pokud to ještě pujde.
+          </p>
+          <p>
+          	  Naše představa je, že někdo založí anketu a sesbírá veškeré tyto návrhy a uvede jméno komu patří. Pokud už někdo tenhle návrch dal před akcí a nebo v dotazníčku, patří mu jeho prvenství tohoto návrhu.
+          	  Pak se postará, tento člověk, který založil anketu, aby drtivá většina účastníků zahlasovala. Může zkusit i organizátory (za ty má odměnu).
+          </p>
+          <p>
+          	  Poté se vyhodnotí pořadí návrhů dle přidělených hlasů. A od vítězného návrhu se body rozdělí následovně 1 misto 300 minut.
+          </p>
+          <ul>
+          	  <li>1 místo 300 minut</li>
+	          <li>2 místo 200 minut</li>
+	          <li>3 místo 100 minut</li>
+	          <li>4 místo 50 minut</li>
+	          <li>5 místo 25 minut</li>
+	          <li>6 místo 12 minut</li>
+	          <li>7 místo 6 minut</li>
+	      </ul>
+	      <p>
+          	  Pokud je shoda v pořadí dané minuty se dělí přislušným počtem shod.
+          </p>
+          <p>
+          	  Ten kdo anketu vytvořil a pak zmanagoval její vyplnění, tomu přísluší odměna 300 minut.
+          </p> 
+          
+          <h3 id="doprava" ><strong>Doprava</strong></h3>
+          <a href="#" class="button special big">max 180 minut/den</a>
+          <p>
+          	Cestuješ na větší vzdálenost než 100 Km? Pokud ano, platí na tebe tato pravidla. 
+          </p>
+          <ul>
+	          <li>Jedeš vlakem? +90 minut</li>
+	          <li>Jedeš autem ? -120 minut + -120 minut x počet osob s kterými spolucestuješ (autobus se nepočítá za auto)</li>
+	          <li>Jedeš autobusem? -20 minut</li>
+          </ul>
+           <p>
+          	Cestování si můžeš započítat maximalně 2x za den.
+           </p>
+           <p>
+          		Z tohoto pravidla jsou zcela logicky vyjmutí organizátoři.
+           </p>
+           <p>
+          	Pokud ti vyšel záporný čas, pošli ho jako dar libovolnému z organizátorů.
+           </p>
+          <h3 id="rozlisovak" ><strong>Rozlišovák</strong></h3>
+          <a href="#" class="button special big">POVINNÝ</a><a href="#" class="button special big">15 min</a>
+          <p>
+          	Po nalepeni rozlisovaciho náramku na ruku zaloguj informace do systemu, do logu přidej i třímistný číselný kód z náramku, odměna 15min. Místo náramku Hvězdova, Brno. 
+          </p>
+          <h3 id="strom" ><strong>Strom</strong></h3>
+          <a href="#" class="button special big"></a><a href="#" class="button special big">neomezeno</a>
+          <p>
+          	U tohoto úkolu apelujeme na bezpečnost. Nesnažte se za každou cenu riskovat svůj život. Odjezd z akce, nestojí za jeho ztrátu.
+          </p>
+          <p>
+          	Pokud je strom příliš vlhký a kluzký nelezte na něji.
+          </p>
+          <p>
+          	Úkolem je vylézt na strom. Úkol je to jednoduchý, leč záludnost je v životním čase za to získaném.
+          </p>
+          <ul>
+	          <li>co metr výšky noh nad zemí to 15 minut pro toho kdo je v té výšce</li>
+	          <li>pokud někdo z týmu není na stromě počítá se pouze 7 minut na metr</li>
+	          <li>pokud dva z týmu nejsou na stromě počítá se pouze 3 minut na metr</li>
+	          <li>pokud tři z týmu nejsou na stromě počítá se pouze 1 minut na metr</li>
+          </ul>
+           <p>
+          	 Tento úkol můžete udělat maximálně jednou za den. Každý nakládá s časem, který odpovídá jeho výšce na stromě.
+           </p>
+           <p>
+          	 To že je člověk na stromě znamená, že jeho nohy jsou ve výšce jednoho metru.
+           </p>
+           
+          <h3 id="sutr" ><strong>Zátěž a život</strong></h3>
+          <a href="#" class="button special big"></a><a href="#" class="button special big">neomezeno</a>
+          <p>
+          	Jak to je s životem a zátěží? Dává nam smysl žít udržuje nas v chodu? No, nad tím můžeš u tohoto úkolu přemýšlet. 
+          </p>
+          <p>
+          	Pokud najdeš bludný balvan či kámen který se dá dle znaků za něj opravdu považovat, tak pokdu si ho nabalíš do batohu a budeš ho v něm nosit, dostaneš každou hodinu zpět jednu minutu za cca pul kilo kamene. 
+          </p>
+          <p>
+          	Bludný balvan není ledajaký šutr. Najdi si to na internetu.
+          </p>
+          <h3 id="rokovani" ><strong>Rokování</strong></h3>
+          <a href="#" class="button special big"></a><a href="#" class="button special big">bez zisku minut</a>
+          <p>
+          	  Ze svého středu vyberte toho nejschopnejšího, nejsilnejšího, nejchytrejšího, nejdiplomatictejšího, nejcharismatictejšího zkrátka toho, kdo dokáže na rokování vyrešit cokoli i bojovat.
+          </p>
+          <p>
+          	  Vámi vybraný člen se dostaví sám na dané místo a budeme jednat o všech náležitostech. Nesmí si sebou vzít žádný komunikační prostředek ani elektronický přístroj.
+          </p>
+          <p>
+          	  2h před momentem než vyšlete člena na rokování se k danému místu rokování nesmíte priblížit blíže jak na 2.5 km (vzdušnou čarou)</p>
+          <p>
+          	  V průběhu rokování a jednu hodinu před a po nikdo nemuže umřít. Pokud by se tak dělo, tak v momentě kdy mu klesne hodnota času pod 30 minut, muže si připsat 30 minut.
+          </p>
+          <p>
+          	  Byl vybrán vršek kopece Pustina (kota 626m) dle příhodného názvu. Sejdeme se v pustine v 15:00 očekáváme 3 vaše delegáty. Na všechny delegáty budeme čekat tak dlouho dokud nedojdou.
+          </p>
+          <p>
+          	  Prosíme, zdržujte se někde na okraji povolené oblasti či lehce dál, ne však o moc dál.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Two -->
+    <section id="two" class="wrapper style3">
+      <div class="inner">
+        <header class="align-center">
+          <p>
+          To nejcenější co máme je náš životní čas, jak ho využiješ je na Tobě.
+          </p>
+          <h2>Kolik do toho dáš, tolik se ti vrátí</h2>
+        </header>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <ul class="icons">
+          <li>
+            <a href="#" class="icon fa-facebook">
+            <span class="label">Facebook</span></a>
+          </li>
+          <li>
+            <a href="mailto:akce-ktera-nema-jmeno@email.cz" class="icon fa-envelope-o"
+              ><span class="label">Email</span></a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="copyright">
+        &copy; OHB 2019 / 2020
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

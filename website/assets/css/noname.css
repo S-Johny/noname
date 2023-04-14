@@ -1,0 +1,14 @@
+.digital
+{	
+	font-family: digital7;
+	color: white;
+	font-size: 180%;
+	font-style: normal;
+	font-weight: bold;
+}
+
+@font-face
+{
+	font-family: digital7;
+	src: url("../fonts/digital_7_mono.woff");
+}

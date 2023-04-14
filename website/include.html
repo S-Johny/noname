@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[BEZJMENA]</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/noname.css" />
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth__cs.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth.css" />
+    <script src="assets/js/authetification.js"></script>
+    <script type="text/javascript">
+	    firebase.auth().onAuthStateChanged(user => {
+	    	if(!user) {
+	    		window.location.replace('index.html');
+	    	}
+	    });
+    </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="header" class="alt">
+      <div class="logo">
+        <a href="signin.html" id="sign-in"></a>
+        <span id="sign-in-status"></span></br>
+      </div>
+      <a href="#menu">Menu</a>
+    </header>
+    
+    <!-- Nav -->
+    <nav id="menu">
+      <ul class="links" id="menu_links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="signin.html">Přihlásit</a></li>
+      </ul>
+    </nav>
+
+    <!-- One -->
+    <section id="One" class="wrapper style3">
+      <div class="inner">
+        <header class="align-center">
+          <p>Závěrečná zážitkovka OHB 2019/2020</p>
+          <h2>[BEZJMENA] - Záznam</h2>
+        </header>
+      </div>
+    </section>
+    
+    <!-- Two -->
+    <section id="two" class="wrapper style2">
+    	<div class="inner" class="align-center">
+	    	<form name="zaznamenat" id="include_time" onsubmit="submit_to_firebase();return false;">
+	  			<input type="radio" id="forme" name="prokoho" value="forme">
+	  			<label for="forme">pro mě = dostaneš 100% času</label>
+	  			<br></br>
+	  			<input type="radio" id="forteam" name="prokoho" value="forteam">
+	  			<label for="forteam">pro můj team = každý z tvého týmu dostane (90% času) / počet členů</label>
+	  			<br></br>
+	  			<input type="radio" id="forsomebody" name="prokoho" value="forsomebody">
+	  			<label for="forsomebody">pro někoho jiného - zapis = dostane 85%</label>
+	  			<br></br>
+	  			<input type="radio" id="giftforsomebody" name="prokoho" value="giftforsomebody">
+	  			<label for="giftforsomebody">pro někoho jiného - darek = strhne se ti čas a on/a dostane 80%</label>
+	  			<br></br>
+	  			<label for="names">Pokud si vybral "pro někoho jiného", tak zde vyber pro koho:</label>
+	  			<select name="names" id="list_names">
+				</select>
+				<br/>
+				<br/>
+				<label for="time">Množství času v minutách:</label>
+	  			<input type="number" id="time" name="time"><br><br>
+	  			<br/>
+	  			<label for="witness">Svědek splnění:</label>
+	  			<select name="witness" id="list_witness">
+				</select>
+				<br/>
+				<label for="description">Popis:</label>
+				<textarea id="description" name="description">ZDE NAPIŠ POPISEK</textarea>
+				<br/>
+	  			<input id="mysubmitbutton" type="submit" value="ZAZNAMENAT">
+			</form>
+			<script type="text/javascript">
+				var query = firebase.database().ref("users").orderByKey();
+			  	query.once("value").then(function(snapshot) 
+			  	{
+			  		content=''
+			  		snapshot.forEach(function(user) 
+			  		{
+			      		var value = user.val();
+			      		content += "<option value='"+ value.name +"'>" + value.name + "</option>";
+			  		});
+					content +='</table>';
+					$('#list_names').append(content);
+					$('#list_witness').append(content);
+				});
+	    	</script>
+		</div>
+    </section>
+
+    <!-- Three -->
+    <section id="three" class="wrapper style3">
+      <div class="inner">
+        <header class="align-center">
+          <p>
+          To nejcenější co máme je náš životní čas, jak ho využiješ je na Tobě.
+          </p>
+          <h2>Kolik do toho dáš, tolik se ti vrátí</h2>
+        </header>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <ul class="icons">
+          <li>
+            <a href="#" class="icon fa-facebook"
+              ><span class="label">Facebook</span></a
+            >
+          </li>
+          <li>
+            <a href="mailto:akce-ktera-nema-jmeno@email.cz" class="icon fa-envelope-o"
+              ><span class="label">Email</span></a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="copyright">
+        &copy; OHB 2019 / 2020
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

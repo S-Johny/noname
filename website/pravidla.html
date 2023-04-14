@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[BEZJMENA]</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/noname.css" />
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth__cs.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.0/firebase-ui-auth.css" />
+    <script src="assets/js/authetification.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="header" class="alt">
+      <div class="logo">
+        <a href="signin.html" id="sign-in"></a>
+        <span id="sign-in-status"></span><br/>
+      </div>
+      <a href="#menu">Menu</a>
+    </header>
+    
+    <!-- Nav -->
+    <nav id="menu">
+      <ul class="links" id="menu_links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="signin.html">Přihlásit</a></li>
+      </ul>
+    </nav>
+    
+    <!-- One -->
+    <section id="One" class="wrapper style3">
+      <div class="inner">
+        <header class="align-center">
+          <p>Boj o svůj vlastní životní čas</p>
+          <h2>Hunger Games - Pravidla</h2>
+        </header>
+      </div>
+    </section>
+    
+    <!-- Main -->
+    <div id="main" class="container">
+      <!-- Elements -->
+      <h2 id="elements">Obecná pravidla</h2>
+      <div class="row 200%">
+        <div class="6u 12u$(medium)">
+          <!-- Text stuff -->
+		  <h3>Na začátek</h3>
+          <p>
+          	Tento program je dynamický. Organizátoři, a jak brzo zjistíš, nejen oni mohou a nemusí měnit pravdila v průběhu, ostatně jsou to Hunger Games. Ačkoli to má v názvu Games, nejedná se dle nás o hru, doporučujume k tomu tak přistupovat a věci nepodceňovat. A rozhodně nespoléhat, že se o tebe "někdo" postará.
+          	Program je dobrovolný, ale pokud se ho odmítneš účastnit, pravděpodobně tě nevezmeme na akci. Vhodný okamžik pro rozhodnutí je právě nyní po přečtení pravidel a úkolů.
+          </p>
+          <p>
+          	Každý je sám za sebe, stejně jako v životě. Ovšem stejně jako v životě se vyplatí mít okolo sebe lidi, na které se můžeš spolehnout a kteří ti pomůžou. Ne vždy to musí být právě ti, které nejlépe znáš, ale pamatuj jsou to Hunger Games.  
+          </p>
+          <h3>Dost "kecu"! O co jde?</h3>
+          <p>
+          	Jde o tvůj čas, o nic víc a o nic míň. Jsi sám za sebe! Máš svůj účet času, který se každou uběhlou sekundou odčítá. Na začátek máš 4,5 h (pokud nic neuděláš, v 10:30 dojde). Pokud ti čas dojde, je to stejné jako v životě, čas ti došel a již nemůžeš pokračovat v Hunger Games.
+          	Nejde jen o Hunger Games, prostě se nedostaneš na akci. Proto do teď nevíš ani místo, čas odjezdu, ani místo objektu a ani jestli nějaký objekt existuje a ani jak dlouhé Hunger Games jsou. A tak to ještě chvilku vše zůstane. 
+          	Jedno je ale jisté, vyplatí se počítat s tím, že času potřebuješ dost na celou akci (včetně spánku). Čas bude možné získávat po celý běh Hunger Games, ale doporučujeme si dopředu zajistit dost času na spánek.  
+          </p>
+          <p>
+          	Hunger Games nejsou jen o čase, jsou o všem. Je jen na tobě, co se svým časem uděláš. 
+          </p>
+          <h3>Jak čas získám?</h3>
+          <p>
+          	Čas získáš, když splníš anebo tvůj tým splní úkol. Případně, když ti ho někdo daruje. Úkoly můžeš najít na stránce <a href="joby.html">JOBY</a>. Většinou je přesně definováno, kdo čas získá. A také přesně ta daná osoba (myšleno účet té osoby) musí tento čas do systému zapsat, pokud není řečeno jinak. Počítej i s variantami, že žádné nové ůkoly se po budoucích 24h od chvíle, co jsi se díval, nemusí objevit a naopak některé mohou zmizet, ostatně jsou to Hunger Games. 
+          </p>
+
+          <h3>Jak získaný čas dostanu do systému?</h3>
+          <p>
+          	Po splnění úkolu najedeš na stránku <a href="include.html">ZAZNAMENAT</a>. Vyplníš vše potřebné a dáš odeslat. Zadání získaného času do systému zbytečně nezdržuj. Zhruba polovina účastníků má internet v mobilu a 60 % i powerbanku. 
+          	Doporučujeme ti mít alespoň jednoho z nich za osobu na kterou se můžeš spolehnout. Této osobě lze svěřit své přihlašovací údaje, to zakázané není - ale případné zneužití je problém vás dvou, jak je napsáno výše, jsou to Hunger Games.	  
+          </p>	
+          <p>
+          	Proč píšeme o svěření přihlašovacích údajů, když můžeš čas jednoduše připsat či darovat někomu jinému?<br/> 
+          	Protože když ho připisuješ sám sobě, dostaneš jiné množství času, než dostane team nebo někdo jiný. Stejně tak je to i u daru.
+          	Tyto poměry se mohou v průběhu hry lišit! Doporučujeme sledovat aktuální informace v popiskách při zadávání.<br/>
+          	Jsou to Hunger Games, neočekávej, že tě o změně budeme informovat.
+          </p>
+          <p>
+          	Všechny zadané časové transakce můžeš zkontrolovat na stránce <a href="logy.html">LOGY</a>. Transakce jsou řazeny od nejnovější po nejstarší. 
+          	Pokud se ti něco nebude zdát, klidně od ostatních žádej vysvětlení, za co daná transakce byla provedena. Stejně tak ostatní toto vysvětlení mohou žádat po tobě. 
+          </p>
+          <p>
+          	Pokud si chceš vyzkoušet záznam, či zda funguje systém, je to možné, stačí vyplnit nulu do kolonky času a v logách zkontrolovat. 
+          </p>
+          <p>
+          	Pokud nemáš přístup k internetu ani žádnou osobu, na kterou by jsi se v dané transakci chtěl spoléhat, je tu nouzová možnost poslat organizátorům komunikační SMS. Tvoje telefonní číslo musí být nejdříve do "systému" přihlášeno.
+          	Formát SMS včetně přihlášení do "systému" je definován v části komunikace s organizátory pomoci SMS. Organizátoři to zapíší do systému v čase, který se jim bude hodit. Neočekávej okamžitý zápis těsně před vypršením času. Pokud ti mezi tím čas vyprší, jednoduše vypršel. Ostatně jsou to ...  Hunger Games.
+          </p>
+          
+          <p>
+          	Pokud nemáš ani mobilní telefon - ano, možná tu takoví jsou nebo budou - tak pak nezbývá než mít jiného účastníka po ruce, co je ochotný.
+          </p>
+          
+          <h3>K čemu slouží jednotlivé položky při zadávání času do systému?</h3>
+          <dl>
+	          <dt>Svědek</dt>
+	            <dd>
+	              <p>
+	                Ten, kdo je schopný dosvědčit, že daný čas připisuješ dle pravidel či dohod mezi účastníky Hunger Games (dohody nesmí porušovat pravidla). Pokud u dané události nikdo není, jsi si sám či sama sobě svědkem.
+	              </p>
+	            </dd>
+	          <dt>Popis</dt>
+	            <dd>
+	              <p>
+	                Toto pole by mělo vysvětlovat, za co byl daný čas získán. Mělo by to být napsáno stručně, ale hlavně tak, aby to všem bylo jasné. 
+	                Pro lepší vyjasnění může obsahovat ať už elektronické či pouze písemné odkazy na názvy úkolů, příspěvky na sociálních sítích, fotky jinde na internetu. Prosíme, pokud je dlouhý link, co chceš nechat zobrazený, tak uvádět ve zkrácené podobě (použij zkracovač linků).
+	              </p>
+	              <p>
+	                Příklad pro použití reálného odkazu:
+	              </p>
+	              <pre><code>&lt;a href=&quot;https://facebook.com/cokoli/cokoli2/cokoli3&quot;&gt;text odkazu&lt;/a&gt;</code></pre>
+	              
+	            </dd>
+          </dl>
+          <h3>Technický či jiný problém se systémem?</h3>
+          <p>
+          	Snažíme se, aby vše maximálně fungovalo a na tebe už zbylo jen si akci užívat. Pokud se však i přesto do našeho poměrně složitého systému vloudil přeci jen nějaký šotek, a to se může stát, prosíme tě o informováni. Viz. např. komunikace s organizátory pomocí SMS.
+          </p>
+          <p>
+          	Pokud vzniknou nějaké zbytečné škody, budeme se je snažit férově, podle našeho nejlepšího vědomí a svědomí, napravit. Ovšem ne vždy to jde a prosíme tedy o shovívavost. 
+          </p>
+          <p>
+          	Chtěli bychom však předem upozornit, že pokud to budou technické záležitosti typu "na tomto jednom zařízení mi to nefunguje" nebo "mám špatný signál" či se bude jednat o jiný technický problém, který pozměňuje pravidla a možnosti pro všechny stejně (tedy je v podstatě spravedlivý), pokusíme se ho napravit, pokud to půjde, ale nebudeme podnikat žádné další akce (jako třeba připisování času jako kompenzaci škod). 
+          </p>
+          <p>
+          	Pokud se bude někdo snažit systém technicky obejít, "nahackovat" či jinak záměrně zneužít či využít ve svůj prospěch, budou organizátoři Hunger Games nemilosrdní. Toto není součástí Hunger Games. Prosím nedělejte to. Využití díry v pravidlech ve svůj prospěch se nepočítá. Pokud máš pochybnosti, zda se nejedná o chybu, odkazujem na sekci komunikace s organizátory pomocí SMS. 
+          </p>
+          <h3>Tvorba pravidel a úkolů od účastníků</h3>
+	        <p>
+	        	Kdokoli, kdo je součástí této akce, může navrhnout nebo upravit pravidlo nebo úkol. Pokud toto pravidlo nebo úkol schválí nadpoloviční většina účastníků akce a alespoň dva organizátoři, stává se platným, pokud splňuje podmínku, že je možné ho technicky zavést do systému v rozumném čase.
+	        	Pokud to nevyžaduje zavedení do systému ale "jen zveřejnění" (například nového úkolu mezi úkoly), stává se platným ihned.   
+	        </p>
+	        <p>
+	        	Schvalování a i navrhování pravidla či úkolu se děje na komunitní stránce facebooku speciálně zřízenou pro tuto akci. "Laik" znamená schvalující hlas. Je také možné, aby hlasoval hromadně za celý tým jeden zástupce, který uvede název týmu a jména účastníků, kteří souhlasí.  
+	        </p>
+	        <p>
+	        	Toto pravidlo neruší pravidlo, že organizátoři mohou kdykoli změnit/vytvořit/zrušit libovolné pravidlo či úkol bez souhlasu účastníků a bez toho, aby o tom dali vědět.
+	        	Pokud budeme měnit text na teto stránce, slibujeme, že dáme vědět, není třeba být absolutně paranoidní, jen trochu.  
+	        </p>
+        </div>
+        <div class="6u$ 12u$(medium)">
+        
+        
+        <h3>Komunikace s organizátory pomocí SMS</h3>
+        <p>
+        	Primární telefonní číslo pro komunikaci s organizátory je <a href="tel:+420 702 203 406">+420 702 203 406 (Petr Kus)</a> záložní <a href="tel:+420 731 275 237">+420 731 275 237 (Johny - Honza Strapek)</a>, <a href="tel:+420 720 521 694">+420 720 521 694 (Dan Farkač)</a> a pak jakékoli jiné organizátorské (viz Lidé na akci). Každé telefoní číslo, které chce komunikovat s organizatory pomocí SMS, se musí "inicializovat". Buď jako osoba nebo jako komunikační číslo za celý team. Pro tým je třeba vyjmenovat všechny členy. Následuje příklad formátu dané inicializační SMS.
+        </p>
+        <pre><code>INIT OSOBA [JMENO STREDNI_JMENO PREZDIVKA PRIJMENI]</code></pre>
+        <pre><code>INIT TYM [JMENO TYMU]; [JMENO PRIJMENI CLENA 1]; [JMENO PRIJMENI CLENA 2]; ...</code></pre>
+        <p>Tedy konkrétně pro jméno Petr Kus</p>
+        <pre><code>INIT OSOBA PETR KUS</code></pre>
+        <p>A team Petr Kus, Jiřina Bohdalová, Indra Pták Ohnivák Mikeš</p>
+        <pre><code>INIT TYM PETR KUS; JIRINA BOHDALOVA; INDRA PTAK OHNIVAK MIKES;</code></pre>
+        <p>Podobnou logikou zápisu se řídí i další SMS. Systém bude velmi podezřívavý, pokud mu dojde init z podivného čísla, která nepatří dle dotazníků danému jménu nebo někomu z daného týmu. Pokusí se pravost ověřit. Případný podvod se řadí do kategorie snaha o "hack". Pokud neproběhne inicializace, nebo se system rozbije a nebude vědět kdo píše, odpoví </p>
+        <pre><code>INIT?</code></pre>
+        <p>Poté je potřeba provést znovu inicialiazaci. Všechny kódy mají i varianty s otazníčkem, to znamená, že orgové se dožadují od vás dané informace. Například informace o poloze nebo doupřesnění, rozšíření či upravení dané předchozí informace.</p>
+        <dl>
+          <dt>Zaznamenání času</dt>
+            <dd>
+            	<p>"nouzové" Zaznamenání času. Prosíme nenadužívat zbytečně, povede to k delšímu čekání. A nejlépe vůbec nepoužívat.</p>
+				<pre><code>LOG [PROME|PROTEAM|PRONEKOHO|DAR]; [OSOBA]; [CAS v MINUTACH]; [SVEDEK]; [POPIS]</code></pre>
+        		<p>Příklad</p>
+        		<pre><code>LOG PROME;60;PETR KUS;toto je logovani 60 minut pro nekoho od koho tato zprava prisla </code></pre>
+            </dd>
+          <dt>Poskytnuti informace</dt>
+            <dd>
+            	<p>Pokud jen chcete poslat nepříliš důležitou informaci</p>
+				<pre><code>INFO [INFORMACE]</code></pre>
+            </dd>
+          <dt>Varování / výstraha</dt>
+            <dd>
+            	<p>Pokud chcete organizátory před něčím varovat či poskytnout důležité varování pro ostatní prostřednictvím organizátorů. Pokud dojde WARN? - znamená to, že máte například nějáký problém.</p>
+				<pre><code>WARN [INFORMACE]</code></pre>
+            </dd>
+          <dt>Poskytnuti vaší polohy</dt>
+            <dd>
+            	<p>Pokud posiláte svoji polohu. </p>
+				<pre><code>LOC [OSOBA|TEAM] [popis polohy či gps]</code></pre>
+            </dd>
+          <dt>Report problému</dt>
+            <dd>
+            	<p>Report technického nebo jiného problému</p>
+				<pre><code>ERROR [popis problemu]</code></pre>
+            </dd>
+          <dt>Žádost o pomoc</dt>
+            <dd>
+            	<p>Tuto zprávu doufáme, že vůbec nedostaneme. Pokud pujde opravdu do tuhého, samozřejmě rovnou volejte.</p>
+				<pre><code>HELP [popis]</code></pre>
+				<p>Prosím používejte to opravdu jen v případě, že cítíte, že jste v nouzi. Ohrožení na zdraví například. Pro ostatní postačí WARN.</p>
+            </dd>
+          </dl>
+          <h3>Virus :-( a věci okolo</h3>
+          <p>
+          	Zde bychom tě odkázali na <a href="joby.html#noninfection">jeden z úkolů</a> a také například <a href="https://www.novinky.cz/pocasi/clanek/tropy-o-vikendu-nehrozi-bude-prset-40331306">zde</a>.
+          	V každém pádě si s sebou vezmi na akci alespoň jednu roušku a měj u sebe desinfekci na ruce. 
+          </p>
+          <p>
+          	Dále bychom tě chtěli upozornit, že dle posledních informaci se situace může velmi dramaticky měnit i během pátku. Viz <a href="https://www.seznamzpravy.cz/clanek/v-cesku-za-stredu-pribylo-247-nakazenych-113345">zde</a>. Ačkoli si to nikdo z nás nepřeje, je to okolnost, která může reálně ohrozit konání akce.  
+          </p>
+          <p>
+          	Dalším vnějším ohrožením jsou přemnožená klíšťata z důvodu teplé zimy. Pro minimalizaci šance přenosu nebezpečných chorob <a href="https://cs.wikipedia.org/wiki/Kl%C3%AD%C5%A1%C5%A5ov%C3%A1_encefalitida">klišťová encefalitidy</a> a <a href="https://cs.wikipedia.org/wiki/Lymesk%C3%A1_nemoc">lymeská borreliózy</a> se rozhodně doporučuje vytáhnout klíště co nejdříve (do jednotek hodin) a ránu vydesinfikovat. Tak se nestyďte pořádně prohlédnout, obzvláště pokud jste leželi v trávě atp. zdraví za to stojí.
+          </p>
+          <p>
+          	Dobrou a nepříjemnou prevencí v létě je dlouhé oblečení. Obě nemoci dokážou být velmi nepříjemné a zatěžující. Lékarničky jsou vybaveny pinzetami, tak je můžete použít. Prý zabírají některé varianty B vitaminu (tiamin), pokud chceš je v lékarničce přítomen b-komplex dopňek stravy.
+          </p>
+          <h3>PRVNI UKOL ZA TEBOU</h3>
+          <p>
+          	Pokud jsi právě poprvé přečetl pozorně celá tahle pravidla, což odhadujeme přibližně na 30 minut času, dostal jsi nyní jednorázově 45 minut. Dané minuty můžeš připsat do systému. Pod koho je napíšeš, už je na tobě. Připsáním zároveň potvrzuješ přečtení pravidel. Doporučujeme si je vytisknout, opsat důležité části nebo jinak si je vzít s sebou.    
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two -->
+    <section id="two" class="wrapper style3">
+      <div class="inner">
+        <header class="align-center">
+          <p>
+          To nejcenější co máme je náš životní čas, jak ho využiješ je na Tobě.
+          </p>
+          <h2>Kolik do toho dáš, tolik se ti vrátí</h2>
+        </header>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <ul class="icons">
+          <li>
+            <a href="#" class="icon fa-facebook">
+            <span class="label">Facebook</span></a>
+          </li>
+          <li>
+            <a href="mailto:akce-ktera-nema-jmeno@email.cz" class="icon fa-envelope-o"
+              ><span class="label">Email</span></a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="copyright">
+        &copy; OHB 2019 / 2020
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
