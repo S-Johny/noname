@@ -1,1 +1,122 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$primary-palette: (
+  50: #e2fbf2,
+  100: #b8f5df,
+  200: #82efcc,
+  300: #1de9b6,
+  400: #00e2a4,
+  500: #00da93,
+  600: #00c986,
+  700: #00b576,
+  800: #00a368,
+  900: #00814f,
+  // ... continues to 900
+  contrast:
+    (
+      50: #000000,
+      100: #000000,
+      200: #000000,
+      300: #000000,
+      400: #000000,
+      500: #000000,
+      600: #000000,
+      700: #000000,
+      800: #000000,
+      900: #000000,
+      A100: #000000,
+      A200: #000000,
+      A400: #000000,
+      A700: #000000,
+    ),
+);
+
+$secondary-palette: (
+  50: #fde4e9,
+  100: #fbbac9,
+  200: #f78da6,
+  300: #f36083,
+  400: #ee3d69,
+  500: #e91d50,
+  600: #d9184e,
+  700: #c4124b,
+  800: #b00948,
+  900: #8c0043,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$noname-primary: mat.define-palette($primary-palette);
+$noname-accent: mat.define-palette($secondary-palette);
+
+// The warn palette is optional (defaults to red).
+$noname-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$noname-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $noname-primary,
+      accent: $noname-accent,
+      warn: $noname-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($noname-theme);
+
 /* You can add global styles to this file, and also import other style files */
+
+$background-color: #303030;
+html,
+body {
+  height: 100%;
+  font-family: 'Roboto Mono', monospace;
+}
+
+body {
+  line-height: 1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* stylelint-disable-next-line selector-max-type */
+input,
+button {
+  border: none;
+  background: none;
+}

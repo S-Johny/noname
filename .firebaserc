@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "noname-459cb"
+  },
+  "targets": {
+    "noname-459cb": {
+      "hosting": {
+        "app": [
+          "noname-app"
+        ],
+        "web": [
+          "noname-web"
+        ]
+      }
+    }
+  }
+}
