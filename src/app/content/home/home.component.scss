@@ -1,0 +1,45 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: red;
+}
+
+.home-default {
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 300;
+  margin: 0;
+  padding-bottom: 1.75rem;
+  letter-spacing: 0.25rem;
+  text-align: center;
+}
+
+.digital {
+  font-family: digital7;
+  color: white;
+  font-size: 7rem;
+  font-style: normal;
+  font-weight: bold;
+
+  @media screen and (max-width: 1280px) {
+    font-size: 4rem;
+  }
+}
+
+.timer {
+  display: flex;
+  gap: 10px;
+}
+
+.countdown {
+  width: 100px;
+}
+
+@font-face {
+  font-family: digital7;
+  src: url('../../../assets/font/digital_7_mono.woff');
+}
