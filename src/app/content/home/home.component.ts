@@ -24,7 +24,9 @@ export class HomeComponent {
     return s.substr(s.length - size);
   }
 
-  calcDateDiff(endDay: Date = new Date(2023, 4, 5)): timeComponents {
+  calcDateDiff(
+    endDay: Date = new Date(2023, 4, 5, 6, 0, 0, 0),
+  ): timeComponents {
     const dDay = endDay.valueOf();
 
     const milliSecondsInASecond = 1000;

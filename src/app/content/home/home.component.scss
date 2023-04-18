@@ -4,7 +4,10 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: red;
+  background-image: url(../../../assets/images/background.JPG);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .home-default {
@@ -28,18 +31,27 @@
   @media screen and (max-width: 1280px) {
     font-size: 4rem;
   }
+
+  @media screen and (max-width: 600px) {
+    font-size: 2rem;
+  }
 }
 
 .timer {
   display: flex;
   gap: 10px;
+  margin-top: 40px;
 }
 
 .countdown {
   width: 100px;
-}
 
-@font-face {
-  font-family: digital7;
-  src: url('../../../assets/font/digital_7_mono.woff');
+  @media screen and (max-width: 1280px) {
+    width: auto;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: 2rem;
+    width: auto;
+  }
 }

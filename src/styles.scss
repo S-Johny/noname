@@ -9,16 +9,16 @@
 @include mat.core();
 
 $primary-palette: (
-  50: #e2fbf2,
-  100: #b8f5df,
-  200: #82efcc,
-  300: #1de9b6,
-  400: #00e2a4,
-  500: #00da93,
-  600: #00c986,
-  700: #00b576,
-  800: #00a368,
-  900: #00814f,
+  50: #e7f6eb,
+  100: #c5e9cd,
+  200: #9fdbae,
+  300: #77ce8d,
+  400: #56c374,
+  500: #33b85c,
+  600: #2aa852,
+  700: #1e9646,
+  800: #12853b,
+  900: #006527,
   // ... continues to 900
   contrast:
     (
@@ -40,16 +40,16 @@ $primary-palette: (
 );
 
 $secondary-palette: (
-  50: #fde4e9,
-  100: #fbbac9,
-  200: #f78da6,
-  300: #f36083,
-  400: #ee3d69,
-  500: #e91d50,
-  600: #d9184e,
-  700: #c4124b,
-  800: #b00948,
-  900: #8c0043,
+  50: #fde4ea,
+  100: #f9baca,
+  200: #f58ea7,
+  300: #f06185,
+  400: #eb406c,
+  500: #e62354,
+  600: #d61e52,
+  700: #c01a4e,
+  800: #ac144b,
+  900: #880a45,
   contrast: (
     50: #000000,
     100: #000000,
@@ -100,7 +100,7 @@ $background-color: #303030;
 html,
 body {
   height: 100%;
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Delm', 'Roboto Mono', monospace;
 }
 
 body {
@@ -119,4 +119,14 @@ input,
 button {
   border: none;
   background: none;
+}
+
+@font-face {
+  font-family: digital7;
+  src: url('./assets/font/digital_7_mono.woff');
+}
+
+@font-face {
+  font-family: Delm;
+  src: url('./assets/font/Delm.otf');
 }
