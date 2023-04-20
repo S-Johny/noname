@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  isDevMode,
+  ViewChild,
+} from '@angular/core';
 import { interval, Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
@@ -18,6 +24,21 @@ interface timeComponents {
 })
 export class HomeComponent {
   public timeLeft$: Observable<timeComponents>;
+  @ViewChild('homeContainer') homeContainer: ElementRef | undefined;
+  audioElement = document.createElement('audio');
+
+  ngAfterViewInit() {
+    if (!isDevMode()) {
+      this.audioElement.setAttribute('src', 'assets/audio/30sTicTac.mp3');
+      this.audioElement.setAttribute('loop', 'true');
+      this.audioElement.setAttribute('preload', 'auto');
+      this.audioElement.setAttribute('autoplay', 'true');
+      this.homeContainer?.nativeElement.appendChild(this.audioElement);
+      setTimeout(() => {
+        this.audioElement.play();
+      }, 5000);
+    }
+  }
 
   zeroPad(num: number, size: number) {
     var s = '000000000' + num;

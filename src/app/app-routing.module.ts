@@ -2,20 +2,23 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './content/home/home.component';
 
+export enum RoutePaths {
+  Home = 'home',
+}
+
 const routes: Routes = [
   {
-    path: 'home',
+    path: RoutePaths.Home,
     component: HomeComponent,
-    data: { title: 'Home' },
   },
-  {
+  /*{
     path: '',
     pathMatch: 'full',
     redirectTo: 'home',
-  },
+  },*/
   {
-    path: '*',
-    redirectTo: 'home',
+    path: '**',
+    redirectTo: RoutePaths.Home,
   },
 ];
 

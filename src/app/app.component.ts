@@ -1,4 +1,34 @@
+import { user } from '@angular/fire/auth';
 import { Component } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Subscription, tap } from 'rxjs';
+import { RoutePaths } from './app-routing.module';
+import { AuthService } from './shared/auth.service';
+
+enum AuthAction {
+  Login = 'Login',
+  Logout = 'Logout',
+}
+
+const DEFAULT_MENU = [
+  {
+    icon: '',
+    title: 'Domů',
+    url: RoutePaths.Home,
+  },
+  {
+    icon: '',
+    title: 'Přihlásit',
+    url: AuthAction.Login,
+  },
+];
 
 @Component({
   selector: 'app-root',
@@ -6,10 +36,115 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'noname';
-  sidnavButtons = [
-    {
-      title: 'Přihlásit',
-    },
-  ];
+  sidnavButtons = DEFAULT_MENU;
+  private userSubscription: Subscription;
+  userName: string | null = null;
+
+  constructor(
+    public readonly dialog: MatDialog,
+    private readonly authService: AuthService,
+    private readonly router: Router,
+  ) {
+    this.userSubscription = this.authService.userData$
+      .pipe(
+        tap(user => {
+          if (user) {
+            this.userName = user.displayName;
+            this.sidnavButtons = [
+              {
+                icon: '',
+                title: 'Domů',
+                url: RoutePaths.Home,
+              },
+              {
+                icon: '',
+                title: 'Odhlásit',
+                url: AuthAction.Logout,
+              },
+            ];
+          } else {
+            this.userName = null;
+            this.sidnavButtons = DEFAULT_MENU;
+          }
+        }),
+      )
+      .subscribe();
+  }
+
+  logout() {
+    this.authService
+      .logout()
+      .then(() => {
+        this.router.navigate([RoutePaths.Home]);
+        this.sidnavButtons = DEFAULT_MENU;
+      })
+      .catch(e => console.log(e.message));
+  }
+
+  lastButton(last: AuthAction | RoutePaths) {
+    if (last === AuthAction.Logout) {
+      this.logout();
+    } else {
+      this.openDialog();
+    }
+  }
+
+  openDialog(): void {
+    this.dialog.open(AppLoginDialogComponent);
+  }
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
+}
+
+@Component({
+  selector: 'app-login-dialog',
+  templateUrl: 'app-login-dialog.html',
+  styleUrls: ['./app-login-dialog.scss'],
+})
+export class AppLoginDialogComponent {
+  loginForm: FormGroup;
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  passwordFormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(8),
+  ]);
+  constructor(
+    private readonly authService: AuthService,
+    public dialogRef: MatDialogRef<AppLoginDialogComponent>,
+    private readonly fb: FormBuilder,
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+    });
+  }
+
+  close(): void {
+    console.log('close');
+    this.dialogRef.close();
+  }
+
+  login(): void {
+    if (
+      this.loginForm.valid &&
+      this.loginForm.get('email') != null &&
+      this.loginForm.get('password') != null
+    ) {
+      this.authService
+        .loginToFirebase(
+          this.loginForm.get('email')?.value,
+          this.loginForm.get('password')?.value,
+        )
+        .then(user => {
+          if (user != null) {
+            this.dialogRef.close();
+          }
+        })
+        .catch(error => alert(error));
+    }
+  }
 }

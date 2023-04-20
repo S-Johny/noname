@@ -1,14 +1,27 @@
 <div class="app-container">
-  <mat-toolbar color="primary">
-    <button (click)="sidenav.toggle()" mat-icon-button class="menu-icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span class="noname-toolbar">[BEZJMENA]</span>
+  <mat-toolbar class="noname-toolbar">
+    <div class="left-side">
+      <button (click)="sidenav.toggle()" mat-icon-button class="menu-icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="noname-toolbar">[BEZEJMENA]</span>
+    </div>
+    <span class="user-name" *ngIf="userName">{{ userName }}</span>
   </mat-toolbar>
   <mat-sidenav-container class="main-container" hasBackdrop="false">
     <mat-sidenav class="sidenav-container" #sidenav mode="over">
-      <div class="sidenav-buttons" *ngFor="let button of sidnavButtons">
-        {{ button.title }}
+      <div
+        class="sidenav-buttons"
+        *ngFor="let menu of sidnavButtons; last as isLast"
+      >
+        <div class="menu-item" *ngIf="!isLast">
+          <i class="menu-icon" [ngClass]="menu.icon"></i>
+          <span class="menu-label">{{ menu.title }}</span>
+        </div>
+        <div class="menu-item" *ngIf="isLast" (click)="lastButton(menu.url)">
+          <i class="menu-icon" [ngClass]="menu.icon"></i>
+          <span class="menu-label">{{ menu.title }}</span>
+        </div>
       </div>
     </mat-sidenav>
 
@@ -23,7 +36,7 @@
     <img class="footer-logo" src="assets/images/loho-hb.png" alt="Sorry" />
     <div class="footer-text-container">
       <div>
-        To nejcenější co máme je náš životní čas, jak ho využiješ je na Tobě.
+        To nejcenější, co máme, je náš životní čas. Jak ho využiješ, je na Tobě.
       </div>
       <div class="divider"></div>
       <div>Kolik do toho dáš, tolik se ti vrátí</div>

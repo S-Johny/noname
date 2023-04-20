@@ -1,0 +1,49 @@
+<div class="login-form-container">
+  <span class="login-heading">Přihlášení</span>
+  <form [formGroup]="loginForm" class="login-form" (ngSubmit)="login()">
+    <mat-form-field class="login-input">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        placeholder="Ex. pat@example.com"
+      />
+      <mat-error
+        *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')"
+      >
+        Prosím zadejte správný email.
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email je <strong>povinný</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="login-input">
+      <mat-label>Heslo</mat-label>
+      <input
+        type="password"
+        matInput
+        formControlName="password"
+        placeholder="Password"
+      />
+      <mat-error
+        *ngIf="emailFormControl.hasError('minLength') && !emailFormControl.hasError('required')"
+      >
+        Vaše heslo je příliš krátké
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Heslo je <strong>povinné</strong>
+      </mat-error>
+    </mat-form-field>
+    <div class="login-buttons">
+      <button
+        type="submit"
+        [disabled]="!loginForm.valid"
+        mat-raised-button
+        color="primary"
+      >
+        Přihlásit
+      </button>
+    </div>
+  </form>
+</div>

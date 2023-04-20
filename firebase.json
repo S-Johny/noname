@@ -13,7 +13,7 @@
     },
     {
       "target": "web",
-      "public": "website",
+      "public": "dist",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
     }
   ]

@@ -1,5 +1,4 @@
 .noname-toolbar {
-  margin-left: 10px;
   user-select: none;
   color: white;
   font-family: digital7;
@@ -18,7 +17,6 @@
   @media screen and (max-width: 600px) {
     flex-direction: column-reverse;
     align-items: center;
-    padding: 40px;
   }
 }
 
@@ -55,6 +53,17 @@
   }
 }
 
+.sidenav-buttons {
+  font-size: 20px;
+  letter-spacing: 0.1rem;
+  padding: 10px;
+  cursor: pointer;
+
+  &:last-child {
+    border-top: rgba($color: #000000, $alpha: 0.3) 1px solid;
+  }
+}
+
 .divider {
   width: 70%;
   height: 1px;
@@ -72,4 +81,16 @@
   justify-content: center;
   padding: 20px;
   min-width: 300px;
+  background-color: #212121;
+}
+
+.noname-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-side {
+  display: flex;
+  align-items: center;
 }

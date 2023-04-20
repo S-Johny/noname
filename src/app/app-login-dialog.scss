@@ -1,0 +1,28 @@
+.login-form-container {
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-heading {
+  font-size: 20px;
+  color: white;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-input {
+  min-width: 300px;
+}
+
+.login-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  color: white;
+}
