@@ -86,6 +86,7 @@ $noname-theme: mat.define-dark-theme(
       accent: $noname-accent,
       warn: $noname-warn,
     ),
+    typography: mat.define-typography-config(),
   )
 );
 

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 import { RoutePaths } from './app-routing.module';
 import { AuthService } from './shared/auth.service';
+import { DatabaseService } from './shared/database.service';
 
 enum AuthAction {
   Login = 'Login',
@@ -44,6 +45,7 @@ export class AppComponent {
     public readonly dialog: MatDialog,
     private readonly authService: AuthService,
     private readonly router: Router,
+    private readonly database: DatabaseService,
   ) {
     this.userSubscription = this.authService.userData$
       .pipe(
@@ -58,10 +60,31 @@ export class AppComponent {
               },
               {
                 icon: '',
+                title: 'Pravidla',
+                url: RoutePaths.Rules,
+              },
+              {
+                icon: '',
+                title: 'Úkoly',
+                url: RoutePaths.Tasks,
+              },
+              {
+                icon: '',
+                title: 'Logy',
+                url: RoutePaths.Logs,
+              },
+              {
+                icon: '',
+                title: 'Hráči',
+                url: RoutePaths.Players,
+              },
+              {
+                icon: '',
                 title: 'Odhlásit',
                 url: AuthAction.Logout,
               },
             ];
+            this.database.subscribeTodb();
           } else {
             this.userName = null;
             this.sidnavButtons = DEFAULT_MENU;
@@ -77,6 +100,7 @@ export class AppComponent {
       .then(() => {
         this.router.navigate([RoutePaths.Home]);
         this.sidnavButtons = DEFAULT_MENU;
+        this.database.unsubscribeFromdb();
       })
       .catch(e => console.log(e.message));
   }

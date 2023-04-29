@@ -14,7 +14,7 @@
         class="sidenav-buttons"
         *ngFor="let menu of sidnavButtons; last as isLast"
       >
-        <div class="menu-item" *ngIf="!isLast">
+        <div class="menu-item" *ngIf="!isLast" [routerLink]="menu.url">
           <i class="menu-icon" [ngClass]="menu.icon"></i>
           <span class="menu-label">{{ menu.title }}</span>
         </div>
@@ -28,18 +28,22 @@
     <mat-sidenav-content>
       <div class="app-content">
         <router-outlet></router-outlet>
+        <div class="footer">
+          <img
+            class="footer-logo"
+            src="assets/images/loho-hb.png"
+            alt="Sorry"
+          />
+          <div class="footer-text-container">
+            <div>
+              To nejcennější, co máme, je náš životní čas. Jak ho využiješ, je
+              na Tobě.
+            </div>
+            <div class="divider"></div>
+            <div>Kolik do toho dáš, tolik se ti vrátí</div>
+          </div>
+        </div>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-
-  <div class="footer">
-    <img class="footer-logo" src="assets/images/loho-hb.png" alt="Sorry" />
-    <div class="footer-text-container">
-      <div>
-        To nejcenější, co máme, je náš životní čas. Jak ho využiješ, je na Tobě.
-      </div>
-      <div class="divider"></div>
-      <div>Kolik do toho dáš, tolik se ti vrátí</div>
-    </div>
-  </div>
 </div>

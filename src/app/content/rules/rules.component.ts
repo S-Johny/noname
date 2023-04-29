@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RoutePaths } from 'src/app/app-routing.module';
 
 @Component({
   selector: 'app-rules',
@@ -6,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./rules.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RulesComponent {}
+export class RulesComponent {
+  routesPaths: typeof RoutePaths = RoutePaths;
+}
