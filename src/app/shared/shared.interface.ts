@@ -1,10 +1,16 @@
 export interface UsersLogs {
-  id: string;
   description: string;
   fromId: string;
+  fromName: string;
   forId: string;
+  forName: string;
   witnessId: string;
+  witnessName: string;
   time: number;
+}
+
+export interface Users {
+  [key: string]: userData;
 }
 
 export interface userData {

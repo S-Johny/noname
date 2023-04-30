@@ -122,6 +122,22 @@ button {
   background: none;
 }
 
+.page-content-container {
+  margin: 40px 20%;
+
+  @media screen and (max-width: 800px) {
+    margin: 40px 10%;
+  }
+}
+
+.page-header {
+  font-family: digital7;
+  color: white;
+  font-size: 3em;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
 @font-face {
   font-family: digital7;
   src: url('./assets/font/digital_7_mono.woff');

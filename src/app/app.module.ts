@@ -29,6 +29,7 @@ import { TasksComponent } from './content/tasks/tasks.component';
 import { LogsComponent } from './content/logs/logs.component';
 import { DatabaseService } from './shared/database.service';
 import { PlayersComponent } from './content/players/players.component';
+import { TimeCountdownPipe } from './shared/time-countdown.pipe';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { PlayersComponent } from './content/players/players.component';
     TasksComponent,
     LogsComponent,
     PlayersComponent,
+    TimeCountdownPipe,
   ],
   imports: [
     BrowserModule,

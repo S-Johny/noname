@@ -35,6 +35,7 @@
 
 .app-content {
   width: 100%;
+  min-height: calc(100vh - 104px);
   height: calc(100% - 104px);
 }
 

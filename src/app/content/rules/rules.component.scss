@@ -1,15 +1,6 @@
-.rules-content-container {
+.page-content-container {
   display: flex;
   flex-direction: column;
-  margin: 40px 20%;
-}
-
-.rules-header {
-  font-family: digital7;
-  color: white;
-  font-size: 3em;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
 }
 
 .rules-container {
@@ -22,6 +13,10 @@
 .rules-wrapper {
   display: flex;
   gap: 20px;
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 }
 
 .card-text {

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { interval, Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { zeroPad } from 'src/app/shared/utils';
 
 interface timeComponents {
   milisecondsToDday: string;
@@ -40,11 +41,6 @@ export class HomeComponent {
     }
   }
 
-  zeroPad(num: number, size: number) {
-    var s = '000000000' + num;
-    return s.substr(s.length - size);
-  }
-
   calcDateDiff(
     endDay: Date = new Date(2023, 4, 5, 6, 0, 0, 0),
   ): timeComponents {
@@ -57,7 +53,7 @@ export class HomeComponent {
 
     const timeDifference = dDay - Date.now();
 
-    const daysToDday = this.zeroPad(
+    const daysToDday = zeroPad(
       Math.floor(
         timeDifference /
           (milliSecondsInASecond *
@@ -68,7 +64,7 @@ export class HomeComponent {
       2,
     );
 
-    const hoursToDday = this.zeroPad(
+    const hoursToDday = zeroPad(
       Math.floor(
         (timeDifference /
           (milliSecondsInASecond * minutesInAnHour * secondsInAMinute)) %
@@ -77,7 +73,7 @@ export class HomeComponent {
       2,
     );
 
-    const minutesToDday = this.zeroPad(
+    const minutesToDday = zeroPad(
       Math.floor(
         (timeDifference / (milliSecondsInASecond * minutesInAnHour)) %
           secondsInAMinute,
@@ -85,12 +81,12 @@ export class HomeComponent {
       2,
     );
 
-    const secondsToDday = this.zeroPad(
+    const secondsToDday = zeroPad(
       Math.floor(timeDifference / milliSecondsInASecond) % secondsInAMinute,
       2,
     );
 
-    const milisecondsToDday = this.zeroPad(
+    const milisecondsToDday = zeroPad(
       Math.floor(timeDifference % milliSecondsInASecond),
       3,
     );

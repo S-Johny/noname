@@ -1,0 +1,30 @@
+.user-details-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.small-answers-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.answer-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0px;
+  min-width: 150px;
+}
+
+.asnwer-header {
+  color: #f07832;
+}
+
+.divider {
+  margin: 10px;
+}
+
+.spacer {
+  margin-bottom: 15px;
+}

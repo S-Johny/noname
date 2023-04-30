@@ -1,5 +1,4 @@
-import { user } from '@angular/fire/auth';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subscription, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { RoutePaths } from './app-routing.module';
 import { AuthService } from './shared/auth.service';
 import { DatabaseService } from './shared/database.service';
@@ -36,9 +35,9 @@ const DEFAULT_MENU = [
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   sidnavButtons = DEFAULT_MENU;
-  private userSubscription: Subscription;
+  private unsubscribe = new Subject();
   userName: string | null = null;
 
   constructor(
@@ -47,8 +46,9 @@ export class AppComponent {
     private readonly router: Router,
     private readonly database: DatabaseService,
   ) {
-    this.userSubscription = this.authService.userData$
+    this.authService.userData$
       .pipe(
+        takeUntil(this.unsubscribe),
         tap(user => {
           if (user) {
             this.userName = user.displayName;
@@ -117,7 +117,8 @@ export class AppComponent {
     this.dialog.open(AppLoginDialogComponent);
   }
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    this.unsubscribe.next(null);
+    this.unsubscribe.complete();
   }
 }
 

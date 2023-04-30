@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Unsubscribe } from '@angular/fire/database';
 import { getDatabase, ref, onValue, set, update } from 'firebase/database';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { UsersLogs, userData } from './shared.interface';
+import { Users, UsersLogs, userData } from './shared.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +13,8 @@ export class DatabaseService {
   logRef = ref(this.db, 'logs/');
 
   private userDataSubscription: Unsubscribe | undefined;
-  private userData: BehaviorSubject<userData | null> =
-    new BehaviorSubject<userData | null>(null);
+  private userData: BehaviorSubject<Users | null> =
+    new BehaviorSubject<Users | null>(null);
   public userData$ = this.userData.asObservable();
 
   emptyUser: userData = {
