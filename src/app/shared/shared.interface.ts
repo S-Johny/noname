@@ -1,19 +1,21 @@
-export interface UsersLogs {
+export interface UsersLog {
   description: string;
-  fromId: string;
   fromName: string;
-  forId: string;
   forName: string;
-  witnessId: string;
   witnessName: string;
   time: number;
+  timeStamp: number;
+}
+
+export interface Logs {
+  [key: string]: UsersLog;
 }
 
 export interface Users {
-  [key: string]: userData;
+  [key: string]: UserData;
 }
 
-export interface userData {
+export interface UserData {
   name: string;
   gameTime: number;
   team: string;

@@ -1,0 +1,28 @@
+.option-description {
+  color: #f07832;
+  margin: 20px 0;
+  font-size: 17px;
+}
+
+.input-containers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.input-field {
+  flex: 1 1 0px;
+  min-width: 250px;
+}
+
+.description-container {
+  width: 100%;
+}
+
+.log-table-container {
+  margin-top: 20px;
+}
+
+.long-text {
+  text-overflow: ellipsis;
+}

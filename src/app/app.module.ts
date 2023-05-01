@@ -21,6 +21,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { HomeComponent } from './content/home/home.component';
 import { RulesComponent } from './content/rules/rules.component';
@@ -61,6 +65,10 @@ import { TimeCountdownPipe } from './shared/time-countdown.pipe';
     MatCommonModule,
     MatDividerModule,
     ReactiveFormsModule,
+    MatButtonToggleModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [AuthService, DatabaseService],
   bootstrap: [AppComponent],

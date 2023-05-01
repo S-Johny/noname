@@ -1,8 +1,42 @@
+import { UserData } from './shared.interface';
+
 const timeStart = 1683172800;
 const milliSecondsInASecond = 1000;
 const hoursInADay = 24;
 const minutesInAnHour = 60;
 const secondsInAMinute = 60;
+
+export const emptyUser: UserData = {
+  name: ``,
+  gameTime: 16200,
+  team: `undefined`,
+  internet: ``,
+  mobile: ``,
+  email: ``,
+  communication: ``,
+  powerbank: ``,
+  sleepingBag: ``,
+  sleepingOutside: 0,
+  favoriteDish: ``,
+  favoriteToieletPaper: ``,
+  favoriteFlower: ``,
+  favoriteTransport: ``,
+  favoritePub: ``,
+  favoritePlace: ``,
+  quote: ``,
+  recognitionSign: ``,
+  startingPoint: ``,
+  timeManagement: 0,
+  favebookFriends: ``,
+  friends: ``,
+  placeToLive: ``,
+  pricelessItem: ``,
+  character: ``,
+  happyLife: ``,
+  sadLife: ``,
+  dreams: ``,
+  questionToOthers: ``,
+};
 
 export function formatTime(time: number): string {
   const timeDifference = timeStart + time - Math.floor(Date.now() / 1000);

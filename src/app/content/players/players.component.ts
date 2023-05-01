@@ -1,9 +1,8 @@
-import { filter, map, take, tap } from 'rxjs/operators';
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { Subject, combineLatest, takeUntil, interval, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DatabaseService } from 'src/app/shared/database.service';
-import { formatTime } from 'src/app/shared/utils';
-import { Users, userData } from 'src/app/shared/shared.interface';
+import { UserData } from 'src/app/shared/shared.interface';
 
 @Component({
   selector: 'app-players',
@@ -23,14 +22,14 @@ export class PlayersComponent {
           .reduce<any>((acc, cur) => {
             return [...acc, userData[cur]];
           }, [])
-          .sort((a: userData, b: userData) =>
+          .sort((a: UserData, b: UserData) =>
             a.name < b.name ? -1 : a.name > b.name ? 1 : 0,
           );
       }),
     );
   }
 
-  trackByFn(index: number, item: userData) {
+  trackByFn(index: number, item: UserData) {
     return item.name;
   }
 }
