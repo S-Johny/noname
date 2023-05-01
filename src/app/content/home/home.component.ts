@@ -1,8 +1,10 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   isDevMode,
+  OnDestroy,
   ViewChild,
 } from '@angular/core';
 import { interval, Observable } from 'rxjs';
@@ -23,21 +25,30 @@ interface timeComponents {
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit, OnDestroy {
   public timeLeft$: Observable<timeComponents>;
   @ViewChild('homeContainer') homeContainer: ElementRef | undefined;
-  audioElement = document.createElement('audio');
+  audioElement =
+    document.getElementById('audio-tik-tok') != null
+      ? document.getElementById('audio-tik-tok')
+      : document.createElement('audio');
+  bodyElement = document.getElementById('app-body');
 
   ngAfterViewInit() {
-    if (!isDevMode()) {
+    if (!isDevMode() && this.audioElement != null) {
       this.audioElement.setAttribute('src', 'assets/audio/30sTicTac.mp3');
       this.audioElement.setAttribute('loop', 'true');
+      this.audioElement.setAttribute('id', 'audio-tik-tok');
       this.audioElement.setAttribute('preload', 'auto');
       this.audioElement.setAttribute('autoplay', 'true');
-      this.homeContainer?.nativeElement.appendChild(this.audioElement);
-      setTimeout(() => {
-        this.audioElement.play();
-      }, 5000);
+      if (this.bodyElement != null) {
+        this.bodyElement.appendChild(this.audioElement);
+        setTimeout(() => {
+          if (this.audioElement != null) {
+            (this.audioElement as any).play();
+          }
+        }, 5000);
+      }
     }
   }
 
@@ -105,5 +116,14 @@ export class HomeComponent {
       map(x => this.calcDateDiff()),
       shareReplay(1),
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.bodyElement != null) {
+      (this.audioElement as any).pause();
+      setInterval(() => {
+        (this.audioElement as any).pause();
+      }, 1000);
+    }
   }
 }

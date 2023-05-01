@@ -24,7 +24,6 @@ export class AuthService {
     this.userSubscription = this.user$.subscribe((aUser: User | null) => {
       this.userData.next(aUser);
       //handle user state changes here. Note, that user will be null if there is no currently logged in user.
-      console.log(aUser);
     });
   }
 
@@ -40,7 +39,6 @@ export class AuthService {
   }
 
   ngOnDestroy() {
-    // when manually subscribing to an observable remember to unsubscribe in ngOnDestroy
     this.userSubscription.unsubscribe();
   }
 }

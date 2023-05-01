@@ -1,0 +1,19 @@
+.times-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+mat-panel-title {
+  font-size: 15px;
+}
+
+.required {
+  margin-bottom: 20px;
+  color: #afcd32;
+}
+
+.required-heading {
+  color: #afcd32;
+}

@@ -1,1 +1,27 @@
-<p>tasks works!</p>
+<div class="page-content-container">
+  <h1 class="page-header">Ukoly</h1>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let task of taskData | async">
+      <mat-expansion-panel-header>
+        <mat-panel-title [ngClass]="task.required ? 'required-heading' : ''">{{
+          task.name
+        }}</mat-panel-title>
+        <mat-panel-description
+          >Odměna: {{ task.reward }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="required">{{ task.required ? 'POVINNY' : '' }}</div>
+      <div class="task-container" [innerHTML]="task.description"></div>
+      <mat-action-row>
+        <div class="times-container">
+          <div class="task-times task-start">
+            Začátek úkolu: {{ task.startAt | date : 'YY:LL:dd-HH:mm:ss' }}
+          </div>
+          <div class="task-times task-end">
+            Konec úkolu: {{ task.endAt | date : 'YY:LL:dd-HH:mm:ss' }}
+          </div>
+        </div>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

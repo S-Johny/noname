@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import {
   Unsubscribe,
   child,
+  equalTo,
   orderByChild,
+  orderByValue,
   push,
   query,
 } from '@angular/fire/database';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { BehaviorSubject } from 'rxjs';
-import { Users, UsersLog, UserData, Logs } from './shared.interface';
+import { Users, UsersLog, UserData, TaskData } from './shared.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +19,16 @@ export class DatabaseService {
   db = getDatabase();
   userRef = ref(this.db, 'users/');
   logRef = query(ref(this.db, 'logs/'), orderByChild('timestamp'));
+  tasksRef = query(
+    ref(this.db, 'tasks/'),
+    orderByChild('shown'),
+    equalTo(true),
+  );
 
   private userDataSubscription: Unsubscribe | undefined;
   private logDataSubscription: Unsubscribe | undefined;
+  private taskDataSubscription: Unsubscribe | undefined;
+
   private userData: BehaviorSubject<Users | null> =
     new BehaviorSubject<Users | null>(null);
   public userData$ = this.userData.asObservable();
@@ -38,19 +47,20 @@ export class DatabaseService {
   );
   public logs$ = this.logs.asObservable();
 
-  constructor() {
-    //update(this.userRef, {['vbaZUcVy9zXFQoT9JYI13mkRsLn1']: {...emptyUser, name: 'Jan Johny Strapek', team: 'org'}})
-  }
+  public tasks: BehaviorSubject<TaskData[]> = new BehaviorSubject<TaskData[]>(
+    [],
+  );
+  public tasks$ = this.tasks.asObservable();
 
-  /*addLog(log: UsersLog): Promise<any> {
-    const uuid = this.getUniqueId(4);
-    return update(this.logRef, { [uuid]: log });
-  }*/
+  constructor() {}
+
+  uploadTask(task: TaskData) {
+    const newTaskKey = push(child(ref(this.db), 'tasks')).key;
+    update(ref(this.db), { ['tasks/' + newTaskKey]: task });
+  }
 
   updateDatabaseTimeAndLog(users: Users, log: UsersLog) {
     const newLogKey = push(child(ref(this.db), 'logs')).key;
-
-    console.log('updates to db', users);
     return update(ref(this.db), { ...users, ['logs/' + newLogKey]: log });
   }
 
@@ -68,7 +78,6 @@ export class DatabaseService {
 
   subscribeTodb(): void {
     this.userDataSubscription = onValue(this.userRef, snapshot => {
-      console.log('user data', snapshot.val());
       const users = snapshot.val();
       this.userData.next(users);
       if (users != null) {
@@ -108,6 +117,23 @@ export class DatabaseService {
         }, []),
       );
     });
+  }
+
+  subscribeToTasksdb(): void {
+    this.taskDataSubscription = onValue(this.tasksRef, snapshot => {
+      const taskObj = snapshot.val();
+      this.tasks.next(
+        Object.keys(taskObj).reduce<any>((acc, cur) => {
+          return [...acc, { ...taskObj[cur] }];
+        }, []),
+      );
+    });
+  }
+
+  unsubscribeToTasksdb(): void {
+    if (this.taskDataSubscription != null) {
+      this.taskDataSubscription();
+    }
   }
 
   unsubscribeToLogdb(): void {

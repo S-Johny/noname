@@ -1,11 +1,11 @@
 import { DataSource } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, firstValueFrom, tap } from 'rxjs';
 import { DatabaseService } from 'src/app/shared/database.service';
 import { UserData, UsersLog } from 'src/app/shared/shared.interface';
@@ -22,7 +22,7 @@ enum optionsType {
   styleUrls: ['./logs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogsComponent implements OnInit {
+export class LogsComponent implements OnInit, OnDestroy {
   logForm: FormGroup;
   logOptions: { value: string; label: string; description: string }[] = [
     {
@@ -77,6 +77,10 @@ export class LogsComponent implements OnInit {
 
   ngOnInit(): void {
     this.database.subscribeToLogdb();
+  }
+
+  ngOnDestroy(): void {
+    this.database.unsubscribeToLogdb();
   }
 
   setTeam(team: string): void {
