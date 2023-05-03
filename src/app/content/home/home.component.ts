@@ -53,7 +53,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   calcDateDiff(
-    endDay: Date = new Date(2023, 4, 5, 6, 0, 0, 0),
+    endDay: Date = new Date('2023-05-04T04:00:00Z'),
   ): timeComponents {
     const dDay = endDay.valueOf();
 
