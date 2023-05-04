@@ -1,12 +1,16 @@
 import { DataSource } from '@angular/cdk/collections';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, firstValueFrom, tap } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable, Subject, firstValueFrom, takeUntil, tap } from 'rxjs';
 import { DatabaseService } from 'src/app/shared/database.service';
 import { UserData, UsersLog } from 'src/app/shared/shared.interface';
 
@@ -22,7 +26,9 @@ enum optionsType {
   styleUrls: ['./logs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogsComponent implements OnInit, OnDestroy {
+export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  dataSource: MatTableDataSource<UsersLog>;
   logForm: FormGroup;
   logOptions: { value: string; label: string; description: string }[] = [
     {
@@ -52,7 +58,7 @@ export class LogsComponent implements OnInit, OnDestroy {
   teamOptions = this.database.teamOptions$;
   teamSelected = '';
 
-  dataSource = new LogsDataSource(this.database);
+  private unsubscribe = new Subject();
   displayedColumns: string[] = [
     'forName',
     'fromName',
@@ -73,6 +79,19 @@ export class LogsComponent implements OnInit, OnDestroy {
       witnessId: ['', [Validators.required]],
       fromId: ['', [Validators.required]],
     });
+    this.dataSource = new MatTableDataSource();
+    this.database.logs$
+      .pipe(
+        takeUntil(this.unsubscribe),
+        tap(data => {
+          this.dataSource.data = data;
+        }),
+      )
+      .subscribe();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {
@@ -81,6 +100,8 @@ export class LogsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.database.unsubscribeToLogdb();
+    this.unsubscribe.next(null);
+    this.unsubscribe.complete();
   }
 
   setTeam(team: string): void {
@@ -92,9 +113,9 @@ export class LogsComponent implements OnInit, OnDestroy {
   }
 
   async addNewLog(): Promise<void> {
-    if (this.logForm.value.time <= 0) {
+    /*if (this.logForm.value.time < 0) {
       return;
-    }
+    }*/
     const timeInSeconds = this.logForm.value.time * 60;
     const users = await firstValueFrom(this.database.userData$);
     if (users == null) {
@@ -116,22 +137,26 @@ export class LogsComponent implements OnInit, OnDestroy {
     };
     switch (this.logForm.value.logOption) {
       case optionsType.Me:
-        this.database.updateDatabaseTimeAndLog(
-          {
-            ['users/' + (this.logForm.value.forId as string)]: {
-              ...(<UserData>forUser),
-              gameTime: timeInSeconds + (forUser as UserData).gameTime,
+        this.database
+          .updateDatabaseTimeAndLog(
+            {
+              ['users/' + (this.logForm.value.forId as string)]: {
+                ...(<UserData>forUser),
+                gameTime: timeInSeconds + (forUser as UserData).gameTime,
+              },
             },
-          },
-          { ...logBase, forName: (forUser as UserData).name },
-        );
+            { ...logBase, forName: (forUser as UserData).name },
+          )
+          .then(() => {
+            this.logForm.reset();
+            this.logForm.controls['logOption'].setValue(optionsType.Me);
+          });
         break;
 
       case optionsType.MyTeam:
         const gameTime = Math.floor(
           timeInSeconds / 90 / this.logForm.value.forId.length,
         );
-        console.log('game time team', gameTime);
         const updates: any = {};
         this.logForm.value.forId.forEach((item: string) => {
           updates['users/' + item] = {
@@ -139,23 +164,36 @@ export class LogsComponent implements OnInit, OnDestroy {
             gameTime: users[item].gameTime + gameTime,
           };
         });
-        this.database.updateDatabaseTimeAndLog(updates, {
-          ...logBase,
-          forName: forUser as string,
-        });
+        this.database
+          .updateDatabaseTimeAndLog(updates, {
+            ...logBase,
+            forName: forUser as string,
+          })
+          .then(() => {
+            this.logForm.reset();
+            this.logForm.controls['logOption'].setValue(optionsType.MyTeam);
+          });
         break;
 
       case optionsType.SomeoneOther:
-        this.database.updateDatabaseTimeAndLog(
-          {
-            ['users/' + (this.logForm.value.forId as string)]: {
-              ...(<UserData>forUser),
-              gameTime:
-                Math.floor(timeInSeconds / 85) + (forUser as UserData).gameTime,
+        this.database
+          .updateDatabaseTimeAndLog(
+            {
+              ['users/' + (this.logForm.value.forId as string)]: {
+                ...(<UserData>forUser),
+                gameTime:
+                  Math.floor(timeInSeconds / 85) +
+                  (forUser as UserData).gameTime,
+              },
             },
-          },
-          { ...logBase, forName: (forUser as UserData).name },
-        );
+            { ...logBase, forName: (forUser as UserData).name },
+          )
+          .then(() => {
+            this.logForm.reset();
+            this.logForm.controls['logOption'].setValue(
+              optionsType.SomeoneOther,
+            );
+          });
         break;
 
       case optionsType.Gift:
@@ -163,26 +201,33 @@ export class LogsComponent implements OnInit, OnDestroy {
         if (cutTime < 0) {
           return;
         }
-        this.database.updateDatabaseTimeAndLog(
-          {
-            ['users/' + (this.logForm.value.forId as string)]: {
-              ...(<UserData>forUser),
-              gameTime:
-                Math.floor(timeInSeconds / 80) + (forUser as UserData).gameTime,
+        this.database
+          .updateDatabaseTimeAndLog(
+            {
+              ['users/' + (this.logForm.value.forId as string)]: {
+                ...(<UserData>forUser),
+                gameTime:
+                  Math.floor(timeInSeconds / 80) +
+                  (forUser as UserData).gameTime,
+              },
+              ['users/' + (this.logForm.value.fromId as string)]: {
+                ...(<UserData>fromUser),
+                gameTime: cutTime,
+              },
             },
-            ['users/' + (this.logForm.value.fromId as string)]: {
-              ...(<UserData>fromUser),
-              gameTime: cutTime,
-            },
-          },
-          { ...logBase, forName: (forUser as UserData).name },
-        );
+            { ...logBase, forName: (forUser as UserData).name },
+          )
+          .then(() => {
+            this.logForm.reset();
+            this.logForm.controls['logOption'].setValue(optionsType.Gift);
+          });
         break;
     }
   }
 }
 
-class LogsDataSource extends DataSource<UsersLog> {
+/*class LogsDataSource extends DataSource<UsersLog> {
+
   constructor(private readonly database: DatabaseService) {
     super();
   }
@@ -197,3 +242,4 @@ class LogsDataSource extends DataSource<UsersLog> {
     this.database.logs.next(data);
   }
 }
+*/

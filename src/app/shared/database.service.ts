@@ -60,7 +60,7 @@ export class DatabaseService {
     update(ref(this.db), { ['tasks/' + newTaskKey]: task });
   }
 
-  updateDatabaseTimeAndLog(users: Users, log: UsersLog) {
+  updateDatabaseTimeAndLog(users: Users, log: UsersLog): Promise<void> {
     const newLogKey = push(child(ref(this.db), 'logs')).key;
     return update(ref(this.db), { ...users, ['logs/' + newLogKey]: log });
   }
@@ -113,9 +113,11 @@ export class DatabaseService {
     this.logDataSubscription = onValue(this.logRef, snapshot => {
       const logObj = snapshot.val() != null ? snapshot.val() : {};
       this.logs.next(
-        Object.keys(logObj).reduce<any>((acc, cur) => {
-          return [...acc, { ...logObj[cur] }];
-        }, []),
+        Object.keys(logObj)
+          .reduce<any>((acc, cur) => {
+            return [...acc, { ...logObj[cur] }];
+          }, [])
+          .reverse(),
       );
     });
   }
