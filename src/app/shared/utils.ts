@@ -54,28 +54,27 @@ export const emptyUser: UserData = {
 export function formatTime(time: number): string {
   const timeDifference = timeStart + time - Math.floor(Date.now() / 1000);
 
-  const daysToDday = zeroPad(
-    Math.floor(
-      timeDifference / (minutesInAnHour * secondsInAMinute * hoursInADay),
-    ),
-    2,
+  const daysToDday = Math.floor(
+    timeDifference / (minutesInAnHour * secondsInAMinute * hoursInADay),
   );
 
-  const hoursToDday = zeroPad(
-    Math.floor(
-      (timeDifference / (minutesInAnHour * secondsInAMinute)) % hoursInADay,
-    ),
-    2,
+  const hoursToDday = Math.floor(
+    (timeDifference / (minutesInAnHour * secondsInAMinute)) % hoursInADay,
   );
 
-  const minutesToDday = zeroPad(
-    Math.floor((timeDifference / minutesInAnHour) % secondsInAMinute),
-    2,
+  const minutesToDday = Math.floor(
+    (timeDifference / minutesInAnHour) % secondsInAMinute,
   );
 
-  const secondsToDday = zeroPad(timeDifference % secondsInAMinute, 2);
+  const secondsToDday = timeDifference % secondsInAMinute;
 
-  return `${daysToDday}:${hoursToDday}:${minutesToDday}:${secondsToDday}`;
+  return `${zeroPad(daysToDday < 0 ? daysToDday + 1 : daysToDday, 2)}:${zeroPad(
+    hoursToDday < 0 ? hoursToDday + 1 : hoursToDday,
+    2,
+  )}:${zeroPad(
+    minutesToDday < 0 ? minutesToDday + 1 : minutesToDday,
+    2,
+  )}:${zeroPad(secondsToDday < 0 ? secondsToDday + 1 : secondsToDday, 2)}`;
 }
 
 export function zeroPad(num: number, size: number) {

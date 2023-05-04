@@ -50,6 +50,7 @@ export class AppComponent implements OnDestroy {
     private readonly router: Router,
     private readonly database: DatabaseService,
   ) {
+    console.log('config', this.remoteConfig);
     console.log('remote', this.siteName);
     this.authService.userData$
       .pipe(

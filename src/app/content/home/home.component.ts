@@ -64,50 +64,55 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
     const timeDifference = dDay - Date.now();
 
-    const daysToDday = zeroPad(
-      Math.floor(
-        timeDifference /
-          (milliSecondsInASecond *
-            minutesInAnHour *
-            secondsInAMinute *
-            hoursInADay),
-      ),
-      2,
+    const daysToDday = Math.floor(
+      timeDifference /
+        (milliSecondsInASecond *
+          minutesInAnHour *
+          secondsInAMinute *
+          hoursInADay),
     );
 
-    const hoursToDday = zeroPad(
-      Math.floor(
-        (timeDifference /
-          (milliSecondsInASecond * minutesInAnHour * secondsInAMinute)) %
-          hoursInADay,
-      ),
-      2,
+    const hoursToDday = Math.floor(
+      (timeDifference /
+        (milliSecondsInASecond * minutesInAnHour * secondsInAMinute)) %
+        hoursInADay,
     );
 
-    const minutesToDday = zeroPad(
-      Math.floor(
-        (timeDifference / (milliSecondsInASecond * minutesInAnHour)) %
-          secondsInAMinute,
-      ),
-      2,
+    const minutesToDday = Math.floor(
+      (timeDifference / (milliSecondsInASecond * minutesInAnHour)) %
+        secondsInAMinute,
     );
 
-    const secondsToDday = zeroPad(
-      Math.floor(timeDifference / milliSecondsInASecond) % secondsInAMinute,
-      2,
-    );
+    const secondsToDday =
+      Math.floor(timeDifference / milliSecondsInASecond) % secondsInAMinute;
 
-    const milisecondsToDday = zeroPad(
-      Math.floor(timeDifference % milliSecondsInASecond),
-      3,
+    const milisecondsToDday = Math.floor(
+      timeDifference % milliSecondsInASecond,
     );
 
     return {
-      milisecondsToDday,
-      secondsToDday,
-      minutesToDday,
-      hoursToDday,
-      daysToDday,
+      milisecondsToDday: zeroPad(
+        milisecondsToDday < 0
+          ? Math.abs(milisecondsToDday + 1)
+          : milisecondsToDday,
+        3,
+      ),
+      secondsToDday: zeroPad(
+        secondsToDday < 0 ? Math.abs(secondsToDday + 1) : secondsToDday,
+        2,
+      ),
+      minutesToDday: zeroPad(
+        minutesToDday < 0 ? Math.abs(minutesToDday + 1) : minutesToDday,
+        2,
+      ),
+      hoursToDday: zeroPad(
+        hoursToDday < 0 ? Math.abs(hoursToDday + 1) : hoursToDday,
+        2,
+      ),
+      daysToDday: zeroPad(
+        daysToDday < 0 ? Math.abs(daysToDday + 1) : daysToDday,
+        2,
+      ),
     };
   }
 
