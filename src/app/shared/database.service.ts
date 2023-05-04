@@ -18,6 +18,7 @@ import { Users, UsersLog, UserData, TaskData } from './shared.interface';
 export class DatabaseService {
   db = getDatabase();
   userRef = ref(this.db, 'users/');
+  webRef = ref(this.db, 'website');
   logRef = query(ref(this.db, 'logs/'), orderByChild('timestamp'));
   tasksRef = query(
     ref(this.db, 'tasks/'),
@@ -110,7 +111,7 @@ export class DatabaseService {
 
   subscribeToLogdb(): void {
     this.logDataSubscription = onValue(this.logRef, snapshot => {
-      const logObj = snapshot.val();
+      const logObj = snapshot.val() != null ? snapshot.val() : {};
       this.logs.next(
         Object.keys(logObj).reduce<any>((acc, cur) => {
           return [...acc, { ...logObj[cur] }];
@@ -121,7 +122,7 @@ export class DatabaseService {
 
   subscribeToTasksdb(): void {
     this.taskDataSubscription = onValue(this.tasksRef, snapshot => {
-      const taskObj = snapshot.val();
+      const taskObj = snapshot.val() != null ? snapshot.val() : {};
       this.tasks.next(
         Object.keys(taskObj).reduce<any>((acc, cur) => {
           return [...acc, { ...taskObj[cur] }];

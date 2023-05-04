@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +11,8 @@ import { Subject, takeUntil, tap } from 'rxjs';
 import { RoutePaths } from './app-routing.module';
 import { AuthService } from './shared/auth.service';
 import { DatabaseService } from './shared/database.service';
+import { RemoteConfig } from '@angular/fire/remote-config';
+import { getValue } from 'firebase/remote-config';
 
 enum AuthAction {
   Login = 'Login',
@@ -37,6 +39,8 @@ const DEFAULT_MENU = [
 })
 export class AppComponent implements OnDestroy {
   sidnavButtons = DEFAULT_MENU;
+  private remoteConfig: RemoteConfig = inject(RemoteConfig);
+  siteName = getValue(this.remoteConfig, 'website');
   private unsubscribe = new Subject();
   userName: string | null = null;
 
@@ -46,6 +50,7 @@ export class AppComponent implements OnDestroy {
     private readonly router: Router,
     private readonly database: DatabaseService,
   ) {
+    console.log('remote', this.siteName);
     this.authService.userData$
       .pipe(
         takeUntil(this.unsubscribe),

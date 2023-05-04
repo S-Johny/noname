@@ -5,6 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { DatabaseService } from 'src/app/shared/database.service';
+import { emptyTask } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-tasks',
@@ -14,6 +15,19 @@ import { DatabaseService } from 'src/app/shared/database.service';
 })
 export class TasksComponent implements OnInit, OnDestroy {
   taskData = this.database.tasks$;
+  emptyTask = {
+    name: '',
+    required: false,
+    description: `
+  <div class="task-body">
+
+  </div>
+`,
+    startAt: 1683172800000,
+    endAt: 1683547200000,
+    reward: '',
+    shown: true,
+  };
 
   constructor(private readonly database: DatabaseService) {}
 
@@ -26,6 +40,6 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   uploadTask(): void {
-    //this.database.uploadTask(this.emptyTask);
+    this.database.uploadTask(this.emptyTask);
   }
 }
