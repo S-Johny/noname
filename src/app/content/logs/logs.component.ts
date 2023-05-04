@@ -155,7 +155,7 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       case optionsType.MyTeam:
         const gameTime = Math.floor(
-          timeInSeconds / 90 / this.logForm.value.forId.length,
+          (timeInSeconds * 0.9) / this.logForm.value.forId.length,
         );
         const updates: any = {};
         this.logForm.value.forId.forEach((item: string) => {
@@ -182,7 +182,7 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
               ['users/' + (this.logForm.value.forId as string)]: {
                 ...(<UserData>forUser),
                 gameTime:
-                  Math.floor(timeInSeconds / 85) +
+                  Math.floor(timeInSeconds * 0.85) +
                   (forUser as UserData).gameTime,
               },
             },
@@ -207,7 +207,7 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
               ['users/' + (this.logForm.value.forId as string)]: {
                 ...(<UserData>forUser),
                 gameTime:
-                  Math.floor(timeInSeconds / 80) +
+                  Math.floor(timeInSeconds * 0.8) +
                   (forUser as UserData).gameTime,
               },
               ['users/' + (this.logForm.value.fromId as string)]: {
