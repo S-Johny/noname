@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 4200:4200
+    entrypoint: ng serve --host 0.0.0.0
