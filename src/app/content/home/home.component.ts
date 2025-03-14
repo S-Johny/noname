@@ -62,7 +62,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     const minutesInAnHour = 60;
     const secondsInAMinute = 60;
 
-    const timeDifference = dDay - Date.now();
+    const timeDifference = Math.abs(dDay - Date.now());
 
     const daysToDday = Math.floor(
       timeDifference /
