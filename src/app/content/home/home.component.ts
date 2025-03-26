@@ -3,13 +3,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  isDevMode,
   OnDestroy,
   ViewChild,
+  inject,
+  isDevMode,
 } from '@angular/core';
 import { interval, Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { zeroPad } from 'src/app/shared/utils';
+import { ConfigService } from 'src/app/shared/config.service';
 
 interface timeComponents {
   milisecondsToDday: string;
@@ -34,6 +36,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       ? document.getElementById('audio-tik-tok')
       : document.createElement('audio');
   bodyElement = document.getElementById('app-body');
+  private configService: ConfigService = inject(ConfigService);
+  public eventStart: Date = new Date();
 
   ngAfterViewInit() {
     if (!isDevMode() && this.audioElement != null) {
@@ -54,7 +58,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   calcDateDiff(
-    endDay: Date = new Date('2025-05-07T04:00:00Z'),
+    endDay: Date = this.eventStart,
   ): timeComponents {
     const dDay = endDay.valueOf();
 
@@ -122,6 +126,11 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       map(x => this.calcDateDiff()),
       shareReplay(1),
     );
+  }
+
+  async ngOnInit() {
+    await this.configService.initializeConfig();
+    this.eventStart = new Date(this.configService.getString('eventStart'));
   }
 
   ngOnDestroy(): void {
