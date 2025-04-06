@@ -35,6 +35,7 @@ const DEFAULT_MENU = [
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  standalone: false,
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnDestroy {
@@ -132,6 +133,7 @@ export class AppComponent implements OnDestroy {
   selector: 'app-login-dialog',
   templateUrl: 'app-login-dialog.html',
   styleUrls: ['./app-login-dialog.scss'],
+  standalone: false,
 })
 export class AppLoginDialogComponent {
   loginForm: FormGroup;

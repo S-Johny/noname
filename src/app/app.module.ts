@@ -1,5 +1,5 @@
 import { firebaseConfig } from './../../.project/firebase.config';
-import { NgModule } from '@angular/core';
+import { importProvidersFrom, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +22,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -53,10 +52,7 @@ import { TimeCountdownPipe } from './shared/time-countdown.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
-    provideRemoteConfig(() => getRemoteConfig()),
+
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -67,7 +63,6 @@ import { TimeCountdownPipe } from './shared/time-countdown.pipe';
     MatFormFieldModule,
     MatCardModule,
     MatExpansionModule,
-    MatCommonModule,
     MatDividerModule,
     ReactiveFormsModule,
     MatButtonToggleModule,
@@ -75,7 +70,14 @@ import { TimeCountdownPipe } from './shared/time-countdown.pipe';
     MatTableModule,
     MatPaginatorModule,
   ],
-  providers: [AuthService, DatabaseService],
+  providers: [
+    AuthService,
+    DatabaseService,
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideRemoteConfig(() => getRemoteConfig()),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

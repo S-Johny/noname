@@ -8,6 +8,7 @@ import { UserData } from 'src/app/shared/shared.interface';
   selector: 'app-players',
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.scss'],
+  standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayersComponent {

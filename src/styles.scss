@@ -8,100 +8,124 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-$primary-palette: (
-  50: #e7f6eb,
-  100: #c5e9cd,
-  200: #9fdbae,
-  300: #77ce8d,
-  400: #56c374,
-  500: #33b85c,
-  600: #2aa852,
-  700: #1e9646,
-  800: #12853b,
-  900: #006527,
-  // ... continues to 900
-  contrast:
-    (
-      50: #000000,
-      100: #000000,
-      200: #000000,
-      300: #000000,
-      400: #000000,
-      500: #000000,
-      600: #000000,
-      700: #000000,
-      800: #000000,
-      900: #000000,
-      A100: #000000,
-      A200: #000000,
-      A400: #000000,
-      A700: #000000,
-    ),
-);
-
-$secondary-palette: (
-  50: #fde4ea,
-  100: #f9baca,
-  200: #f58ea7,
-  300: #f06185,
-  400: #eb406c,
-  500: #e62354,
-  600: #d61e52,
-  700: #c01a4e,
-  800: #ac144b,
-  900: #880a45,
-  contrast: (
-    50: #000000,
-    100: #000000,
-    200: #000000,
-    300: #000000,
-    400: #000000,
-    500: #000000,
-    600: #000000,
-    700: #000000,
-    800: #000000,
-    900: #000000,
-    A100: #000000,
-    A200: #000000,
-    A400: #000000,
-    A700: #000000,
+$noname-palette: (
+  0: #000000,
+  10: #002109,
+  20: #003915,
+  25: #00461b,
+  30: #005321,
+  35: #006028,
+  40: #006e2e,
+  50: #008a3c,
+  60: #16a64d,
+  70: #40c265,
+  80: #5fdf7e,
+  90: #7dfc97,
+  95: #c5ffc8,
+  98: #ebffe8,
+  99: #f6fff2,
+  100: #ffffff,
+  secondary: (
+    0: #000000,
+    10: #07200d,
+    20: #1d3621,
+    25: #28412b,
+    30: #334d36,
+    35: #3e5941,
+    40: #4a654c,
+    50: #627e64,
+    60: #7c987c,
+    70: #96b396,
+    80: #b0ceb0,
+    90: #ccebcb,
+    95: #daf9d9,
+    98: #ebffe8,
+    99: #f6fff2,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    10: #1a1c19,
+    20: #2e312e,
+    25: #393c38,
+    30: #454744,
+    35: #51534f,
+    40: #5d5f5b,
+    50: #757873,
+    60: #8f918d,
+    70: #aaaca7,
+    80: #c5c7c2,
+    90: #e2e3dd,
+    95: #f0f1ec,
+    98: #f9faf4,
+    99: #fcfdf7,
+    100: #ffffff,
+    4: #0a0b0c,
+    6: #101013,
+    12: #1e1f23,
+    17: #292a2d,
+    22: #343438,
+    24: #39393d,
+    87: #dbdade,
+    92: #e9e8ec,
+    94: #efedf1,
+    96: #f5f3f7,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #171d17,
+    20: #2b322b,
+    25: #363d36,
+    30: #414941,
+    35: #4d544c,
+    40: #596058,
+    50: #727970,
+    60: #8b9389,
+    70: #a6ada3,
+    80: #c1c9be,
+    90: #dde5da,
+    95: #ecf3e8,
+    98: #f4fcf0,
+    99: #f7fef3,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
   ),
 );
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$noname-primary: mat.define-palette($primary-palette);
-$noname-accent: mat.define-palette($secondary-palette);
-
-// The warn palette is optional (defaults to red).
-$noname-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$noname-theme: mat.define-dark-theme(
-  (
-    color: (
-      primary: $noname-primary,
-      accent: $noname-accent,
-      warn: $noname-warn,
-    ),
-    typography: mat.define-typography-config(),
-  )
-);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($noname-theme);
-
-/* You can add global styles to this file, and also import other style files */
+//$noname-primary: mat.m2-define-palette($noname-palette);
 
 $background-color: #303030;
 html,
 body {
+  color-scheme: dark;
   height: 100%;
   font-family: 'Delm', 'Roboto Mono', monospace;
+  @include mat.theme(
+    (
+      color: $noname-palette,
+      density: 0,
+    )
+  );
 }
 
 body {

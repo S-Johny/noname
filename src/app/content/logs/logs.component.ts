@@ -24,6 +24,7 @@ enum optionsType {
   selector: 'app-logs',
   templateUrl: './logs.component.html',
   styleUrls: ['./logs.component.scss'],
+  standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {

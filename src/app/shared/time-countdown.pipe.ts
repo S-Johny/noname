@@ -4,6 +4,7 @@ import { formatTime } from './utils';
 
 @Pipe({
   name: 'timeCountdown',
+  standalone: false,
 })
 export class TimeCountdownPipe implements PipeTransform {
   transform(gameTime: number): Observable<string> {

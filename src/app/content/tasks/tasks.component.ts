@@ -11,6 +11,7 @@ import { emptyTask } from 'src/app/shared/utils';
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
+  standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksComponent implements OnInit, OnDestroy {
