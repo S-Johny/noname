@@ -1,6 +1,6 @@
 <div #homeContainer class="home-container">
-  <p class="home-default">Závěrečná zážitkovka OHB 2024/2025</p>
-  <h2 class="digital">[BEZEJMENA]</h2>
+  <p class="home-default">{{ subtitle }}</p>
+  <h2 class="digital">[{{ title }}]</h2>
   <div class="timer digital" *ngIf="timeLeft$ | async as t; else sorry">
     <span class="countdown"> {{ t.daysToDday }} </span>:
     <span class="countdown"> {{ t.hoursToDday }} </span>:

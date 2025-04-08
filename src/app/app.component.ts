@@ -10,9 +10,8 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { RoutePaths } from './app-routing.module';
 import { AuthService } from './shared/auth.service';
+import { ConfigService } from './shared/config.service';
 import { DatabaseService } from './shared/database.service';
-import { RemoteConfig } from '@angular/fire/remote-config';
-import { getValue } from 'firebase/remote-config';
 
 enum AuthAction {
   Login = 'Login',
@@ -40,8 +39,8 @@ const DEFAULT_MENU = [
 })
 export class AppComponent implements OnDestroy {
   sidnavButtons = DEFAULT_MENU;
-  private remoteConfig: RemoteConfig = inject(RemoteConfig);
-  siteName = getValue(this.remoteConfig, 'website');
+  private configService: ConfigService = inject(ConfigService);
+  siteName: String = "Noname";
   private unsubscribe = new Subject();
   userName: string | null = null;
 
@@ -51,7 +50,6 @@ export class AppComponent implements OnDestroy {
     private readonly router: Router,
     private readonly database: DatabaseService,
   ) {
-    console.log('config', this.remoteConfig);
     console.log('remote', this.siteName);
     this.authService.userData$
       .pipe(
@@ -123,6 +121,12 @@ export class AppComponent implements OnDestroy {
   openDialog(): void {
     this.dialog.open(AppLoginDialogComponent);
   }
+
+  async ngOnInit() {
+    await this.configService.initializeConfig();
+    this.siteName = this.configService.getString('title');
+  }
+
   ngOnDestroy() {
     this.unsubscribe.next(null);
     this.unsubscribe.complete();

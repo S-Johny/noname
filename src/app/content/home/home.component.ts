@@ -37,6 +37,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       : document.createElement('audio');
   bodyElement = document.getElementById('app-body');
   private configService: ConfigService = inject(ConfigService);
+  public title: String = "Noname";
+  public subtitle: String = "Experience Event 2025";
   public eventStart: Date = new Date();
 
   ngAfterViewInit() {
@@ -130,6 +132,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   async ngOnInit() {
     await this.configService.initializeConfig();
+    this.title = this.configService.getString('title');
+    this.subtitle = this.configService.getString('subtitle');
     this.eventStart = new Date(this.configService.getString('eventStart'));
   }
 
