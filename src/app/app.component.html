@@ -1,7 +1,12 @@
 <div class="app-container">
   <mat-toolbar class="noname-toolbar">
     <div class="left-side">
-      <button (click)="sidenav.toggle()" mat-icon-button class="menu-icon">
+      <button
+        (click)="sidenav.toggle()"
+        *ngIf="eventStarted"
+        mat-icon-button
+        class="menu-icon"
+      >
         <mat-icon>menu</mat-icon>
       </button>
       <span class="noname-toolbar">[{{ siteName }}]</span>
@@ -10,17 +15,19 @@
   </mat-toolbar>
   <mat-sidenav-container class="main-container" hasBackdrop="false">
     <mat-sidenav class="sidenav-container" #sidenav mode="over">
-      <div
-        class="sidenav-buttons"
-        *ngFor="let menu of sidnavButtons; last as isLast"
-      >
-        <div class="menu-item" *ngIf="!isLast" [routerLink]="menu.url">
-          <i class="menu-icon" [ngClass]="menu.icon"></i>
-          <span class="menu-label">{{ menu.title }}</span>
-        </div>
-        <div class="menu-item" *ngIf="isLast" (click)="lastButton(menu.url)">
-          <i class="menu-icon" [ngClass]="menu.icon"></i>
-          <span class="menu-label">{{ menu.title }}</span>
+      <div *ngIf="eventStarted">
+        <div
+          class="sidenav-buttons"
+          *ngFor="let menu of sidnavButtons; last as isLast"
+        >
+          <div class="menu-item" *ngIf="!isLast" [routerLink]="menu.url">
+            <i class="menu-icon" [ngClass]="menu.icon"></i>
+            <span class="menu-label">{{ menu.title }}</span>
+          </div>
+          <div class="menu-item" *ngIf="isLast" (click)="lastButton(menu.url)">
+            <i class="menu-icon" [ngClass]="menu.icon"></i>
+            <span class="menu-label">{{ menu.title }}</span>
+          </div>
         </div>
       </div>
     </mat-sidenav>
