@@ -24,8 +24,8 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   </div>
 `,
-    startAt: 1683172800000,
-    endAt: 1683547200000,
+    startAt: 1746590400000,
+    endAt: 1746964800000,
     reward: '',
     shown: true,
   };

@@ -4,7 +4,7 @@
       <button (click)="sidenav.toggle()" mat-icon-button class="menu-icon">
         <mat-icon>menu</mat-icon>
       </button>
-      <span class="noname-toolbar">[BEZEJMENA]</span>
+      <span class="noname-toolbar">[{{ siteName }}]</span>
     </div>
     <span class="user-name" *ngIf="userName">{{ userName }}</span>
   </mat-toolbar>
