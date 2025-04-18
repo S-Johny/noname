@@ -26,7 +26,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <div class="app-content">
+      <div class="app-content" (click)="sidenav.close()">
         <div class="app-wrapper">
           <router-outlet></router-outlet>
         </div>
