@@ -1,4 +1,4 @@
-import { firebaseConfig } from './../../.project/firebase.config';
+import { environment } from '../environments/environment';
 import { importProvidersFrom, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -73,7 +73,7 @@ import { TimeCountdownPipe } from './shared/time-countdown.pipe';
   providers: [
     AuthService,
     DatabaseService,
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideRemoteConfig(() => getRemoteConfig()),
