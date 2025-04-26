@@ -8,17 +8,17 @@
     </div>
     <span class="user-name" *ngIf="userName">{{ userName }}</span>
   </mat-toolbar>
-  <mat-sidenav-container class="main-container" hasBackdrop="false">
+  <mat-sidenav-container class="main-container">
     <mat-sidenav class="sidenav-container" #sidenav mode="over">
       <div
         class="sidenav-buttons"
         *ngFor="let menu of sidnavButtons; last as isLast"
       >
-        <div class="menu-item" *ngIf="!isLast" [routerLink]="menu.url">
+        <div class="menu-item" *ngIf="!isLast" (click)="sidenav.close()" [routerLink]="menu.url">
           <i class="menu-icon" [ngClass]="menu.icon"></i>
           <span class="menu-label">{{ menu.title }}</span>
         </div>
-        <div class="menu-item" *ngIf="isLast" (click)="lastButton(menu.url)">
+        <div class="menu-item" *ngIf="isLast" (click)="lastButton(menu.url); sidenav.close()">
           <i class="menu-icon" [ngClass]="menu.icon"></i>
           <span class="menu-label">{{ menu.title }}</span>
         </div>
@@ -26,7 +26,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <div class="app-content" (click)="sidenav.close()">
+      <div class="app-content">
         <div class="app-wrapper">
           <router-outlet></router-outlet>
         </div>
