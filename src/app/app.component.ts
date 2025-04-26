@@ -43,6 +43,7 @@ export class AppComponent implements OnDestroy {
   siteName: String = "Noname";
   eventStart = new Date();
   eventStarted = false;
+  eventStartedInterval = 0;
   private unsubscribe = new Subject();
   userName: string | null = null;
 
@@ -128,12 +129,17 @@ export class AppComponent implements OnDestroy {
     await this.configService.initializeConfig();
     this.siteName = this.configService.getString('title');
     this.eventStart = new Date(this.configService.getString('eventStart'));
-    this.eventStarted = this.eventStart.valueOf() < Date.now();
+    this.eventStartedInterval = setInterval(() => {
+      this.eventStarted = this.eventStart.valueOf() < Date.now();
+    }, 1000);
   }
 
   ngOnDestroy() {
     this.unsubscribe.next(null);
     this.unsubscribe.complete();
+    if (this.eventStartedInterval) {
+      clearInterval(this.eventStartedInterval);
+    }
   }
 }
 
