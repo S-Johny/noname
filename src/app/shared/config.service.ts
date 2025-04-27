@@ -4,6 +4,8 @@ import {
   RemoteConfig,
   fetchAndActivate,
   getRemoteConfig,
+  getBoolean,
+  getNumber,
   getString,
   getValue,
 } from 'firebase/remote-config';
@@ -36,6 +38,14 @@ export class ConfigService {
 
   getValue(key: string) {
     return getValue(this.remoteConfig, key);
+  }
+
+  getBoolean(key: string) {
+    return getBoolean(this.remoteConfig, key);
+  }
+
+  getNumber(key: string) {
+    return getNumber(this.remoteConfig, key);
   }
 
   getString(key: string) {
