@@ -17,7 +17,7 @@
           <div class="task-times task-start">
             Začátek úkolu: {{ task.startAt | date : 'd.&nbsp;M. YYYY HH:mm' }}
           </div>
-          <div class="task-times task-end">
+          <div class="task-times task-end" *ngIf="showTaskEnd">
             Konec úkolu: {{ task.endAt | date : 'd.&nbsp;M. YYYY HH:mm' }}
           </div>
         </div>
