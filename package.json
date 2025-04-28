@@ -13,8 +13,8 @@
     "test": "ng test",
     "prepare": "husky install",
     "prettier": "pretty-quick",
-    "deploy:website": "firebase deploy --only hosting:web",
-    "deploy:app": "firebase deploy --only hosting:app",
+    "deploy:test": "firebase deploy --only hosting:app-test",
+    "deploy:prod": "firebase deploy --only hosting:app",
     "deploy": "firebase deploy"
   },
   "private": true,

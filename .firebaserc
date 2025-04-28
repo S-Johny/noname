@@ -8,8 +8,8 @@
         "app": [
           "noname-app"
         ],
-        "web": [
-          "noname-web"
+        "app-test": [
+          "noname-app-test"
         ]
       }
     }
