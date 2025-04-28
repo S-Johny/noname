@@ -41,6 +41,9 @@ export class AppComponent implements OnDestroy {
   sidnavButtons = DEFAULT_MENU;
   private configService: ConfigService = inject(ConfigService);
   siteName: String = "Noname";
+  eventStart = new Date();
+  eventStarted = false;
+  eventStartedInterval = 0;
   private unsubscribe = new Subject();
   userName: string | null = null;
 
@@ -125,11 +128,18 @@ export class AppComponent implements OnDestroy {
   async ngOnInit() {
     await this.configService.initializeConfig();
     this.siteName = this.configService.getString('title');
+    this.eventStart = new Date(this.configService.getString('eventStart'));
+    this.eventStartedInterval = setInterval(() => {
+      this.eventStarted = this.eventStart.valueOf() < Date.now();
+    }, 1000);
   }
 
   ngOnDestroy() {
     this.unsubscribe.next(null);
     this.unsubscribe.complete();
+    if (this.eventStartedInterval) {
+      clearInterval(this.eventStartedInterval);
+    }
   }
 }
 
