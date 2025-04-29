@@ -51,23 +51,23 @@ export const emptyUser: UserData = {
 };
 
 export function formatRemainingTime(to: number): string {
-  var secondsRemaining = to - Math.floor(Date.now() / 1000);
-  var sign = Math.sign(secondsRemaining);
+  let secondsRemaining = to - Math.floor(Date.now() / 1000);
+  const sign = Math.sign(secondsRemaining);
   secondsRemaining = Math.abs(secondsRemaining);
 
-  var daysToDday = Math.floor(
+  const daysToDday = Math.floor(
     secondsRemaining / (secondsInAMinute * minutesInAnHour * hoursInADay),
   );
 
-  var hoursToDday = Math.floor(
+  const hoursToDday = Math.floor(
     (secondsRemaining / (secondsInAMinute * minutesInAnHour)) % hoursInADay,
   );
 
-  var minutesToDday = Math.floor(
+  const minutesToDday = Math.floor(
     (secondsRemaining / minutesInAnHour) % secondsInAMinute,
   );
 
-  var secondsToDday = secondsRemaining % secondsInAMinute;
+  const secondsToDday = secondsRemaining % secondsInAMinute;
 
   return `${sign < 0 ? '-' : ''
           }${zeroPad(daysToDday, 2)

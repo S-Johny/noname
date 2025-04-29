@@ -15,7 +15,7 @@ export class TimeCountdownPipe implements PipeTransform {
   }
 
   transform(gameTime: number): Observable<string> {
-    var time = this.epochTime(gameTime);
+    const time = this.epochTime(gameTime);
     return interval(1000).pipe(map(() => formatRemainingTime(time)));
   }
 
