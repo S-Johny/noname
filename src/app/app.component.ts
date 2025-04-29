@@ -128,7 +128,7 @@ export class AppComponent implements OnDestroy {
   async ngOnInit() {
     await this.configService.initializeConfig();
     this.siteName = this.configService.getString('title');
-    this.eventStart = new Date(this.configService.getString('eventStart'));
+    this.eventStart = this.configService.getEventStart();
     this.eventStartedInterval = setInterval(() => {
       this.eventStarted = this.eventStart.valueOf() < Date.now();
     }, 1000);

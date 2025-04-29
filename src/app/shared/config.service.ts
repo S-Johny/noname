@@ -54,4 +54,8 @@ export class ConfigService {
   getString(key: string) {
     return getString(this.remoteConfig, key);
   }
+
+  getEventStart() : Date {
+    return new Date(this.getString('eventStart'));
+  }
 }

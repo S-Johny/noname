@@ -1,6 +1,5 @@
 import { UserData } from './shared.interface';
 
-const timeStart = 1683172800;
 const milliSecondsInASecond = 1000;
 const hoursInADay = 24;
 const minutesInAnHour = 60;
@@ -51,33 +50,32 @@ export const emptyUser: UserData = {
   questionToOthers: ``,
 };
 
-export function formatTime(time: number): string {
-  const timeDifference = timeStart + time - Math.floor(Date.now() / 1000);
+export function formatRemainingTime(to: number): string {
+  let secondsRemaining = to - Math.floor(Date.now() / 1000);
+  const sign = Math.sign(secondsRemaining);
+  secondsRemaining = Math.abs(secondsRemaining);
 
   const daysToDday = Math.floor(
-    timeDifference / (minutesInAnHour * secondsInAMinute * hoursInADay),
+    secondsRemaining / (secondsInAMinute * minutesInAnHour * hoursInADay),
   );
 
   const hoursToDday = Math.floor(
-    (timeDifference / (minutesInAnHour * secondsInAMinute)) % hoursInADay,
+    (secondsRemaining / (secondsInAMinute * minutesInAnHour)) % hoursInADay,
   );
 
   const minutesToDday = Math.floor(
-    (timeDifference / minutesInAnHour) % secondsInAMinute,
+    (secondsRemaining / minutesInAnHour) % secondsInAMinute,
   );
 
-  const secondsToDday = timeDifference % secondsInAMinute;
+  const secondsToDday = secondsRemaining % secondsInAMinute;
 
-  return `${zeroPad(daysToDday < 0 ? daysToDday + 1 : daysToDday, 2)}:${zeroPad(
-    hoursToDday < 0 ? hoursToDday + 1 : hoursToDday,
-    2,
-  )}:${zeroPad(
-    minutesToDday < 0 ? minutesToDday + 1 : minutesToDday,
-    2,
-  )}:${zeroPad(secondsToDday < 0 ? secondsToDday + 1 : secondsToDday, 2)}`;
+  return `${sign < 0 ? '-' : ''
+          }${zeroPad(daysToDday, 2)
+          }:${zeroPad(hoursToDday, 2,)
+          }:${zeroPad(minutesToDday, 2,)
+          }:${zeroPad(secondsToDday, 2)}`;
 }
 
 export function zeroPad(num: number, size: number) {
-  const s = '000000000' + num;
-  return s.substr(s.length - size);
+  return String(num).padStart(size, '0');
 }

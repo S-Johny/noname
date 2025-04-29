@@ -134,7 +134,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     await this.configService.initializeConfig();
     this.title = this.configService.getString('title');
     this.subtitle = this.configService.getString('subtitle');
-    this.eventStart = new Date(this.configService.getString('eventStart'));
+    this.eventStart = this.configService.getEventStart();
   }
 
   ngOnDestroy(): void {
