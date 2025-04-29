@@ -4,9 +4,12 @@ import {
   RemoteConfig,
   fetchAndActivate,
   getRemoteConfig,
+  getBoolean,
+  getNumber,
   getString,
   getValue,
 } from 'firebase/remote-config';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +24,10 @@ export class ConfigService {
       "title": "BEZEJMENA",
       "subtitle": "Závěrečná víkendovka OHB 2024/2025",
       "eventStart": "2025-05-07T04:00:00Z",
+      "showTaskEnd": "true",
     };
-    this.remoteConfig.settings.minimumFetchIntervalMillis = 10 * 60 * 1000;
+    this.remoteConfig.settings.minimumFetchIntervalMillis
+        = environment.configFetchIntervalMillis;
   }
 
   async initializeConfig(): Promise<void> {
@@ -36,6 +41,14 @@ export class ConfigService {
 
   getValue(key: string) {
     return getValue(this.remoteConfig, key);
+  }
+
+  getBoolean(key: string) {
+    return getBoolean(this.remoteConfig, key);
+  }
+
+  getNumber(key: string) {
+    return getNumber(this.remoteConfig, key);
   }
 
   getString(key: string) {
