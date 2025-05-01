@@ -1,7 +1,6 @@
-import { filter, map } from 'rxjs/operators';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DatabaseService } from 'src/app/shared/database.service';
+import { Team, TeamService } from 'src/app/shared/teams.service';
 import { UserData } from 'src/app/shared/shared.interface';
 
 @Component({
@@ -12,22 +11,10 @@ import { UserData } from 'src/app/shared/shared.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayersComponent {
-  public usersObs: Observable<any>;
+  public teamsObs: Observable<Team[]>;
 
-  constructor(private readonly database: DatabaseService) {
-    this.usersObs = this.database.userData$.pipe(
-      filter(userData => userData != null),
-      map(userData => {
-        if (userData == null) return [];
-        return Object.keys(userData)
-          .reduce<any>((acc, cur) => {
-            return [...acc, userData[cur]];
-          }, [])
-          .sort((a: UserData, b: UserData) =>
-            a.name < b.name ? -1 : a.name > b.name ? 1 : 0,
-          );
-      }),
-    );
+  constructor(private readonly teams: TeamService) {
+    this.teamsObs = this.teams.teams$;
   }
 
   trackByFn(index: number, item: UserData) {
