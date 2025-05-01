@@ -1,10 +1,14 @@
 <div class="page-content-container">
   <h1 class="page-header">Hraci</h1>
-  <div *ngFor="let team of teamsObs | async">
-    <h2 class="team-name">{{ team.name }}</h2>
+  <div *ngFor="let team of teamsObs | async; first as isFirst">
+    @if (isFirst && homeTeam) {
+      <h2 class="team-name">{{ team.name }} (tvůj tým)</h2>
+    } @else {
+      <h2 class="team-name">{{ team.name }}</h2>
+    }
     <mat-accordion>
       <mat-expansion-panel
-        *ngFor="let user of team.players"
+        *ngFor="let user of team.playersData()"
       >
         <mat-expansion-panel-header>
           <mat-panel-title>

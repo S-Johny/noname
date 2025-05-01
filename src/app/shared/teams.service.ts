@@ -6,11 +6,15 @@ import { Users, UserData } from './shared.interface';
 
 export class Team {
   public name: string;
-  public players: [UserData];
+  public players: Users;
 
-  constructor(name: string, players: [UserData]) {
+  constructor(name: string, players: Users) {
     this.name = name;
     this.players = players;
+  }
+
+  playersData() {
+    return Object.values(this.players);
   }
 }
 
@@ -36,17 +40,19 @@ export class TeamService {
    */
   private teamList(userData: Users) {
     if (userData == null) return [];
-    let map = Object.values(userData)
-      .reduce<Map<string, [UserData]>>((teams, user) => {
-        console.log(teams);
-        console.log(user);
+    let map = Object.entries(userData)
+      .reduce<Map<string, Users>>((teams, entry) => {
+        const [userId, user] = entry;
         if (teams.has(user.team)) {
-          teams.get(user.team)?.push(user);
+          const team = teams.get(user.team);
+          if (team) {
+            team[userId] = user;
+          }
         } else {
-          teams.set(user.team, [user]);
+          teams.set(user.team, {userId: user});
         }
         return teams;
-      }, new Map<string, [UserData]>());
+      }, new Map<string, Users>());
     const result = [];
     for (const [key, value] of map.entries()) {
       result.push(new Team(key, value));
