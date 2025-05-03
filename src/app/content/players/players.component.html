@@ -1,143 +1,150 @@
 <div class="page-content-container">
   <h1 class="page-header">Hraci</h1>
-  <mat-accordion>
-    <mat-expansion-panel
-      *ngFor="let user of usersObs | async; trackBy: trackByFn"
-    >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ user.name }}
-        </mat-panel-title>
-        <mat-panel-description>
-          Time: {{ user.gameTime | timeCountdown | async }}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div class="user-details-wrapper">
-        <div class="small-answers-container">
-          <div class="answer-container">
-            <div class="asnwer-header">Mobil</div>
-            <div class="answer">{{ user.mobile }}</div>
-          </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Email</div>
-            <div class="answer">{{ user.email }}</div>
-          </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Tým</div>
-            <div class="answer">{{ user.team }}</div>
-          </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Komunikace</div>
-            <div class="answer">{{ user.communication }}</div>
-          </div>
-        </div>
-        <mat-divider class="divider"></mat-divider>
-        <div class="small-answers-container">
-          <div class="answer-container">
-            <div class="asnwer-header">Internet</div>
-            <div class="answer">{{ user.internet }}</div>
-          </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Powerbanka</div>
-            <div class="answer">{{ user.powerbank }}</div>
-          </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Spacák</div>
-            <div class="answer">{{ user.sleepingBag }}</div>
-          </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Spánek na divoko</div>
-            <div class="answer">{{ user.sleepingOutside }}</div>
-          </div>
-          <!-- <div class="answer-container">
-            <div class="asnwer-header">Čas trávený jak chceš</div>
-            <div class="answer">{{ user.timeManagement }}</div>
-          </div> -->
-        </div>
-        <mat-divider class="divider"></mat-divider>
-        <div class="small-answers-container">
-          <div class="answer-container">
-            <div class="asnwer-header">Oblíbené jídlo</div>
-            <div class="answer">{{ user.favoriteDish }}</div>
-          </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Oblíbená rostlina</div>
-            <div class="answer">{{ user.favoriteFlower }}</div>
-          </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Oblíbený toaletní papír</div>
-            <div class="answer">{{ user.favoriteToieletPaper }}</div>
-          </div>
-
+  <div *ngFor="let team of teamsObs | async; first as isFirst">
+    @if (isFirst && homeTeam) {
+      <h2 class="team-name">{{ team.name }} (tvůj tým)</h2>
+    } @else {
+      <h2 class="team-name">{{ team.name }}</h2>
+    }
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let user of team.playersData()"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ user.name }}
+          </mat-panel-title>
+          <mat-panel-description>
+            Time: {{ user.gameTime | timeCountdown | async }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="user-details-wrapper">
           <div class="small-answers-container">
             <div class="answer-container">
-              <div class="asnwer-header">Oblíbený dopravní prostředek</div>
-              <div class="answer">{{ user.favoriteTransport }}</div>
+              <div class="asnwer-header">Mobil</div>
+              <div class="answer">{{ user.mobile }}</div>
             </div>
             <div class="answer-container">
-              <div class="asnwer-header">Oblíbený podnik</div>
-              <div class="answer">{{ user.favoritePub }}</div>
+              <div class="asnwer-header">Email</div>
+              <div class="answer">{{ user.email }}</div>
             </div>
             <div class="answer-container">
-              <div class="asnwer-header">Oblíbené místo</div>
-              <div class="answer">{{ user.favoritePlace }}</div>
+              <div class="asnwer-header">Tým</div>
+              <div class="answer">{{ user.team }}</div>
+            </div>
+            <div class="answer-container">
+              <div class="asnwer-header">Komunikace</div>
+              <div class="answer">{{ user.communication }}</div>
             </div>
           </div>
-        </div>
-        <mat-divider class="divider"></mat-divider>
-        <div class="small-answers-container">
-          <div class="answer-container">
-            <div class="asnwer-header">Poznávací znamení</div>
-            <div class="answer">{{ user.recognitionSign }}</div>
+          <mat-divider class="divider"></mat-divider>
+          <div class="small-answers-container">
+            <div class="answer-container">
+              <div class="asnwer-header">Internet</div>
+              <div class="answer">{{ user.internet }}</div>
+            </div>
+            <div class="answer-container">
+              <div class="asnwer-header">Powerbanka</div>
+              <div class="answer">{{ user.powerbank }}</div>
+            </div>
+            <div class="answer-container">
+              <div class="asnwer-header">Spacák</div>
+              <div class="answer">{{ user.sleepingBag }}</div>
+            </div>
+            <div class="answer-container">
+              <div class="asnwer-header">Spánek na divoko</div>
+              <div class="answer">{{ user.sleepingOutside }}</div>
+            </div>
+            <!-- <div class="answer-container">
+              <div class="asnwer-header">Čas trávený jak chceš</div>
+              <div class="answer">{{ user.timeManagement }}</div>
+            </div> -->
           </div>
-          <div class="answer-container">
-            <div class="asnwer-header">Začátek</div>
-            <div class="answer">{{ user.startingPoint }}</div>
-          </div>
-          <!-- <div class="answer-container">
-            <div class="asnwer-header">Přátelé na Facebooku</div>
-            <div class="answer">{{ user.favebookFriends }}</div>
-          </div> -->
-          <!-- <div class="answer-container">
-            <div class="asnwer-header">Skutečných přátel</div>
-            <div class="answer">{{ user.friends }}</div>
-          </div> -->
+          <mat-divider class="divider"></mat-divider>
+          <div class="small-answers-container">
+            <div class="answer-container">
+              <div class="asnwer-header">Oblíbené jídlo</div>
+              <div class="answer">{{ user.favoriteDish }}</div>
+            </div>
+            <div class="answer-container">
+              <div class="asnwer-header">Oblíbená rostlina</div>
+              <div class="answer">{{ user.favoriteFlower }}</div>
+            </div>
+            <div class="answer-container">
+              <div class="asnwer-header">Oblíbený toaletní papír</div>
+              <div class="answer">{{ user.favoriteToieletPaper }}</div>
+            </div>
 
+            <div class="small-answers-container">
+              <div class="answer-container">
+                <div class="asnwer-header">Oblíbený dopravní prostředek</div>
+                <div class="answer">{{ user.favoriteTransport }}</div>
+              </div>
+              <div class="answer-container">
+                <div class="asnwer-header">Oblíbený podnik</div>
+                <div class="answer">{{ user.favoritePub }}</div>
+              </div>
+              <div class="answer-container">
+                <div class="asnwer-header">Oblíbené místo</div>
+                <div class="answer">{{ user.favoritePlace }}</div>
+              </div>
+            </div>
+          </div>
+          <mat-divider class="divider"></mat-divider>
+          <div class="small-answers-container">
+            <div class="answer-container">
+              <div class="asnwer-header">Poznávací znamení</div>
+              <div class="answer">{{ user.recognitionSign }}</div>
+            </div>
+            <div class="answer-container">
+              <div class="asnwer-header">Začátek</div>
+              <div class="answer">{{ user.startingPoint }}</div>
+            </div>
+            <!-- <div class="answer-container">
+              <div class="asnwer-header">Přátelé na Facebooku</div>
+              <div class="answer">{{ user.favebookFriends }}</div>
+            </div> -->
+            <!-- <div class="answer-container">
+              <div class="asnwer-header">Skutečných přátel</div>
+              <div class="answer">{{ user.friends }}</div>
+            </div> -->
+
+            <!-- <div class="answer-container">
+              <div class="asnwer-header">Sny</div>
+              <div class="answer">{{ user.dreams }}</div>
+            </div> -->
+          </div>
+          <mat-divider class="divider"></mat-divider>
+          <!-- <div class="answer-container spacer">
+            <div class="asnwer-header">Místo/doba kde by si chtěl žít</div>
+            <div class="answer">{{ user.placeToLive }}</div>
+          </div> -->
+          <!-- <div class="answer-container spacer">
+            <div class="asnwer-header">Charakteristika</div>
+            <div class="answer">{{ user.character }}</div>
+          </div> -->
+          <!-- <div class="answer-container spacer">
+            <div class="asnwer-header">Co ti v životě dělá radost</div>
+            <div class="answer">{{ user.happyLife }}</div>
+          </div>
+          <div class="answer-container spacer">
+            <div class="asnwer-header">Na co ti nezbývá čas</div>
+            <div class="answer">{{ user.sadLife }}</div>
+          </div> -->
+          <div class="answer-container spacer">
+            <div class="asnwer-header">Myšlenka/citát</div>
+            <div class="answer">{{ user.quote }}</div>
+          </div>
+          <div class="answer-container">
+            <div class="asnwer-header">Nejcennější věc</div>
+            <div class="answer">{{ user.pricelessItem }}</div>
+          </div>
           <!-- <div class="answer-container">
-            <div class="asnwer-header">Sny</div>
-            <div class="answer">{{ user.dreams }}</div>
+            <div class="asnwer-header">Otázka pro druhé</div>
+            <div class="answer">{{ user.questionToOthers }}</div>
           </div> -->
         </div>
-        <mat-divider class="divider"></mat-divider>
-        <!-- <div class="answer-container spacer">
-          <div class="asnwer-header">Místo/doba kde by si chtěl žít</div>
-          <div class="answer">{{ user.placeToLive }}</div>
-        </div> -->
-        <!-- <div class="answer-container spacer">
-          <div class="asnwer-header">Charakteristika</div>
-          <div class="answer">{{ user.character }}</div>
-        </div> -->
-        <!-- <div class="answer-container spacer">
-          <div class="asnwer-header">Co ti v životě dělá radost</div>
-          <div class="answer">{{ user.happyLife }}</div>
-        </div>
-        <div class="answer-container spacer">
-          <div class="asnwer-header">Na co ti nezbývá čas</div>
-          <div class="answer">{{ user.sadLife }}</div>
-        </div> -->
-        <div class="answer-container spacer">
-          <div class="asnwer-header">Myšlenka/citát</div>
-          <div class="answer">{{ user.quote }}</div>
-        </div>
-        <div class="answer-container">
-          <div class="asnwer-header">Nejcennější věc</div>
-          <div class="answer">{{ user.pricelessItem }}</div>
-        </div>
-        <!-- <div class="answer-container">
-          <div class="asnwer-header">Otázka pro druhé</div>
-          <div class="answer">{{ user.questionToOthers }}</div>
-        </div> -->
-      </div>
-    </mat-expansion-panel>
-  </mat-accordion>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

@@ -1,8 +1,8 @@
-import { filter, map } from 'rxjs/operators';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DatabaseService } from 'src/app/shared/database.service';
-import { UserData } from 'src/app/shared/shared.interface';
+import { User } from '@angular/fire/auth';
+import { Observable, combineLatestWith, filter, map } from 'rxjs';
+import { AuthService } from 'src/app/shared/auth.service';
+import { Team, TeamService } from 'src/app/shared/teams.service';
 
 @Component({
   selector: 'app-players',
@@ -12,25 +12,31 @@ import { UserData } from 'src/app/shared/shared.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayersComponent {
-  public usersObs: Observable<any>;
+  public teamsObs: Observable<Team[]>;
+  public homeTeam: boolean = false;
 
-  constructor(private readonly database: DatabaseService) {
-    this.usersObs = this.database.userData$.pipe(
-      filter(userData => userData != null),
-      map(userData => {
-        if (userData == null) return [];
-        return Object.keys(userData)
-          .reduce<any>((acc, cur) => {
-            return [...acc, userData[cur]];
-          }, [])
-          .sort((a: UserData, b: UserData) =>
-            a.name < b.name ? -1 : a.name > b.name ? 1 : 0,
-          );
-      }),
+  constructor(
+    private readonly auth: AuthService,
+    private readonly teams: TeamService
+  ) {
+    this.teamsObs = this.teams.teams$.pipe(
+      combineLatestWith(this.auth.userData$),
+      filter(([_, user]) => user !== null),
+      map(([teams, user]) => this.moveHomeTeamFirst(teams, user!))
     );
   }
 
-  trackByFn(index: number, item: UserData) {
-    return item.name;
+  moveHomeTeamFirst(teams: Team[], user: User) {
+    const homeTeamIndex = teams.findIndex(team => {
+      Object.keys(team.players).some(key => key == user.uid);
+    });
+    if (homeTeamIndex >= 0) {
+      const [homeTeam] = teams.splice(homeTeamIndex, 1);
+      teams.unshift(homeTeam);
+      this.homeTeam = true;
+    } else {
+      this.homeTeam = false;
+    }
+    return teams;
   }
 }
