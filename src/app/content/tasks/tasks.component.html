@@ -10,14 +10,14 @@
           >Odměna: {{ task.reward }}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div class="required">{{ task.required ? 'POVINNY' : '' }}</div>
+      <div class="required">{{ task.required ? 'POVINNÝ' : '' }}</div>
       <div class="task-container" [innerHTML]="task.description"></div>
       <mat-action-row>
         <div class="times-container">
           <div class="task-times task-start">
             Začátek úkolu: {{ task.startAt | date : 'd.&nbsp;M. YYYY HH:mm' }}
           </div>
-          <div class="task-times task-end">
+          <div class="task-times task-end" *ngIf="showTaskEnd">
             Konec úkolu: {{ task.endAt | date : 'd.&nbsp;M. YYYY HH:mm' }}
           </div>
         </div>

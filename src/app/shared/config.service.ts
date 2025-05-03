@@ -24,7 +24,7 @@ export class ConfigService {
       "title": "BEZEJMENA",
       "subtitle": "Závěrečná víkendovka OHB 2024/2025",
       "eventStart": "2025-05-07T04:00:00Z",
-      "showTaskEnd": "true",
+      "showTaskEnd": true,
     };
     this.remoteConfig.settings.minimumFetchIntervalMillis
         = environment.configFetchIntervalMillis;

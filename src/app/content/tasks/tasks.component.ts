@@ -3,7 +3,9 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
+import { ConfigService } from 'src/app/shared/config.service';
 import { DatabaseService } from 'src/app/shared/database.service';
 import { emptyTask } from 'src/app/shared/utils';
 
@@ -16,6 +18,8 @@ import { emptyTask } from 'src/app/shared/utils';
 })
 export class TasksComponent implements OnInit, OnDestroy {
   taskData = this.database.tasks$;
+  private configService: ConfigService = inject(ConfigService);
+  showTaskEnd = this.configService.getBoolean("showTaskEnd");
   emptyTask = {
     name: '',
     required: false,
