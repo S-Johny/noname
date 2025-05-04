@@ -35,6 +35,7 @@ export interface UserData {
   internet: string;
   phone: string;
   email: string;
+  img: string;
   communication: string;
   powerbank: string;
   sleepingBag: string;

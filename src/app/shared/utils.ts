@@ -25,6 +25,7 @@ export const emptyUser: UserData = {
   internet: ``,
   phone: ``,
   email: ``,
+  img: ``,
   communication: ``,
   powerbank: ``,
   sleepingBag: ``,

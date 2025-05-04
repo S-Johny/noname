@@ -34,6 +34,7 @@ fieldnames = [
   "prizedItem",
   "favoritePlace",
   "org",
+  "img",
 ]
 
 with open(args.user_data_file) as f:
@@ -60,15 +61,16 @@ with open(args.user_data_file) as f:
 def firebase_cmd():
   return os.environ.get('FIREBASE_CMD', "firebase")
 
-def add_default_properties(users_data):
+def set_common_properties(users_data):
   for user_data in users_data.values():
     user_data["gameTime"] = 4.5 * 3600
     if user_data["org"].lower() == "true":
       user_data["team"] = "Orgové"
     else:
       user_data["team"] = ""
+    del user_data["org"]
 
-add_default_properties(users)
+set_common_properties(users)
 if args.upload:
   for user_id, user_data in users.items():
     # TODO: Ensure proper escaping of data_str
