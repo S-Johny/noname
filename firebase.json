@@ -13,7 +13,7 @@
     },
     {
       "target": "app-test",
-      "public": "dist",
+      "public": "dist-test",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
