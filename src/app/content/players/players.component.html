@@ -3,6 +3,8 @@
   <div *ngFor="let team of teamsObs | async; first as isFirst">
     @if (isFirst && homeTeam) {
       <h2 class="team-name">{{ team.name }} (tvůj tým)</h2>
+    } @else if (team.name == "") {
+      <h2 class="team-name">Nezařazení</h2>
     } @else {
       <h2 class="team-name">{{ team.name }}</h2>
     }
