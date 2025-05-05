@@ -7,10 +7,18 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, Subject, firstValueFrom, takeUntil, tap } from 'rxjs';
+import {
+  Subject,
+  combineLatestWith,
+  firstValueFrom,
+  takeUntil,
+  tap
+} from 'rxjs';
+import { AuthService } from 'src/app/shared/auth.service';
 import { DatabaseService } from 'src/app/shared/database.service';
 import { UserData, UsersLog } from 'src/app/shared/shared.interface';
 
@@ -42,6 +50,8 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
   timeFactorGift: number = 0.8;
   timeFactorSomeoneOther: number = 0.85;
   logOptions: LogOption[] = this.createLogOptions();
+  userAuth: User | null = null;
+  user: UserData | null = null;
 
   optionType = optionsType;
   userOptions = this.database.userOptions$;
@@ -59,16 +69,42 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private readonly fb: FormBuilder,
+    private readonly auth: AuthService,
     private readonly database: DatabaseService,
   ) {
     this.logForm = this.fb.group({
       logOption: [optionsType.Me],
       time: [null, [Validators.required]],
       description: ['', [Validators.required]],
-      forId: [null, [Validators.required]],
+      forId: [null, []],
       witnessId: ['', [Validators.required]],
-      fromId: ['', [Validators.required]],
+      fromId: ['', []],
     });
+    this.logForm.get('logOption')?.valueChanges.subscribe(opt => {
+      if (opt === optionsType.Me) {
+        this.logForm.get('forId')?.clearValidators();
+        this.logForm.get('fromId')?.clearValidators();
+      } else {
+        this.logForm.get('forId')?.setValidators(Validators.required);
+        this.logForm.get('fromId')?.setValidators(Validators.required);
+      }
+      this.logForm.get('forId')?.updateValueAndValidity();
+      this.logForm.get('fromId')?.updateValueAndValidity();
+    });
+    this.auth.userData$
+      .pipe(
+        takeUntil(this.unsubscribe),
+        combineLatestWith(this.database.userData$),
+        tap(([userAuth, userData]) => {
+          this.userAuth = userAuth;
+          if (userData && userAuth) {
+            this.user = userData![userAuth.uid];
+          } else {
+            this.user = null;
+          }
+        }),
+      )
+      .subscribe();
     this.dataSource = new MatTableDataSource();
     this.database.logs$
       .pipe(
@@ -157,7 +193,7 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
         : users[this.logForm.value.forId];
     const logBase = {
       description: this.logForm.value.description,
-      fromName: fromUser.name,
+      fromName: fromUser?.name,
       forName: '',
       witnessName: witness.name,
       time: this.logForm.value.time,
@@ -165,15 +201,20 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     switch (this.logForm.value.logOption) {
       case optionsType.Me:
+        const userAuth = this.userAuth;
+        const user = this.user;
+        if (!userAuth || !user) {
+          return;
+        }
         this.database
           .updateDatabaseTimeAndLog(
             {
-              ['users/' + (this.logForm.value.forId as string)]: {
-                ...(<UserData>forUser),
-                gameTime: timeInSeconds + (forUser as UserData).gameTime,
+              ['users/' + (userAuth.uid as string)]: {
+                ...user,
+                gameTime: timeInSeconds + user.gameTime,
               },
             },
-            { ...logBase, forName: (forUser as UserData).name },
+            { ...logBase, fromName: user.name, forName: user.name },
           )
           .then(() => {
             this.logForm.reset();
