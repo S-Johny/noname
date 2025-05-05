@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, combineLatestWith, filter, tap } from 'rxjs';
 import { RoutePaths } from './app-routing.module';
 import { AuthService } from './shared/auth.service';
 import { ConfigService } from './shared/config.service';
@@ -96,6 +96,13 @@ export class AppComponent implements OnDestroy {
           } else {
             this.userName = null;
             this.sidnavButtons = DEFAULT_MENU;
+          }
+        }),
+        filter(user => user !== null),
+        combineLatestWith(this.database.userData$),
+        tap(([userAuth, userData]) => {
+          if (userData && userAuth) {
+            this.userName = userData![userAuth.uid].name;
           }
         }),
       )

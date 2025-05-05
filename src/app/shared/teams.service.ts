@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { DatabaseService } from './database.service';
-import { Users, UserData } from './shared.interface';
+import { Users } from './shared.interface';
 
 export class Team {
   public name: string;
@@ -43,13 +43,12 @@ export class TeamService {
     let map = Object.entries(userData)
       .reduce<Map<string, Users>>((teams, entry) => {
         const [userId, user] = entry;
-        if (teams.has(user.team)) {
-          const team = teams.get(user.team);
-          if (team) {
-            team[userId] = user;
-          }
-        } else {
-          teams.set(user.team, {userId: user});
+        if (!teams.has(user.team)) {
+          teams.set(user.team, {});
+        }
+        const team = teams.get(user.team);
+        if (team) {
+          team[userId] = user;
         }
         return teams;
       }, new Map<string, Users>());

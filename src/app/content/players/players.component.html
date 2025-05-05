@@ -3,6 +3,8 @@
   <div *ngFor="let team of teamsObs | async; first as isFirst">
     @if (isFirst && homeTeam) {
       <h2 class="team-name">{{ team.name }} (tvůj tým)</h2>
+    } @else if (team.name == "") {
+      <h2 class="team-name">Nezařazení</h2>
     } @else {
       <h2 class="team-name">{{ team.name }}</h2>
     }
@@ -22,7 +24,7 @@
           <div class="small-answers-container">
             <div class="answer-container">
               <div class="asnwer-header">Mobil</div>
-              <div class="answer">{{ user.mobile }}</div>
+              <div class="answer">{{ user.phone }}</div>
             </div>
             <div class="answer-container">
               <div class="asnwer-header">Email</div>
@@ -68,11 +70,11 @@
             </div>
             <div class="answer-container">
               <div class="asnwer-header">Oblíbená rostlina</div>
-              <div class="answer">{{ user.favoriteFlower }}</div>
+              <div class="answer">{{ user.favoritePlant }}</div>
             </div>
             <div class="answer-container">
               <div class="asnwer-header">Oblíbený toaletní papír</div>
-              <div class="answer">{{ user.favoriteToieletPaper }}</div>
+              <div class="answer">{{ user.favoriteToiletPaper }}</div>
             </div>
 
             <div class="small-answers-container">
@@ -82,7 +84,7 @@
               </div>
               <div class="answer-container">
                 <div class="asnwer-header">Oblíbený podnik</div>
-                <div class="answer">{{ user.favoritePub }}</div>
+                <div class="answer">{{ user.favoriteInstitute }}</div>
               </div>
               <div class="answer-container">
                 <div class="asnwer-header">Oblíbené místo</div>
@@ -137,7 +139,7 @@
           </div>
           <div class="answer-container">
             <div class="asnwer-header">Nejcennější věc</div>
-            <div class="answer">{{ user.pricelessItem }}</div>
+            <div class="answer">{{ user.prizedItem }}</div>
           </div>
           <!-- <div class="answer-container">
             <div class="asnwer-header">Otázka pro druhé</div>

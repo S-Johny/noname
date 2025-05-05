@@ -28,7 +28,7 @@ export class PlayersComponent {
 
   moveHomeTeamFirst(teams: Team[], user: User) {
     const homeTeamIndex = teams.findIndex(team => {
-      Object.keys(team.players).some(key => key == user.uid);
+      return Object.keys(team.players).some(key => key == user.uid);
     });
     if (homeTeamIndex >= 0) {
       const [homeTeam] = teams.splice(homeTeamIndex, 1);
