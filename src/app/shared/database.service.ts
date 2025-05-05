@@ -10,7 +10,13 @@ import {
 } from '@angular/fire/database';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { BehaviorSubject } from 'rxjs';
-import { Users, UsersLog, UserData, TaskData } from './shared.interface';
+import {
+  ConfigData,
+  TaskData,
+  UserData,
+  Users,
+  UsersLog,
+} from './shared.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +31,12 @@ export class DatabaseService {
     orderByChild('shown'),
     equalTo(true),
   );
+  configRef = ref(this.db, 'config/');
 
   private userDataSubscription: Unsubscribe | undefined;
   private logDataSubscription: Unsubscribe | undefined;
   private taskDataSubscription: Unsubscribe | undefined;
+  private configDataSubscription: Unsubscribe | undefined;
 
   private userData: BehaviorSubject<Users | null> =
     new BehaviorSubject<Users | null>(null);
@@ -52,6 +60,14 @@ export class DatabaseService {
     [],
   );
   public tasks$ = this.tasks.asObservable();
+
+  public config: BehaviorSubject<ConfigData>
+    = new BehaviorSubject<ConfigData>({
+      timeFactorMyTeam: 0.9,
+      timeFactorGift: 0.8,
+      timeFactorSomeoneOther: 0.85
+    });
+  public config$ = this.config.asObservable();
 
   constructor() {}
 
@@ -133,6 +149,13 @@ export class DatabaseService {
     });
   }
 
+  subscribeToConfigdb(): void {
+    this.configDataSubscription = onValue(this.configRef, snapshot => {
+      const configObj = snapshot.val() != null ? snapshot.val() : {};
+      this.config.next(configObj);
+    });
+  }
+
   unsubscribeToTasksdb(): void {
     if (this.taskDataSubscription != null) {
       this.taskDataSubscription();
@@ -151,8 +174,15 @@ export class DatabaseService {
     }
   }
 
+  unsubscribeFromConfigdb(): void {
+    if (this.configDataSubscription != null) {
+      this.configDataSubscription();
+    }
+  }
+
   ngOnDestroy(): void {
     this.unsubscribeFromdb();
     this.unsubscribeToLogdb();
+    this.unsubscribeFromConfigdb();
   }
 }

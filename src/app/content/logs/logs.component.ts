@@ -20,6 +20,13 @@ enum optionsType {
   SomeoneOther = 'someoneOther',
   Gift = 'gift',
 }
+
+interface LogOption {
+  value: string;
+  label: string;
+  description: string;
+}
+
 @Component({
   selector: 'app-logs',
   templateUrl: './logs.component.html',
@@ -31,28 +38,10 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   dataSource: MatTableDataSource<UsersLog>;
   logForm: FormGroup;
-  logOptions: { value: string; label: string; description: string }[] = [
-    {
-      value: optionsType.Me,
-      label: 'Pro mě',
-      description: `Donstaneš 100% času`,
-    },
-    {
-      value: optionsType.MyTeam,
-      label: 'Tým',
-      description: `Každý z tvého týmu dostane (90% času) / počet členů`,
-    },
-    {
-      value: optionsType.Gift,
-      label: 'Dárek',
-      description: `Tobě se strhne 100% a dotyčný/á dostane 80% času`,
-    },
-    {
-      value: optionsType.SomeoneOther,
-      label: 'Ostatní',
-      description: `Zadávání ze někoho. Dotyčný/á dostane 85% času`,
-    },
-  ];
+  timeFactorMyTeam: number = 0.9;
+  timeFactorGift: number = 0.8;
+  timeFactorSomeoneOther: number = 0.85;
+  logOptions: LogOption[] = this.createLogOptions();
 
   optionType = optionsType;
   userOptions = this.database.userOptions$;
@@ -89,6 +78,17 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
         }),
       )
       .subscribe();
+    this.database.config$
+      .pipe(
+        takeUntil(this.unsubscribe),
+        tap(data => {
+          this.timeFactorMyTeam = data.timeFactorMyTeam;
+          this.timeFactorGift = data.timeFactorGift;
+          this.timeFactorSomeoneOther = data.timeFactorSomeoneOther;
+          this.logOptions = this.createLogOptions();
+        })
+      )
+      .subscribe();
   }
 
   ngAfterViewInit(): void {
@@ -97,10 +97,12 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.database.subscribeToLogdb();
+    this.database.subscribeToConfigdb();
   }
 
   ngOnDestroy(): void {
     this.database.unsubscribeToLogdb();
+    this.database.unsubscribeFromConfigdb();
     this.unsubscribe.next(null);
     this.unsubscribe.complete();
   }
@@ -111,6 +113,31 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   clearForId(): void {
     this.logForm.get('forId')?.reset();
+  }
+
+  private createLogOptions(): LogOption[] {
+    return [
+      {
+        value: optionsType.Me,
+        label: 'Pro mě',
+        description: `Dostaneš 100 % času`,
+      },
+      {
+        value: optionsType.MyTeam,
+        label: 'Tým',
+        description: `Každý z tvého týmu dostane (${this.timeFactorMyTeam * 100} % času) / počet členů`,
+      },
+      {
+        value: optionsType.Gift,
+        label: 'Dárek',
+        description: `Tobě se strhne 100 % a dotyčný/á dostane ${this.timeFactorGift * 100} % času`,
+      },
+      {
+        value: optionsType.SomeoneOther,
+        label: 'Ostatní',
+        description: `Zadávání ze někoho. Dotyčný/á dostane ${this.timeFactorSomeoneOther * 100} % času`,
+      },
+    ];
   }
 
   async addNewLog(): Promise<void> {
@@ -156,7 +183,8 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       case optionsType.MyTeam:
         const gameTime = Math.floor(
-          (timeInSeconds * 0.9) / this.logForm.value.forId.length,
+          (timeInSeconds * this.timeFactorMyTeam) /
+          this.logForm.value.forId.length,
         );
         const updates: any = {};
         this.logForm.value.forId.forEach((item: string) => {
@@ -183,7 +211,7 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
               ['users/' + (this.logForm.value.forId as string)]: {
                 ...(<UserData>forUser),
                 gameTime:
-                  Math.floor(timeInSeconds * 0.85) +
+                  Math.floor(timeInSeconds * this.timeFactorSomeoneOther) +
                   (forUser as UserData).gameTime,
               },
             },
@@ -208,7 +236,7 @@ export class LogsComponent implements OnInit, OnDestroy, AfterViewInit {
               ['users/' + (this.logForm.value.forId as string)]: {
                 ...(<UserData>forUser),
                 gameTime:
-                  Math.floor(timeInSeconds * 0.8) +
+                  Math.floor(timeInSeconds * this.timeFactorGift) +
                   (forUser as UserData).gameTime,
               },
               ['users/' + (this.logForm.value.fromId as string)]: {
