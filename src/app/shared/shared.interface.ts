@@ -61,3 +61,9 @@ export interface UserData {
   dreams: string;
   questionToOthers: string;
 }
+
+export interface ConfigData {
+  timeFactorMyTeam: number;
+  timeFactorGift: number;
+  timeFactorSomeoneOther: number;
+}

@@ -39,7 +39,11 @@
             <input matInput type="number" formControlName="time" />
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="input-filed">
+          <mat-form-field
+            appearance="fill"
+            class="input-filed"
+            *ngIf="logForm.value.logOption !== optionType.Me"
+          >
             <mat-label>Zadavatel/Dárce</mat-label>
             <mat-select formControlName="fromId">
               <mat-option
@@ -53,7 +57,8 @@
           <mat-form-field
             appearance="fill"
             class="input-filed"
-            *ngIf="logForm.value.logOption !== optionType.MyTeam"
+            *ngIf="logForm.value.logOption !== optionType.MyTeam
+                   && logForm.value.logOption !== optionType.Me"
           >
             <mat-label>Kdo dostane čas</mat-label>
             <mat-select formControlName="forId">
