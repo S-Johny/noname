@@ -25,7 +25,7 @@
           <div class="user-image-container spacer" *ngIf="user.img">
             <a href="{{ user.img }}" target="_blank" rel="noopener">Foto</a>
           </div>
-          <div class="small-answers-container">
+          <div class="small-answers-container spacer">
             <div class="answer-container">
               <div class="asnwer-header">Mobil</div>
               <div class="answer">{{ user.phone }}</div>
@@ -38,10 +38,10 @@
               <div class="asnwer-header">Tým</div>
               <div class="answer">{{ user.team }}</div>
             </div>
-            <div class="answer-container">
-              <div class="asnwer-header">Komunikace</div>
-              <div class="answer">{{ user.communication }}</div>
-            </div>
+          </div>
+          <div class="answer-container">
+            <div class="asnwer-header">Komunikace</div>
+            <div class="answer">{{ user.communication }}</div>
           </div>
 
           <!-- <mat-divider class="divider"></mat-divider> -->
