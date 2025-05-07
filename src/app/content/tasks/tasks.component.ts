@@ -22,7 +22,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     map(tasks => {
       tasks = tasks.filter(task => {
         const now = Date.now();
-        return task.startAt > now && task.endAt < now;
+        return task.startAt < now && now < task.endAt;
       });
       tasks.sort((a, b) => {
         if (a.required && !b.required) {
