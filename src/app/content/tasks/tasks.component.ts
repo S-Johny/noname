@@ -5,6 +5,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
+import { map } from 'rxjs';
 import { ConfigService } from 'src/app/shared/config.service';
 import { DatabaseService } from 'src/app/shared/database.service';
 import { emptyTask } from 'src/app/shared/utils';
@@ -17,7 +18,28 @@ import { emptyTask } from 'src/app/shared/utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksComponent implements OnInit, OnDestroy {
-  taskData = this.database.tasks$;
+  taskData = this.database.tasks$.pipe(
+    map(tasks => {
+      tasks = tasks.filter(task => {
+        const now = Date.now();
+        return task.startAt < now && now < task.endAt;
+      });
+      tasks.sort((a, b) => {
+        if (a.required && !b.required) {
+          return -1;
+        } else if (!a.required && b.required) {
+          return 1;
+        } else if (a.startAt < b.startAt) {
+          return -1;
+        } else if (a.startAt > b.startAt) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      return tasks;
+    })
+  );
   private configService: ConfigService = inject(ConfigService);
   showTaskEnd = this.configService.getBoolean("showTaskEnd");
   emptyTask = {
@@ -36,12 +58,14 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   constructor(private readonly database: DatabaseService) {}
 
-  ngOnDestroy(): void {
-    this.database.unsubscribeToTasksdb();
+  async ngOnInit() {
+    this.database.subscribeToTasksdb();
+    await this.configService.initializeConfig();
+    this.showTaskEnd = this.configService.getBoolean("showTaskEnd");
   }
 
-  ngOnInit(): void {
-    this.database.subscribeToTasksdb();
+  ngOnDestroy(): void {
+    this.database.unsubscribeToTasksdb();
   }
 
   uploadTask(): void {
