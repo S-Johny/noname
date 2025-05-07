@@ -139,6 +139,10 @@ body {
   box-sizing: border-box;
 }
 
+ul, ol {
+  padding-left: 2em;
+}
+
 /* stylelint-disable-next-line selector-max-type */
 input,
 button {
