@@ -58,12 +58,14 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   constructor(private readonly database: DatabaseService) {}
 
-  ngOnDestroy(): void {
-    this.database.unsubscribeToTasksdb();
+  async ngOnInit() {
+    this.database.subscribeToTasksdb();
+    await this.configService.initializeConfig();
+    this.showTaskEnd = this.configService.getBoolean("showTaskEnd");
   }
 
-  ngOnInit(): void {
-    this.database.subscribeToTasksdb();
+  ngOnDestroy(): void {
+    this.database.unsubscribeToTasksdb();
   }
 
   uploadTask(): void {
