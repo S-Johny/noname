@@ -20,8 +20,12 @@
             Time: {{ user.gameTime | timeCountdown | async }}
           </mat-panel-description>
         </mat-expansion-panel-header>
+
         <div class="user-details-wrapper">
-          <div class="small-answers-container">
+          <div class="user-image-container spacer" *ngIf="user.img">
+            <a href="{{ user.img }}" target="_blank" rel="noopener">Foto</a>
+          </div>
+          <div class="small-answers-container spacer">
             <div class="answer-container">
               <div class="asnwer-header">Mobil</div>
               <div class="answer">{{ user.phone }}</div>
@@ -34,36 +38,38 @@
               <div class="asnwer-header">Tým</div>
               <div class="answer">{{ user.team }}</div>
             </div>
-            <div class="answer-container">
-              <div class="asnwer-header">Komunikace</div>
-              <div class="answer">{{ user.communication }}</div>
-            </div>
           </div>
-          <mat-divider class="divider"></mat-divider>
-          <div class="small-answers-container">
-            <div class="answer-container">
+          <div class="answer-container">
+            <div class="asnwer-header">Komunikace</div>
+            <div class="answer">{{ user.communication }}</div>
+          </div>
+
+          <!-- <mat-divider class="divider"></mat-divider> -->
+          <!-- <div class="small-answers-container"> -->
+            <!-- <div class="answer-container">
               <div class="asnwer-header">Internet</div>
               <div class="answer">{{ user.internet }}</div>
-            </div>
-            <div class="answer-container">
+            </div> -->
+            <!-- <div class="answer-container">
               <div class="asnwer-header">Powerbanka</div>
               <div class="answer">{{ user.powerbank }}</div>
-            </div>
-            <div class="answer-container">
+            </div> -->
+            <!-- <div class="answer-container">
               <div class="asnwer-header">Spacák</div>
               <div class="answer">{{ user.sleepingBag }}</div>
-            </div>
-            <div class="answer-container">
+            </div> -->
+            <!-- <div class="answer-container">
               <div class="asnwer-header">Spánek na divoko</div>
               <div class="answer">{{ user.sleepingOutside }}</div>
-            </div>
+            </div> -->
             <!-- <div class="answer-container">
               <div class="asnwer-header">Čas trávený jak chceš</div>
               <div class="answer">{{ user.timeManagement }}</div>
             </div> -->
-          </div>
+          <!-- </div> -->
+
           <mat-divider class="divider"></mat-divider>
-          <div class="small-answers-container">
+          <div class="small-answers-container spacer">
             <div class="answer-container">
               <div class="asnwer-header">Oblíbené jídlo</div>
               <div class="answer">{{ user.favoriteDish }}</div>
@@ -76,47 +82,40 @@
               <div class="asnwer-header">Oblíbený toaletní papír</div>
               <div class="answer">{{ user.favoriteToiletPaper }}</div>
             </div>
-
-            <div class="small-answers-container">
-              <div class="answer-container">
-                <div class="asnwer-header">Oblíbený dopravní prostředek</div>
-                <div class="answer">{{ user.favoriteTransport }}</div>
-              </div>
-              <div class="answer-container">
-                <div class="asnwer-header">Oblíbený podnik</div>
-                <div class="answer">{{ user.favoriteInstitute }}</div>
-              </div>
-              <div class="answer-container">
-                <div class="asnwer-header">Oblíbené místo</div>
-                <div class="answer">{{ user.favoritePlace }}</div>
-              </div>
-            </div>
           </div>
-          <mat-divider class="divider"></mat-divider>
-          <div class="small-answers-container">
+          <div class="small-answers-container spacer">
             <div class="answer-container">
-              <div class="asnwer-header">Poznávací znamení</div>
-              <div class="answer">{{ user.recognitionSign }}</div>
+              <div class="asnwer-header">Oblíbený dopravní prostředek</div>
+              <div class="answer">{{ user.favoriteTransport }}</div>
             </div>
             <div class="answer-container">
-              <div class="asnwer-header">Začátek</div>
-              <div class="answer">{{ user.startingPoint }}</div>
+              <div class="asnwer-header">Oblíbený podnik</div>
+              <div class="answer">{{ user.favoriteInstitute }}</div>
             </div>
-            <!-- <div class="answer-container">
-              <div class="asnwer-header">Přátelé na Facebooku</div>
-              <div class="answer">{{ user.favebookFriends }}</div>
-            </div> -->
-            <!-- <div class="answer-container">
-              <div class="asnwer-header">Skutečných přátel</div>
-              <div class="answer">{{ user.friends }}</div>
-            </div> -->
-
-            <!-- <div class="answer-container">
-              <div class="asnwer-header">Sny</div>
-              <div class="answer">{{ user.dreams }}</div>
-            </div> -->
+            <div class="answer-container">
+              <div class="asnwer-header">Oblíbená píseň</div>
+              <div class="answer">{{ user.favoriteSong }}</div>
+            </div>
           </div>
-          <mat-divider class="divider"></mat-divider>
+          <div class="answer-container spacer">
+            <div class="asnwer-header">Oblíbené místo</div>
+            <div class="answer">{{ user.favoritePlace }}</div>
+          </div>
+
+          <!-- <div class="answer-container">
+            <div class="asnwer-header">Přátelé na Facebooku</div>
+            <div class="answer">{{ user.favebookFriends }}</div>
+          </div> -->
+          <!-- <div class="answer-container">
+            <div class="asnwer-header">Skutečných přátel</div>
+            <div class="answer">{{ user.friends }}</div>
+          </div> -->
+
+          <!-- <div class="answer-container">
+            <div class="asnwer-header">Sny</div>
+            <div class="answer">{{ user.dreams }}</div>
+          </div> -->
+
           <!-- <div class="answer-container spacer">
             <div class="asnwer-header">Místo/doba kde by si chtěl žít</div>
             <div class="answer">{{ user.placeToLive }}</div>
@@ -137,7 +136,7 @@
             <div class="asnwer-header">Myšlenka/citát</div>
             <div class="answer">{{ user.quote }}</div>
           </div>
-          <div class="answer-container">
+          <div class="answer-container spacer">
             <div class="asnwer-header">Nejcennější věc</div>
             <div class="answer">{{ user.prizedItem }}</div>
           </div>
@@ -145,6 +144,16 @@
             <div class="asnwer-header">Otázka pro druhé</div>
             <div class="answer">{{ user.questionToOthers }}</div>
           </div> -->
+
+          <mat-divider class="divider"></mat-divider>
+          <!-- <div class="answer-container">
+            <div class="asnwer-header">Poznávací znamení</div>
+            <div class="answer">{{ user.recognitionSign }}</div>
+          </div> -->
+          <div class="answer-container">
+            <div class="asnwer-header">Začátek</div>
+            <div class="answer">{{ user.startingPoint }}</div>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>

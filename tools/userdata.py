@@ -33,8 +33,9 @@ fieldnames = [
   "favoriteToiletPaper",
   "prizedItem",
   "favoritePlace",
-  "org",
   "img",
+  "org",
+  "going",
 ]
 
 with open(args.user_data_file) as f:
@@ -42,7 +43,7 @@ with open(args.user_data_file) as f:
   reader = csv.DictReader(f, fieldnames=fieldnames, dialect='excel-tab')
   next(reader) # Skip header
   for user_data in reader:
-    if not user_data["email"]:
+    if not user_data["email"] or not user_data["going"] == "TRUE":
       continue
     uid = None
     for auth in users_auth:
@@ -69,6 +70,7 @@ def set_common_properties(users_data):
     else:
       user_data["team"] = ""
     del user_data["org"]
+    del user_data["going"]
 
 set_common_properties(users)
 if args.upload:
